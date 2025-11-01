@@ -2245,6 +2245,12 @@ class ArabicLearningGame {
         
         const question = this.questions[this.currentQuestion];
         
+        // Track game mode for daily missions (only once per game)
+        if (this.currentQuestion === 0) {
+            this.updateDailyProgress('mode', this.gameMode);
+            console.log('📝 Daily progress updated: game mode', this.gameMode);
+        }
+        
         // Update progress
         document.getElementById('currentQuestion').textContent = this.currentQuestion + 1;
         const progress = ((this.currentQuestion) / this.questions.length) * 100;
@@ -2599,9 +2605,17 @@ class ArabicLearningGame {
         this.totalAnswers++;
         localStorage.setItem('totalAnswers', this.totalAnswers.toString());
         
+        // Update daily progress for missions (question answered)
+        this.updateDailyProgress('question');
+        console.log('📝 Daily progress updated: question answered');
+        
         if (isCorrect) {
             this.score++;
             this.correctAnswers++;
+            
+            // Update daily progress for missions
+            this.updateDailyProgress('correct');
+            console.log('📝 Daily progress updated: correct answer');
             
             // Calculate hasene based on game mode
             let earnedHasene = 0;
