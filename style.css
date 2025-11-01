@@ -6759,13 +6759,15 @@ input:checked + .toggle-slider:before {
 .achievements-container {
     background: white;
     padding: 30px;
-    max-height: 50vh;
+    max-height: 60vh;
     overflow-y: auto;
     scroll-behavior: smooth;
-    /* 📱 Samsung M33: Scroll bar gizli */
+    /* 📱 Samsung M33: Enhanced touch scroll */
     scrollbar-width: none;
     -ms-overflow-style: none;
     -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
 }
 
 .achievements-grid {
@@ -7016,10 +7018,16 @@ input:checked + .toggle-slider:before {
         font-size: 0.7rem;
     }
     
+    /* 📱 Samsung M33 Achievements Container */
     .achievements-container {
         padding: 10px;
-        max-height: 45vh;
+        max-height: 55vh;
         border-radius: 0;
+        /* Enhanced Samsung M33 touch scroll */
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
+        scroll-behavior: smooth;
+        overscroll-behavior: contain;
     }
     
     .achievements-grid {
