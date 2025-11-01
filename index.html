@@ -319,7 +319,7 @@
                 <div class="question-type" id="questionType">Arapça kelimeyi çevir</div>
                 <div class="question-text" id="questionText">خَتَمَ</div>
                 <div class="word-id" id="wordId">ID: 2:7:1</div>
-                <button class="audio-btn" id="audioBtn" onclick="playAudio()">
+                <button class="audio-btn" id="audioBtn" onclick="playAudio()" ontouchend="playAudio()" ontouchstart="">
                     <i class="fas fa-volume-up"></i>
                 </button>
             </div>
@@ -327,23 +327,23 @@
             <div class="answer-section">
                 <!-- Multiple Choice Mode -->
                 <div class="options-container" id="optionsContainer">
-                    <button class="option-btn" onclick="selectOption(this, 0)" ontouchstart="this.click()">mühürlemiştir</button>
-                    <button class="option-btn" onclick="selectOption(this, 1)" ontouchstart="this.click()">neredeyse</button>
-                    <button class="option-btn" onclick="selectOption(this, 2)" ontouchstart="this.click()">isterler</button>
-                    <button class="option-btn" onclick="selectOption(this, 3)" ontouchstart="this.click()">değildir</button>
+                    <button class="option-btn" onclick="selectOption(this, 0)" ontouchend="selectOption(this, 0)" ontouchstart="">mühürlemiştir</button>
+                    <button class="option-btn" onclick="selectOption(this, 1)" ontouchend="selectOption(this, 1)" ontouchstart="">neredeyse</button>
+                    <button class="option-btn" onclick="selectOption(this, 2)" ontouchend="selectOption(this, 2)" ontouchstart="">isterler</button>
+                    <button class="option-btn" onclick="selectOption(this, 3)" ontouchend="selectOption(this, 3)" ontouchstart="">değildir</button>
                 </div>
 
                 <!-- Text Input Mode -->
                 <div class="input-container" id="inputContainer" style="display: none;">
                     <input type="text" id="answerInput" placeholder="Arapça kelimeyi yazın..." onkeypress="checkEnter(event)" readonly>
-                    <button class="check-btn" onclick="checkAnswer()" ontouchstart="this.click()">Kontrol Et</button>
+                    <button class="check-btn" onclick="checkAnswer()" ontouchend="checkAnswer()" ontouchstart="">Kontrol Et</button>
                     
 
                 </div>
             </div>
 
             <div class="action-buttons">
-                <button class="skip-btn" onclick="skipQuestion()" ontouchstart="this.click()">Geç</button>
+                <button class="skip-btn" onclick="skipQuestion()" ontouchend="skipQuestion()" ontouchstart="">Geç</button>
             </div>
         </div>
 
@@ -356,7 +356,7 @@
                 <div class="feedback-text" id="feedbackText">Doğru!</div>
                 <div class="feedback-meaning" id="feedbackMeaning">خَتَمَ = mühürlemiştir</div>
                 <div class="feedback-actions">
-                    <button class="continue-btn" id="continueBtn" onclick="nextQuestion()" ontouchstart="this.click()" style="display: none;">Devam Et</button>
+                    <button class="continue-btn" id="continueBtn" onclick="nextQuestion()" ontouchend="nextQuestion()" ontouchstart="" style="display: none;">Devam Et</button>
                 </div>
             </div>
         </div>
