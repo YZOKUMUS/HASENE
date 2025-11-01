@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="tr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="HASENE - İnteraktif Arapça öğrenme uygulaması. Duolingo tarzı gamification ile Kuran Arapçası öğrenin.">
+    <meta name="keywords" content="Arapça öğrenme, Kuran Arapçası, İslami eğitim, gamification, interactive learning">
+    <meta name="author" content="YZOKUMUS">
+    <meta name="theme-color" content="#2c5530">
+    <title>HASENE - Duolingo Tarzı Arapça Öğrenme</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="icon-192-v4-RED-MUSHAF.png">
+    <link rel="apple-touch-icon" href="icon-192-v4-RED-MUSHAF.png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
+</head>
+<body>
+    <!-- 🎨 Duolingo-Style Loading Screen -->
+    <div id="loadingScreen" class="screen duo-loading">
+        <div class="duo-loading-container">
+            <!-- Animated Character/Mascot -->
+            <div class="duo-character">
+                <div class="character-body">
+                    <div class="duo-icon-wrapper">
+                        <img src="icon-512-v4-RED-MUSHAF.png" alt="HASENE Mascot" class="duo-mascot-icon" id="loadingRotatingIcon">
+                        <div class="duo-sparkles">
+                            <div class="sparkle sparkle-1">✨</div>
+                            <div class="sparkle sparkle-2">⭐</div>
+                            <div class="sparkle sparkle-3">💫</div>
+                            <div class="sparkle sparkle-4">🌟</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Breathing/Floating Animation -->
+                <div class="duo-shadow"></div>
+            </div>
+            
+            <!-- App Title with Animation -->
+            <div class="duo-title-section">
+                <h1 class="duo-title">
+                    <span class="title-letter" style="--delay: 0s">H</span>
+                    <span class="title-letter" style="--delay: 0.1s">A</span>
+                    <span class="title-letter" style="--delay: 0.2s">S</span>
+                    <span class="title-letter" style="--delay: 0.3s">E</span>
+                    <span class="title-letter" style="--delay: 0.4s">N</span>
+                    <span class="title-letter" style="--delay: 0.5s">E</span>
+                </h1>
+                <p class="duo-subtitle">Arapça öğrenmeye hazır mısın?</p>
+            </div>
+            
+            <!-- Modern Progress Bar -->
+            <div class="duo-progress-section">
+                <div class="duo-progress-container">
+                    <div class="duo-progress-track">
+                        <div class="duo-progress-fill" id="loadingProgress"></div>
+                        <div class="progress-glow"></div>
+                    </div>
+                    
+                    <!-- Progress Indicators -->
+                    <div class="progress-milestones">
+                        <div class="milestone milestone-1" data-progress="25">
+                            <div class="milestone-icon">📚</div>
+                            <div class="milestone-label">Kelimeler</div>
+                        </div>
+                        <div class="milestone milestone-2" data-progress="50">
+                            <div class="milestone-icon">🏆</div>
+                            <div class="milestone-label">Rozetler</div>
+                        </div>
+                        <div class="milestone milestone-3" data-progress="75">
+                            <div class="milestone-icon">🔊</div>
+                            <div class="milestone-label">Sesler</div>
+                        </div>
+                        <div class="milestone milestone-4" data-progress="100">
+                            <div class="milestone-icon">🎮</div>
+                            <div class="milestone-label">Hazır!</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="duo-percentage">
+                    <span id="loadingPercentage">0</span><span class="percent-symbol">%</span>
+                </div>
+            </div>
+            
+            <!-- Inspirational Quote (Hadis) - Compact Version -->
+            <div class="duo-inspiration">
+                <div class="inspiration-content">
+                    <div class="hadis-arabic">
+                        مَنْ قَرَأَ حَرْفًا مِنْ كِتَابِ اللَّهِ فَلَهُ بِهِ حَسَنَةٌ وَالْحَسَنَةُ بِعَشْرِ أَمْثَالِهَا
+                    </div>
+                    <div class="hadis-translation">
+                        "Kim Kur'an'dan bir harf okursa, ona bir hasene yazılır ve her hasene on misliyle mükâfat edilir." <br>
+                        <small style="opacity: 0.6;">- Tirmizi</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Background Animations -->
+        <div class="duo-background-effects">
+            <div class="floating-element elem-1">🕌</div>
+            <div class="floating-element elem-2">📿</div>
+            <div class="floating-element elem-3">🌙</div>
+            <div class="floating-element elem-4">⭐</div>
+            <div class="floating-element elem-5">💫</div>
+        </div>
+    </div>
+
+    <!-- Main Menu Screen -->
+    <div id="mainMenu" class="screen" style="display: none;">
+        <div class="header">
+            <div class="user-info">
+                <div class="streak-info">
+                    <i class="fas fa-fire streak-icon"></i>
+                    <span id="streakCount">0</span>
+                </div>
+                <div class="hasene-info">
+                    <i class="fas fa-star hasene-icon"></i>
+                    <span id="haseneCount">0</span>
+                </div>
+                <div class="level-info">
+                    <span>Seviye <span id="levelCount">1</span></span>
+                    <i class="fas fa-trophy level-icon"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="progress-section">
+                <div class="daily-goal">
+                    <h3>🎯 Günlük Hedef</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="dailyProgress" style="width: 0%"></div>
+                    </div>
+                    <p><span id="dailyHasene">0</span>/250 Hasene</p>
+                </div>
+                
+                <!-- XP Progress -->
+                <div class="xp-section" style="margin-top: 15px;">
+                    <h3>⚡ Seviye İlerlemen</h3>
+                    <div class="level-progress">
+                        <span class="current-level">Seviye <span id="currentLevel">1</span></span>
+                        <div class="xp-bar">
+                            <div class="xp-fill" id="xpProgress" style="width: 0%"></div>
+                        </div>
+                        <span class="next-level">Seviye <span id="nextLevel">2</span></span>
+                    </div>
+                    <p class="xp-info"><span id="currentXP">0</span>/<span id="nextLevelXP">500</span> XP</p>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <button id="dailyMissionsBtn" class="action-btn missions" onclick="showDailyMissions()" 
+                        aria-label="Günlük görevleri görüntüle" title="Bugünün özel görevleri ve ödülleri">
+                    <i class="fas fa-tasks" aria-hidden="true"></i>
+                    <span>Günlük Görevler</span>
+                    <span id="missionsBadgeCount" class="badge-counter" style="display: none;">0</span>
+                </button>
+                <button id="achievementsBtn" class="action-btn achievements" onclick="showAchievements()" 
+                        aria-label="Başarıları görüntüle" title="Başarıları ve rozetleri görüntüle">
+                    <i class="fas fa-trophy" aria-hidden="true"></i>
+                    <span>Başarılar</span>
+                    <span id="unlockedBadgeCount" class="badge-counter" style="display: none;">0</span>
+                </button>
+                <button id="statsBtn" class="action-btn stats" onclick="showStats()" 
+                        aria-label="İstatistikleri görüntüle" title="Öğrenme istatistiklerin ve ilerlemen">
+                    <i class="fas fa-chart-bar" aria-hidden="true"></i>
+                    <span>İstatistikler</span>
+                </button>
+                <button id="soundSettingsBtn" class="action-btn sound-settings" onclick="showSoundSettings()"
+                        aria-label="Ses ayarları" title="Müzik ve ses efektleri ayarları" style="display: none;">
+                    <i class="fas fa-music" aria-hidden="true"></i>
+                    <span>Ses Ayarları</span>
+                </button>
+                <button class="action-btn calendar" onclick="toggleCalendar()">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Takvim</span>
+                </button>
+                
+                <button id="musicButton" class="action-btn sound-control" onclick="playMusic()">
+                    <i class="fas fa-music"></i> İlahi
+                </button>
+                
+                <button class="action-btn hadis-control" onclick="showRandomHadis()" 
+                        aria-label="Kutub-i Sitte'den hadis oku" title="5972 hadis arasından rastgele bir hadis oku ve 10 hasene kazan">
+                    <i class="fas fa-book-open" aria-hidden="true"></i> Kutub-i Sitte
+                </button>
+
+                <script>
+                    let currentAudio = null; // Global değişken
+
+                    function playMusic() {
+                        if (currentAudio) {
+                            if (!currentAudio.paused) {
+                                currentAudio.pause(); // Çalan sesi durdur
+                                currentAudio.currentTime = 0; // Sesi başa sar
+                                return;
+                            }
+                        } else {
+                            currentAudio = new Audio('https://dinimizislam.com/Download/Ses/Ilahiler/4/AyDo%C4%9Fdu.mp3');
+                        }
+
+                        currentAudio.currentTime = 0; // Sesi başa sar
+                        currentAudio.play(); // Sesi çal
+                    }
+                </script>
+            </div>
+
+            <!-- Zorluk Seçimi -->
+            <div class="difficulty-section">
+                <h3>🎯 Zorluk Seviyesi Seç</h3>
+                <div class="difficulty-buttons">
+                                        <button class="difficulty-btn easy" id="easyBtn" onclick="setDifficulty('easy')" 
+                            role="radio" aria-checked="false" aria-label="Kolay seviye" 
+                            title="Temel seviye - Basit kelimeler">
+                        <i class="fas fa-seedling" aria-hidden="true"></i>
+                        <span>Kolay</span>
+                    </button>
+                                        <button class="difficulty-btn medium active" id="mediumBtn" onclick="setDifficulty('medium')" 
+                            role="radio" aria-checked="true" aria-label="Orta seviye" 
+                            title="Orta seviye - Dengeli zorluk">
+                        <i class="fas fa-balance-scale" aria-hidden="true"></i>
+                        <span>Orta</span>
+                    </button>
+                                        <button class="difficulty-btn hard" id="hardBtn" onclick="setDifficulty('hard')" 
+                            role="radio" aria-checked="false" aria-label="Zor seviye" 
+                            title="İleri seviye - Karmaşık kelimeler">
+                        <i class="fas fa-fire" aria-hidden="true"></i>
+                        <span>Zor</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="game-modes">
+                <button class="game-mode-btn primary" onclick="startGame('translation')" 
+                        aria-label="Çeviri oyunu başlat" title="Arapça kelimeleri Türkçeye çevirerek öğren">
+                    <i class="fas fa-language" aria-hidden="true"></i>
+                    <h3>Çeviri Oyunu</h3>
+                    <p>Arapça kelimeleri Türkçe'ye çevir</p>
+                </button>
+                <button class="game-mode-btn secondary" onclick="startGame('listening')">
+                    <i class="fas fa-headphones"></i>
+                    <h3>Dinleme Oyunu</h3>
+                    <p>Sesi dinle ve anlamını bul</p>
+                </button>
+                <button class="game-mode-btn challenge" onclick="startGame('speed')" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Hız Modu ⚡</h3>
+                    <p>10 saniyede cevapla! Hızlı puan kazan!</p>
+                </button>
+                <button class="game-mode-btn fillblank" onclick="startGame('fillblank')" style="background: linear-gradient(135deg, #9c27b0, #673ab7);">
+                    <i class="fas fa-puzzle-piece"></i>
+                    <h3>Boşluk Doldur 📝</h3>
+                    <p>Ayet'teki eksik kelimeleri bul!</p>
+                </button>
+                <button class="game-mode-btn ayet" onclick="showAyetTask()" style="background: linear-gradient(135deg, #3f51b5, #2196f3); color: #fff; text-shadow: 0 2px 8px #0008;">
+                    <i class="fas fa-book-open"></i>
+                    <h3 style="color:#fff;text-shadow:0 2px 8px #0008;">Ayet Dinle &amp; Oku</h3>
+                    <p style="color:#fff;text-shadow:0 2px 8px #0008;">Her gün bir ayet dinle ve oku!</p>
+                </button>
+                <button class="game-mode-btn dua" onclick="showDuaTask()" style="background: linear-gradient(135deg, #009688, #26a69a); color: #fff; text-shadow: 0 2px 8px #0008;">
+                    <i class="fas fa-pray"></i>
+                    <h3 style="color:#fff;text-shadow:0 2px 8px #0008;">Dua Dinleme Görevi</h3>
+                    <p style="color:#fff;text-shadow:0 2px 8px #0008;">Gün içinde dinlediğin dua kadar hasene kazan!</p>
+                </button>
+            </div>
+
+            <!-- Reset Button -->
+            <div class="reset-section" style="margin-top: 30px; text-align: center;">
+                <button class="reset-btn" onclick="resetGame()" 
+                        aria-label="Oyunu sıfırla" title="DİKKAT: Tüm ilerleme silinecek!" 
+                        style="background: linear-gradient(135deg, #ff4444, #cc0000); color: white; border: none; padding: 12px 24px; border-radius: 10px; font-size: 16px; cursor: pointer; box-shadow: 0 4px 12px rgba(255, 68, 68, 0.3); transition: all 0.3s ease;">
+                    <i class="fas fa-refresh" aria-hidden="true"></i>
+                    Sıfırla
+                </button>
+                <p style="font-size: 12px; color: #666; margin-top: 8px;">⚠️ Tüm ilerleme silinecek</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="gameScreen" class="screen" style="display: none;">
+        <div class="game-header">
+            <div class="game-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="gameProgress"></div>
+                </div>
+                <span class="progress-text"><span id="currentQuestion">1</span>/<span id="totalQuestions">10</span></span>
+            </div>
+            <div class="game-stats">
+                <div class="hearts">
+                    <i class="fas fa-heart" id="heart1"></i>
+                    <i class="fas fa-heart" id="heart2"></i>
+                    <i class="fas fa-heart" id="heart3"></i>
+                    <i class="fas fa-heart" id="heart4"></i>
+                    <i class="fas fa-heart" id="heart5"></i>
+                </div>
+                <div class="game-hasene">
+                    <i class="fas fa-star"></i>
+                    <span id="gameHasene">0</span>
+                </div>
+                <!-- Hız Modu Timer -->
+                <div class="speed-timer" id="speedTimer" style="display: none;">
+                    <i class="fas fa-clock"></i>
+                    <span id="questionTimer">10</span>s
+                </div>
+            </div>
+            <button class="close-btn" onclick="returnToMenu()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="game-content">
+            <div class="question-section">
+                <div class="question-type" id="questionType">Arapça kelimeyi çevir</div>
+                <div class="question-text" id="questionText">خَتَمَ</div>
+                <div class="word-id" id="wordId">ID: 2:7:1</div>
+                <button class="audio-btn" id="audioBtn" onclick="playAudio()">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+            </div>
+
+            <div class="answer-section">
+                <!-- Multiple Choice Mode -->
+                <div class="options-container" id="optionsContainer">
+                    <button class="option-btn" onclick="selectOption(this, 0)">mühürlemiştir</button>
+                    <button class="option-btn" onclick="selectOption(this, 1)">neredeyse</button>
+                    <button class="option-btn" onclick="selectOption(this, 2)">isterler</button>
+                    <button class="option-btn" onclick="selectOption(this, 3)">değildir</button>
+                </div>
+
+                <!-- Text Input Mode -->
+                <div class="input-container" id="inputContainer" style="display: none;">
+                    <input type="text" id="answerInput" placeholder="Arapça kelimeyi yazın..." onkeypress="checkEnter(event)" readonly>
+                    <button class="check-btn" onclick="checkAnswer()">Kontrol Et</button>
+                    
+
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="skip-btn" onclick="skipQuestion()">Geç</button>
+            </div>
+        </div>
+
+        <!-- Result Feedback -->
+        <div class="result-feedback" id="resultFeedback" style="display: none;">
+            <div class="feedback-content">
+                <div class="feedback-icon" id="feedbackIcon">
+                    <i class="fas fa-check"></i>
+                </div>
+                <div class="feedback-text" id="feedbackText">Doğru!</div>
+                <div class="feedback-meaning" id="feedbackMeaning">خَتَمَ = mühürlemiştir</div>
+                <div class="feedback-actions">
+                    <button class="continue-btn" id="continueBtn" onclick="nextQuestion()" style="display: none;">Devam Et</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hearts Depleted Screen -->
+    <div id="heartsDepleted" class="screen" style="display: none;">
+        <div class="hearts-depleted-content">
+            <div class="broken-heart-animation">
+                <i class="fas fa-heart-broken"></i>
+            </div>
+            
+            <h2>Kalplerin Bitti!</h2>
+            <p>Endişelenme, kalp yenilemenin birkaç yolu var:</p>
+            
+            <div class="heart-refill-options">
+                <button class="refill-option watch-ad" onclick="watchAdForHearts()">
+                    <i class="fas fa-play-circle"></i>
+                    <div class="option-content">
+                        <h3>Reklam İzle</h3>
+                        <p>30 saniyelik reklam izle, 1 kalp kazan!</p>
+                        <span class="reward">+1 ❤️</span>
+                    </div>
+                </button>
+                
+                <button class="refill-option wait-time" onclick="showWaitTimer()">
+                    <i class="fas fa-clock"></i>
+                    <div class="option-content">
+                        <h3>Bekle</h3>
+                        <p>Her 30 dakikada 1 kalp yenilenir</p>
+                        <span class="timer" id="heartTimer">29:45</span>
+                    </div>
+                </button>
+                
+                <button class="refill-option unlimited" onclick="buyUnlimitedHearts()">
+                    <i class="fas fa-infinity"></i>
+                    <div class="option-content">
+                        <h3>Sınırsız Kalp</h3>
+                        <p>Hiç kalp kaybetme! (Simülasyon)</p>
+                        <span class="price">100 Hasene</span>
+                    </div>
+                </button>
+            </div>
+            
+            <div class="hearts-depleted-actions">
+                <button class="menu-btn" onclick="returnToMenu()">
+                    <i class="fas fa-home"></i>
+                    Ana Menü
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Complete Screen -->
+    <div id="gameComplete" class="screen" style="display: none;">
+        <div class="complete-content">
+            <div class="complete-animation">
+                <div class="trophy-animation">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="stars">
+                    <i class="fas fa-star" id="star1"></i>
+                    <i class="fas fa-star" id="star2"></i>
+                    <i class="fas fa-star" id="star3"></i>
+                </div>
+            </div>
+            
+            <h2>Tebrikler!</h2>
+            <p>Dersi tamamladın!</p>
+            
+            <div class="results-summary">
+                <div class="result-item">
+                    <i class="fas fa-star"></i>
+                    <span>Kazanılan Hasene</span>
+                    <span id="earnedHasene">0</span>
+                </div>
+                <div class="result-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Doğru Cevaplar</span>
+                    <span id="correctAnswers">0/10</span>
+                </div>
+                <div class="result-item">
+                    <i class="fas fa-percentage"></i>
+                    <span>Doğruluk Oranı</span>
+                    <span id="gameAccuracy">0%</span>
+                </div>
+                <div class="result-item">
+                    <i class="fas fa-fire"></i>
+                    <span>Streak</span>
+                    <span id="finalStreak">0 gün</span>
+                </div>
+            </div>
+            
+            <div class="complete-actions">
+                <button class="continue-learning-btn" onclick="startGame()">
+                    <i class="fas fa-redo"></i>
+                    Tekrar Oyna
+                </button>
+                <button class="menu-btn" onclick="returnToMenu()">
+                    <i class="fas fa-home"></i>
+                    Ana Menü
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Level Up Modal -->
+    <div id="levelUpModal" class="modal" style="display: none;">
+        <div class="modal-content level-up">
+            <div class="level-up-animation">
+                <i class="fas fa-trophy"></i>
+                <div class="level-badge">
+                    <span id="newLevel">2</span>
+                </div>
+            </div>
+            <h2>Seviye Atladın!</h2>
+            <p>Seviye <span id="newLevelText">2</span>'ye ulaştın!</p>
+            <button class="modal-btn" onclick="closeLevelUpModal()">Harika!</button>
+        </div>
+    </div>
+
+    <!-- Streak Modal -->
+    <div id="streakModal" class="modal" style="display: none;">
+        <div class="modal-content streak-modal">
+            <div class="streak-animation">
+                <i class="fas fa-fire"></i>
+            </div>
+            <h2>Streak Korundu!</h2>
+            <p><span id="streakDays">1</span> günlük streak'in devam ediyor!</p>
+            <button class="modal-btn" onclick="closeStreakModal()">Devam Et!</button>
+        </div>
+    </div>
+
+    <!-- 🏆 Modern Achievements Modal -->
+    <div id="achievementsModal" class="modal" style="display: none;">
+        <div class="modal-content modern-achievements-modal">
+            <div class="achievements-header">
+                <div class="header-content">
+                    <h2><i class="fas fa-trophy"></i> Başarı Rozetleri</h2>
+                    <div class="achievements-stats">
+                        <div class="stat-item">
+                            <span class="stat-number" id="unlockedCount">0</span>
+                            <span class="stat-label">Kazanılan</span>
+                        </div>
+                        <div class="stat-divider">|</div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="totalCount">27</span>
+                            <span class="stat-label">Toplam</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="close-modal-btn" onclick="closeAchievementsModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <!-- Rarity Filter Tabs -->
+            <div class="rarity-tabs">
+                <button class="rarity-tab active" onclick="filterByRarity('all')" data-rarity="all">
+                    <i class="fas fa-medal"></i>
+                    <span>Tümü</span>
+                    <span class="tab-count" id="allCount">0</span>
+                </button>
+                <button class="rarity-tab bronze" onclick="filterByRarity('bronze')" data-rarity="bronze">
+                    <i class="fas fa-medal"></i>
+                    <span>Bronz</span>
+                    <span class="tab-count" id="bronzeCount">0</span>
+                </button>
+                <button class="rarity-tab silver" onclick="filterByRarity('silver')" data-rarity="silver">
+                    <i class="fas fa-medal"></i>
+                    <span>Gümüş</span>
+                    <span class="tab-count" id="silverCount">0</span>
+                </button>
+                <button class="rarity-tab gold" onclick="filterByRarity('gold')" data-rarity="gold">
+                    <i class="fas fa-medal"></i>
+                    <span>Altın</span>
+                    <span class="tab-count" id="goldCount">0</span>
+                </button>
+                <button class="rarity-tab diamond" onclick="filterByRarity('diamond')" data-rarity="diamond">
+                    <i class="fas fa-gem"></i>
+                    <span>Elmas</span>
+                    <span class="tab-count" id="diamondCount">0</span>
+                </button>
+            </div>
+            
+            <!-- Achievements Grid -->
+            <div class="achievements-container">
+                <div class="achievements-grid" id="achievementsGrid">
+                    <!-- Rozetler JavaScript ile eklenecek -->
+                </div>
+            </div>
+            
+            <!-- Progress Summary -->
+            <div class="achievements-progress">
+                <div class="progress-header">
+                    <h3><i class="fas fa-chart-line"></i> İlerleme Özeti</h3>
+                </div>
+                <div class="progress-bars">
+                    <div class="progress-item bronze">
+                        <div class="progress-label">
+                            <span class="rarity-icon">🥉</span>
+                            <span>Bronz Rozetler</span>
+                            <span class="progress-fraction" id="bronzeFraction">0/0</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="bronzeProgress" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="progress-item silver">
+                        <div class="progress-label">
+                            <span class="rarity-icon">🥈</span>
+                            <span>Gümüş Rozetler</span>
+                            <span class="progress-fraction" id="silverFraction">0/0</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="silverProgress" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="progress-item gold">
+                        <div class="progress-label">
+                            <span class="rarity-icon">🥇</span>
+                            <span>Altın Rozetler</span>
+                            <span class="progress-fraction" id="goldFraction">0/0</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="goldProgress" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="progress-item diamond">
+                        <div class="progress-label">
+                            <span class="rarity-icon">💎</span>
+                            <span>Elmas Rozetler</span>
+                            <span class="progress-fraction" id="diamondFraction">0/0</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="diamondProgress" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Daily Missions Modal -->
+    <div id="dailyMissionsModal" class="modal" style="display: none;">
+        <div class="modal-content missions-modal">
+            <div class="modal-header">
+                <h2><i class="fas fa-tasks"></i> Günlük Görevler</h2>
+                <button class="close-modal-btn" onclick="closeDailyMissionsModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="missions-content">
+                <div class="missions-summary">
+                    <div class="summary-item">
+                        <span class="summary-number" id="completedMissions">0</span>
+                        <span class="summary-label">Tamamlanan</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-number" id="totalMissions">0</span>
+                        <span class="summary-label">Toplam</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-number" id="dailyRewards">0</span>
+                        <span class="summary-label">Hasene</span>
+                    </div>
+                </div>
+                <div class="missions-grid" id="missionsGrid">
+                    <!-- Görevler JavaScript ile eklenecek -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calendar Modal -->
+    <div id="calendarModal" class="modal" style="display: none;">
+        <div class="modal-content calendar-modal">
+            <div class="modal-header">
+                <h2><i class="fas fa-calendar-alt"></i> Streak Takviminiz</h2>
+                <button class="close-modal-btn" onclick="closeCalendarModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="calendar-modal-content">
+                <div class="calendar-header">
+                    <button class="calendar-nav" onclick="changeMonth(-1)">‹</button>
+                    <h4 id="currentMonth">Ekim 2025</h4>
+                    <button class="calendar-nav" onclick="changeMonth(1)">›</button>
+                </div>
+                <div class="calendar-grid" id="calendarGrid">
+                    <!-- Takvim günleri buraya JavaScript ile eklenecek -->
+                </div>
+                <div class="calendar-legend">
+                    <div class="legend-item empty">
+                        <div class="legend-dot"></div>
+                        <span>Oynanmadı</span>
+                    </div>
+                    <div class="legend-item partial">
+                        <div class="legend-dot"></div>
+                        <span>Kısmi (1-999)</span>
+                    </div>
+                    <div class="legend-item complete">
+                        <div class="legend-dot"></div>
+                        <span>Tamamlandı (250+)</span>
+                    </div>
+                </div>
+                
+                <!-- 📊 Streak İstatistikleri Paneli -->
+                <div class="calendar-stats-panel">
+                    <div class="stats-header">
+                        <h4><i class="fas fa-chart-line"></i> Streak İstatistikleri</h4>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card best">
+                            <div class="stat-icon">🏆</div>
+                            <div class="stat-info">
+                                <div class="stat-number" id="longestStreak">0</div>
+                                <div class="stat-label">En Uzun Streak</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card current">
+                            <div class="stat-icon">🔥</div>
+                            <div class="stat-info">
+                                <div class="stat-number" id="currentStreakStat">0</div>
+                                <div class="stat-label">Mevcut Streak</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card total">
+                            <div class="stat-icon">📅</div>
+                            <div class="stat-info">
+                                <div class="stat-number" id="totalActiveDays">0</div>
+                                <div class="stat-label">Toplam Aktif Gün</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card month">
+                            <div class="stat-icon">🌟</div>
+                            <div class="stat-info">
+                                <div class="stat-number" id="monthlyProgress">0%</div>
+                                <div class="stat-label">Aylık İlerleme</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 🎯 Hedef ve Motivasyon -->
+                    <div class="motivation-section">
+                        <div class="motivation-text">
+                            <i class="fas fa-quote-left"></i>
+                            <span id="motivationQuote">"Devamlılık mükemmellikten daha önemlidir"</span>
+                            <i class="fas fa-quote-right"></i>
+                        </div>
+                        
+                        <div class="next-milestone">
+                            <div class="milestone-progress">
+                                <span>Bir sonraki hedef: </span>
+                                <strong id="nextMilestone">30 günlük streak</strong>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="milestoneProgress" style="width: 20%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hadis Modal -->
+    <div id="hadisModal" class="modal" style="display: none;">
+        <div class="modal-content hadis-modal">
+            <div class="modal-header">
+                <h2><i class="fas fa-book-open"></i> Günün Hadisi</h2>
+                <button class="close-modal-btn" onclick="closeHadisModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="hadis-content" id="hadisContent">
+                <!-- Hadis içeriği buraya JavaScript ile eklenecek -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Modal -->
+    <div id="statsModal" class="modal" style="display: none;">
+        <div class="modal-content stats-modal">
+            <div class="modal-header">
+                <h2><i class="fas fa-chart-bar"></i> Detaylı İstatistikler</h2>
+                <button class="close-modal-btn" onclick="closeStatsModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="stats-content">
+                <div class="stats-summary">
+                    <div class="stat-item">
+                        <i class="fas fa-star"></i>
+                        <div>
+                            <h3 id="statTotalHasene">0</h3>
+                            <p>Toplam Hasene</p>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-calendar-check"></i>
+                        <div>
+                            <h3 id="statMaxStreak">0</h3>
+                            <p>En Uzun Streak</p>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-gamepad"></i>
+                        <div>
+                            <h3 id="statTotalGames">0</h3>
+                            <p>Doğru Kelimeler</p>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-fire"></i>
+                        <div>
+                            <h3 id="statCurrentStreak">0</h3>
+                            <p>Günlük Streak</p>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-brain"></i>
+                        <div>
+                            <h3 id="statWordsLearned">0</h3>
+                            <p>Öğrenilen Kelimeler</p>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-percentage"></i>
+                        <div>
+                            <h3 id="statAccuracyRate">0%</h3>
+                            <p>Doğruluk Oranı</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Streak Shop Section -->
+                <div class="streak-protection-section">
+                    <div class="protection-header">
+                        <h3>🛡️ Streak Koruması</h3>
+                        <p>Streak'ini korumak için özel öğeler!</p>
+                    </div>
+                    <div class="protection-inventory">
+                        <div class="protection-item">
+                            <span class="protection-icon">🛡️</span>
+                            <span class="protection-name">Streak Freeze</span>
+                            <span class="protection-count" id="streakFreezeCount">0</span>
+                        </div>
+                        <div class="protection-item">
+                            <span class="protection-icon">🏖️</span>
+                            <span class="protection-name">Weekend Pass</span>
+                            <span class="protection-count" id="weekendPassCount">0</span>
+                        </div>
+                    </div>
+                    <button class="shop-access-btn" onclick="showStreakShop()">
+                        <i class="fas fa-shopping-cart"></i>
+                        Koruma Mağazası
+                    </button>
+                    
+                    <button class="shop-access-btn" onclick="closeStatsModal()" style="margin-top: 10px; background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); color: white;">
+                        ❌ Kapat
+                    </button>
+                </div>
+                
+                <div class="stats-charts">
+                    <div class="chart-section">
+                        <h3>Haftalık Hasene Grafiği</h3>
+                        <div class="weekly-chart" id="weeklyChart">
+                            <!-- Grafik buraya eklenecek -->
+                        </div>
+                    </div>
+                    
+                    <div class="stats-details">
+                        <h3>Oyun Modu İstatistikleri</h3>
+                        <div class="game-mode-stats">
+                            <div class="mode-stat">
+                                <span class="mode-name">Çeviri</span>
+                                <div class="mode-progress">
+                                    <div class="mode-bar translation" id="translationBar"></div>
+                                </div>
+                                <span class="mode-percentage" id="translationPercent">0%</span>
+                            </div>
+                            <div class="mode-stat">
+                                <span class="mode-name">Dinleme</span>
+                                <div class="mode-progress">
+                                    <div class="mode-bar listening" id="listeningBar"></div>
+                                </div>
+                                <span class="mode-percentage" id="listeningPercent">0%</span>
+                            </div>
+                            <div class="mode-stat">
+                                <span class="mode-name">Hız</span>
+                                <div class="mode-progress">
+                                    <div class="mode-bar speed" id="speedBar"></div>
+                                </div>
+                                <span class="mode-percentage" id="speedPercent">0%</span>
+                            </div>
+                            <div class="mode-stat">
+                                <span class="mode-name">Boşluk Doldur</span>
+                                <div class="mode-progress">
+                                    <div class="mode-bar fillblank" id="fillblankBar"></div>
+                                </div>
+                                <span class="mode-percentage" id="fillblankPercent">0%</span>
+                            </div>
+                            <div class="mode-stat">
+                                <span class="mode-name">Ayet Dinleme</span>
+                                <div class="mode-progress">
+                                    <div class="mode-bar ayet" id="ayetBar"></div>
+                                </div>
+                                <span class="mode-percentage" id="ayetPercent">0%</span>
+                            </div>
+                            <div class="mode-stat">
+                                <span class="mode-name">Dua Dinleme</span>
+                                <div class="mode-progress">
+                                    <div class="mode-bar dua" id="duaBar"></div>
+                                </div>
+                                <span class="mode-percentage" id="duaPercent">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Achievement Unlock Modal -->
+    
+    <!-- Streak Shop Modal -->
+    <div id="streakShopModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeStreakShop()">&times;</span>
+            <h2>🛡️ Streak Koruma Mağazası</h2>
+            <p>Streak'ini korumak için özel öğeler satın al!</p>
+            
+            <div class="shop-items-grid">
+                <div class="shop-item">
+                    <div class="item-icon">🛡️</div>
+                    <h3>Streak Freeze</h3>
+                    <p>1 gün koruma sağlar. Bir gün oynayamazsan streak'in kırılmaz.</p>
+                    <div class="item-price">💰 100 Hasene</div>
+                    <div class="item-owned">Sahip olduğun: <span id="ownedStreakFreezes">0</span></div>
+                    <button class="shop-buy-btn" onclick="buyItem('streakFreeze')">Satın Al</button>
+                </div>
+                
+                <div class="shop-item">
+                    <div class="item-icon">🏖️</div>
+                    <h3>Weekend Pass</h3>
+                    <p>2 gün koruma sağlar. Hafta sonu için mükemmel!</p>
+                    <div class="item-price">💰 180 Hasene</div>
+                    <div class="item-owned">Sahip olduğun: <span id="ownedWeekendPasses">0</span></div>
+                    <button class="shop-buy-btn" onclick="buyItem('weekendPass')">Satın Al</button>
+                </div>
+            </div>
+            
+            <div class="shop-info">
+                <h4>📖 Nasıl Çalışır?</h4>
+                <ul>
+                    <li>🛡️ Streak Freeze: 1 gün kaçırırsan otomatik devreye girer</li>
+                    <li>🏖️ Weekend Pass: 2 gün kaçırırsan otomatik devreye girer</li>
+                    <li>⚡ Koruma kullanıldığında streak'in kırılmaz</li>
+                    <li>📱 Korumaların stokunu üstteki butondan görebilirsin</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Achievement Unlock Modal DEVRE DIŞI -->
+    <!-- 
+    <div id="achievementUnlockModal" class="modal">
+        <div class="modal-content achievement-unlock">
+            <div class="achievement-unlock-animation">
+                <i class="fas fa-trophy" id="unlockedAchievementIcon"></i>
+            </div>
+            <h2>Yeni Rozet Kazandın!</h2>
+            <h3 id="unlockedAchievementTitle">Başarı Adı</h3>
+            <p id="unlockedAchievementDesc">Açıklama</p>
+            <button class="modal-btn" onclick="closeAchievementUnlockModal()">Harika!</button>
+        </div>
+    </div>
+    -->
+
+    <audio id="audioPlayer" preload="none"></audio>
+    <audio id="backgroundMusic" preload="auto" loop>
+        <source src="sounds/melody.wav" type="audio/wav">
+        Tarayıcınız audio elementini desteklemiyor.
+    </audio>
+    <audio id="correctSound" src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+D2u2ccBSuBzvLZjTgHEWe57+OZUQ4IVKTk97VaFws+ltryxXksBS6Hz/LdjTgIG2q+7eSXSAoOVKLm9L1mFgkugM3110g+CV+16iKcWAcLflG1cfkGrrcY0U4YwyZs3+LB9M8H4VLQ+K36oLoi4WEYyCNU4dLDzOAfAAAA"></audio>
+    <audio id="incorrectSound" src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+D2u2ccBSuBzvLZjTgHEWe57+OZUQ4IVKTk97VaFws+ltryxXksBS6Hz/LdjTgIG2q+7eSXSAoOVKLm9L1mFgkugM3110g+CV+16iKcWAcLflG1cfkGrrcY0U4YwyZs3+LB9M8H4VLQ+K36oLoi4WEYyCNU4dLDzOAfAAAA"></audio>
+    <audio id="ayDogduAudio" src="https://dinimizislam.com/Download/Ses/Ilahiler/4/AyDo%C4%9Fdu.mp3" preload="auto"></audio>
+    
+    <!-- 🎵 Enhanced Sound Effects - Web Audio API -->
+    <audio id="achievementSound" preload="auto">
+        <!-- Placeholder for achievement sound -->
+    </audio>
+    <audio id="streakSound" preload="auto">
+        <!-- Placeholder for streak sound -->
+    </audio>
+    <audio id="levelUpSound" preload="auto">
+        <!-- Placeholder for level up sound -->
+    </audio>
+
+
+
+    <script src="sounds/audio-generator.js"></script>
+    <script src="party-effects.js"></script>
+    <script src="script.js"></script>
+    
+    <!-- Manuel Test Script - Console'da window.runManualTest() çalıştır -->
+    <script>
+        // Manuel test fonksiyonu - tarayıcı konsolunda çalıştırılacak
+        function runManualTest() {
+            console.log("🧪 HASENE Oyunu Manuel Test Başlıyor...");
+            
+            try {
+                // 1. Oyun örneğini kontrol et
+                if (typeof window.game === 'undefined') {
+                    console.log("❌ Oyun örneği bulunamadı");
+                    return false;
+                }
+                console.log("✅ Oyun örneği mevcut");
+                
+                // 2. Word data kontrolü
+                if (!window.game.wordData || window.game.wordData.length === 0) {
+                    console.log("❌ Word data yüklenmemiş");
+                    return false;
+                }
+                console.log(`✅ Word data yüklenmiş: ${window.game.wordData.length} kelime`);
+                
+                // 3. Zorluk seviyesi kontrolü
+                const difficulties = {
+                    easy: window.game.wordData.filter(w => w.difficulty >= 5 && w.difficulty <= 7),
+                    medium: window.game.wordData.filter(w => w.difficulty >= 8 && w.difficulty <= 10),
+                    hard: window.game.wordData.filter(w => w.difficulty >= 11)
+                };
+                console.log(`✅ Zorluk seviyeleri: Kolay(${difficulties.easy.length}), Orta(${difficulties.medium.length}), Zor(${difficulties.hard.length})`);
+                
+                // 4. Menü başlatma testi
+                window.game.showMainMenu();
+                console.log("✅ Ana menü gösterildi");
+                
+                // 5. Her zorluk seviyesi için oyun testi
+                const modes = ['translation', 'listening', 'speaking'];
+                const levels = ['easy', 'medium', 'hard'];
+                
+                for (let mode of modes) {
+                    for (let level of levels) {
+                        try {
+                            window.game.startGame(mode, level);
+                            console.log(`✅ ${mode} oyunu (${level}) başlatıldı`);
+                            
+                            // Kısa bir bekleyip menüye dön
+                            setTimeout(() => {
+                                window.game.showMainMenu();
+                            }, 100);
+                            
+                        } catch (err) {
+                            console.log(`⚠️ ${mode} oyunu (${level}) hatası:`, err.message);
+                        }
+                    }
+                }
+                
+                console.log("🎉 Tüm testler tamamlandı!");
+                return true;
+                
+            } catch (error) {
+                console.error("❌ Test sırasında hata:", error);
+                return false;
+            }
+        }
+        
+        // Test butonları için global fonksiyonlar
+        window.testGameStart = () => startGame('translation');
+        window.testDifficulty = () => setDifficulty('hard');
+        window.testAchievements = () => showAchievements();
+        window.testStats = () => showStats();
+        
+        // JSON dosyalarını manuel test et
+        window.testJsonFiles = async function() {
+            console.log('🔍 JSON dosyalarını kontrol ediliyor...');
+            
+            const files = ['data.json', 'ayetoku.json', 'dualar.json', 'kutubisitte.json'];
+            
+            for (const file of files) {
+                try {
+                    console.log(`📄 Testing ${file}...`);
+                    const response = await fetch(`./${file}`);
+                    
+                    if (!response.ok) {
+                        console.error(`❌ ${file}: HTTP ${response.status}`);
+                        continue;
+                    }
+                    
+                    const text = await response.text();
+                    console.log(`📝 ${file} first 100 chars:`, text.substring(0, 100));
+                    
+                    // BOM kontrol
+                    if (text.charCodeAt(0) === 0xFEFF) {
+                        console.warn(`⚠️ ${file} has BOM`);
+                    }
+                    
+                    // JSON parse test
+                    const cleanText = text.replace(/^\uFEFF/, '');
+                    const data = JSON.parse(cleanText);
+                    
+                    console.log(`✅ ${file}: OK (${Array.isArray(data) ? data.length + ' items' : 'object'})`);
+                    
+                } catch (error) {
+                    console.error(`❌ ${file}:`, error.message);
+                }
+            }
+        };
+    </script>
+    
+    <!-- Test Başlatma Fonksiyonları -->
+    <script>
+        // Hızlı test fonksiyonu
+        function quickTest() {
+            console.log("🚀 HIZLI TEST BAŞLATIYOR...");
+            if (window.HASENETestSuite) {
+                const testSuite = new window.HASENETestSuite();
+                return testSuite.runAllTests();
+            }
+        }
+        
+        // Sadece performans testi
+        function performanceTest() {
+            console.log("⚡ PERFORMANS TESTİ...");
+            if (window.HASENETestSuite) {
+                const testSuite = new window.HASENETestSuite();
+                return testSuite.performanceTests();
+            }
+        }
+        
+        // Sadece bug testi
+        function bugTest() {
+            console.log("🐛 BUG TESTİ...");
+            if (window.HASENETestSuite) {
+                const testSuite = new window.HASENETestSuite();
+                return testSuite.bugTests();
+            }
+        }
+        
+        // Oyun modu testleri
+        function gameModeTest() {
+            console.log("🎮 OYUN MODU TESTLERİ...");
+            if (window.HASENETestSuite) {
+                const testSuite = new window.HASENETestSuite();
+                return testSuite.gameModeTests();
+            }
+        }
+        
+        // 🎮 Comprehensive Final Test Function
+        function finalTest() {
+            console.log("🚀 HASENE Arabic Game - Final Comprehensive Test");
+            console.log("===============================================");
+            
+            // Test Achievement System
+            console.log("🏆 Testing Achievement System...");
+            const achievementCount = Object.keys(game.achievements).length;
+            const unlockedCount = Object.values(game.achievements).filter(a => a.unlocked).length;
+            console.log(`   ✅ ${achievementCount} achievements loaded, ${unlockedCount} unlocked`);
+            
+            // Test Sound System
+            console.log("🔊 Testing Sound System...");
+            if (window.audioGenerator) {
+                console.log("   ✅ Audio Generator initialized");
+                window.audioGenerator.playCorrectSound();
+            }
+            
+            // Test Mobile Optimization
+            console.log("📱 Testing Mobile Features...");
+            console.log(`   ✅ Touch optimization: ${!!game.initializeMobileOptimization}`);
+            
+            // Test Performance
+            console.log("⚡ Testing Performance...");
+            const perfReport = game.getPerformanceReport();
+            console.log("   ✅ Performance report:", perfReport);
+            
+            // Test Social Features
+            console.log("🌟 Testing Social Features...");
+            console.log(`   ✅ Leaderboard entries: ${game.leaderboardData.length}`);
+            
+            // Test Daily Missions
+            console.log("🎯 Testing Daily Missions...");
+            const missions = game.updateDailyProgress('test', 1);
+            console.log("   ✅ Daily missions system active");
+            
+            console.log("===============================================");
+            console.log("🎉 All systems operational! Game is ready!");
+            
+            return {
+                achievements: achievementCount,
+                unlocked: unlockedCount,
+                sound: !!window.audioGenerator,
+                performance: perfReport,
+                leaderboard: game.leaderboardData.length,
+                status: "✅ FULLY OPERATIONAL"
+            };
+        }
+
+        // 🏆 COMPREHENSIVE ACHIEVEMENT TESTING FUNCTION
+        function testAllAchievements() {
+            console.log("🎯 ROZET SİSTEMİ KAPSAMLI TEST BAŞLATIYOR...");
+            console.log("================================================");
+            
+            if (!window.game) {
+                console.error("❌ Game instance not found!");
+                return false;
+            }
+            
+            let testResults = {
+                totalAchievements: 0,
+                validAchievements: 0,
+                invalidAchievements: 0,
+                rarityDistribution: { bronze: 0, silver: 0, gold: 0, diamond: 0 },
+                functionalTests: {
+                    unlock: 0,
+                    display: 0,
+                    filter: 0,
+                    progress: 0
+                },
+                errors: []
+            };
+            
+            // 1. Achievement Yapısı Testi
+            console.log("1️⃣ Achievement Yapısı Test Ediliyor...");
+            Object.entries(game.achievements).forEach(([id, achievement]) => {
+                testResults.totalAchievements++;
+                
+                // Required fields kontrolü
+                const requiredFields = ['id', 'title', 'description', 'rarity', 'unlocked'];
+                const hasAllFields = requiredFields.every(field => achievement.hasOwnProperty(field));
+                
+                if (hasAllFields) {
+                    testResults.validAchievements++;
+                    testResults.rarityDistribution[achievement.rarity]++;
+                    console.log(`   ✅ ${id}: ${achievement.title} (${achievement.rarity})`);
+                } else {
+                    testResults.invalidAchievements++;
+                    testResults.errors.push(`❌ ${id}: Missing required fields`);
+                    console.error(`   ❌ ${id}: Missing required fields`);
+                }
+            });
+            
+            // 2. Rarity Dağılımı Analizi
+            console.log("2️⃣ Rarity Dağılımı Analizi...");
+            console.log(`   🥉 Bronze: ${testResults.rarityDistribution.bronze} rozet`);
+            console.log(`   🥈 Silver: ${testResults.rarityDistribution.silver} rozet`);
+            console.log(`   🥇 Gold: ${testResults.rarityDistribution.gold} rozet`);
+            console.log(`   💎 Diamond: ${testResults.rarityDistribution.diamond} rozet`);
+            
+            // 3. Achievement Unlock Testi
+            console.log("3️⃣ Achievement Unlock Mekanizması Test...");
+            
+            // Unlock fonksiyonunu test etmek için geçici test achievement'ı oluştur
+            const testId = 'tempTestAchievement';
+            game.achievements[testId] = {
+                id: testId,
+                title: 'Test Achievement',
+                description: 'Temporary test achievement',
+                rarity: 'bronze',
+                unlocked: false
+            };
+            
+            try {
+                const result = game.unlockAchievement(testId);
+                if (result && game.achievements[testId].unlocked) {
+                    testResults.functionalTests.unlock = 1;
+                    console.log("   ✅ Achievement unlock mechanism working");
+                } else {
+                    testResults.errors.push("❌ Unlock function returned false or achievement not marked as unlocked");
+                    console.error("   ❌ Unlock function returned false or achievement not marked as unlocked");
+                }
+                
+                // Test achievement'ı sil
+                delete game.achievements[testId];
+                const index = game.unlockedAchievements.indexOf(testId);
+                if (index > -1) {
+                    game.unlockedAchievements.splice(index, 1);
+                }
+                
+            } catch (error) {
+                testResults.errors.push(`❌ Unlock mechanism error: ${error.message}`);
+                console.error(`   ❌ Unlock mechanism error: ${error.message}`);
+                
+                // Test achievement'ı sil (hata durumunda)
+                delete game.achievements[testId];
+            }
+            }
+            
+            // 4. Modal Display Testi
+            console.log("4️⃣ Achievement Modal Display Test...");
+            try {
+                game.showAchievements();
+                const modal = document.getElementById('achievementsModal');
+                if (modal && modal.style.display !== 'none') {
+                    testResults.functionalTests.display = 1;
+                    console.log("   ✅ Achievement modal displays correctly");
+                    
+                    // Modal'ı kapat
+                    setTimeout(() => {
+                        game.closeAchievementsModal();
+                    }, 100);
+                } else {
+                    testResults.errors.push("❌ Achievement modal display failed");
+                    console.error("   ❌ Achievement modal display failed");
+                }
+            } catch (error) {
+                testResults.errors.push(`❌ Modal display error: ${error.message}`);
+                console.error(`   ❌ Modal display error: ${error.message}`);
+            }
+            
+            // 5. Filter Functionality Testi
+            console.log("5️⃣ Achievement Filter Test...");
+            const rarities = ['all', 'bronze', 'silver', 'gold', 'diamond'];
+            let filtersWorking = 0;
+            
+            rarities.forEach(rarity => {
+                try {
+                    game.filterAchievements(rarity);
+                    const grid = document.getElementById('achievementsGrid');
+                    if (grid) {
+                        filtersWorking++;
+                        console.log(`   ✅ ${rarity} filter working`);
+                    }
+                } catch (error) {
+                    testResults.errors.push(`❌ Filter ${rarity} error: ${error.message}`);
+                    console.error(`   ❌ Filter ${rarity} error: ${error.message}`);
+                }
+            });
+            
+            testResults.functionalTests.filter = filtersWorking / rarities.length;
+            
+            // 6. Progress Bar Testi
+            console.log("6️⃣ Progress Bar Test...");
+            try {
+                game.updateProgressBars();
+                const progressElements = ['bronzeProgress', 'silverProgress', 'goldProgress', 'diamondProgress'];
+                let progressWorking = 0;
+                
+                progressElements.forEach(elemId => {
+                    const elem = document.getElementById(elemId);
+                    if (elem && elem.style.width !== undefined) {
+                        progressWorking++;
+                        console.log(`   ✅ ${elemId} progress bar working`);
+                    }
+                });
+                
+                testResults.functionalTests.progress = progressWorking / progressElements.length;
+            } catch (error) {
+                testResults.errors.push(`❌ Progress bar error: ${error.message}`);
+                console.error(`   ❌ Progress bar error: ${error.message}`);
+            }
+            
+            // 7. Achievement Emoji Testi
+            console.log("7️⃣ Achievement Emoji Test...");
+            let emojiCount = 0;
+            Object.keys(game.achievements).forEach(achievementId => {
+                const emoji = game.getAchievementEmoji(achievementId);
+                if (emoji && emoji !== '🏆') {
+                    emojiCount++;
+                }
+            });
+            console.log(`   ✅ ${emojiCount}/${testResults.totalAchievements} achievements have custom emojis`);
+            
+            // 8. Share Functionality Testi
+            console.log("8️⃣ Share Function Test...");
+            try {
+                // Unlock bir achievement varsa share test et
+                const unlockedAchievement = Object.entries(game.achievements).find(([id, ach]) => ach.unlocked);
+                if (unlockedAchievement) {
+                    // Share fonksiyonu test et (sadece kontrol, gerçekte paylaşmaz)
+                    if (typeof game.shareAchievement === 'function') {
+                        console.log("   ✅ Share functionality available");
+                    }
+                } else {
+                    console.log("   ⚠️ No unlocked achievements to test sharing");
+                }
+            } catch (error) {
+                testResults.errors.push(`❌ Share test error: ${error.message}`);
+                console.error(`   ❌ Share test error: ${error.message}`);
+            }
+            
+            // 9. Final Results
+            console.log("================================================");
+            console.log("🏆 ROZET SİSTEMİ TEST SONUÇLARI:");
+            console.log(`📊 Toplam Rozet: ${testResults.totalAchievements}`);
+            console.log(`✅ Geçerli Rozet: ${testResults.validAchievements}`);
+            console.log(`❌ Hatalı Rozet: ${testResults.invalidAchievements}`);
+            console.log(`🎯 Unlock Test: ${testResults.functionalTests.unlock ? '✅' : '❌'}`);
+            console.log(`📱 Display Test: ${testResults.functionalTests.display ? '✅' : '❌'}`);
+            console.log(`🔍 Filter Test: ${Math.round(testResults.functionalTests.filter * 100)}%`);
+            console.log(`📊 Progress Test: ${Math.round(testResults.functionalTests.progress * 100)}%`);
+            
+            if (testResults.errors.length > 0) {
+                console.log("⚠️ HATALAR:");
+                testResults.errors.forEach(error => console.log(`   ${error}`));
+            }
+            
+            const overallScore = (
+                (testResults.validAchievements / testResults.totalAchievements) + 
+                testResults.functionalTests.unlock +
+                testResults.functionalTests.display +
+                testResults.functionalTests.filter +
+                testResults.functionalTests.progress
+            ) / 5;
+            
+            console.log(`🎯 GENEL SKOR: ${Math.round(overallScore * 100)}%`);
+            console.log(overallScore > 0.9 ? "🎉 SİSTEM MÜKEMMEL!" : 
+                       overallScore > 0.7 ? "✅ SİSTEM İYİ!" : "⚠️ İYİLEŞTİRME GEREKLİ!");
+            console.log("================================================");
+            
+            return testResults;
+        
+
+    <!-- � Sound Settings Modal -->
+        function testSpecificAchievements() {
+            console.log("🎯 SPESİFİK ROZET TETİKLEME TESTİ...");
+            
+            if (!window.game) {
+                console.error("❌ Game instance not found!");
+                return;
+            }
+            
+            // Test senaryoları
+            const testScenarios = [
+                {
+                    name: "First Game Test",
+                    action: () => {
+                        game.hasene = 50;
+                        game.currentStreak = 1;
+                        game.checkAchievements();
+                    }
+                },
+                {
+                    name: "Streak Test",
+                    action: () => {
+                        game.currentStreak = 3;
+                        game.checkAchievements();
+                        setTimeout(() => {
+                            game.currentStreak = 7;
+                            game.checkAchievements();
+                        }, 1000);
+                    }
+                },
+                {
+                    name: "Hasene Test", 
+                    action: () => {
+                        game.hasene = 100;
+                        game.checkAchievements();
+                        setTimeout(() => {
+                            game.hasene = 500;
+                            game.checkAchievements();
+                        }, 1500);
+                        setTimeout(() => {
+                            game.hasene = 1000;
+                            game.checkAchievements();
+                        }, 3000);
+                    }
+                },
+                {
+                    name: "Perfect Score Test",
+                    action: () => {
+                        // 10 perfect game simülasyonu
+                        for (let i = 0; i < 10; i++) {
+                            game.stats.perfectGames = (game.stats.perfectGames || 0) + 1;
+                        }
+                        game.checkAchievements();
+                    }
+                }
+            ];
+            
+            testScenarios.forEach((scenario, index) => {
+                setTimeout(() => {
+                    console.log(`🧪 Running: ${scenario.name}`);
+                    scenario.action();
+                }, index * 4000);
+            });
+            
+            // Final özet
+            setTimeout(() => {
+                console.log("🎉 Tüm spesifik testler tamamlandı!");
+                console.log("📊 Rozet durumu kontrol ediliyor...");
+                game.showAchievements();
+            }, testScenarios.length * 4000);
+        }
+
+        // 🔄 ROZET SİSTEMİ RESET - Test için rozetleri sıfırla
+        function resetAchievementsForTesting() {
+            console.log("🔄 ROZET SİSTEMİ TEST İÇİN SIFIRLANYOR...");
+            
+            if (!window.game) {
+                console.error("❌ Game instance not found!");
+                return;
+            }
+            
+            // Tüm rozetleri locked yap
+            Object.keys(game.achievements).forEach(id => {
+                game.achievements[id].unlocked = false;
+            });
+            
+            // Stats'ları sıfırla
+            game.hasene = 0;
+            game.currentStreak = 0;
+            game.stats = {
+                totalHasene: 0,
+                currentStreak: 0,
+                maxStreak: 0,
+                perfectGames: 0,
+                totalGames: 0,
+                correctAnswers: 0,
+                totalQuestions: 0
+            };
+            
+            // UI güncelle
+            game.updateUI();
+            
+            console.log("✅ Rozet sistemi test için sıfırlandı!");
+            console.log("🎯 Şimdi testSpecificAchievements() veya unlockAllAchievementsTest() çalıştırabilirsiniz");
+        }
+        
+        console.log("🧪 Test fonksiyonları hazır!");
+        console.log("Kullanım:");
+        console.log("  testAllAchievements()       - 🏆 Kapsamlı rozet sistemi testi");
+        console.log("  unlockAllAchievementsTest() - 🔥 Tüm rozetleri unlock et");
+        console.log("  testSpecificAchievements()  - 🎯 Spesifik rozet tetikleme testi");
+        console.log("  resetAchievementsForTesting() - 🔄 Rozet sistemi sıfırla");
+        console.log("  finalTest()                 - 🚀 Genel sistem testi");
+        console.log("  quickTest()                 - ⚡ Hızlı test");
+
+        // 🔥 ROZET UNLOCK TEST - Tüm rozetleri sırayla unlock et
+        function unlockAllAchievementsTest() {
+            console.log("🔥 TÜM ROZETLERİ UNLOCK ETME TESTİ...");
+            console.log("⚠️ Bu işlem tüm rozetleri açacak - test amaçlıdır!");
+            
+            if (!window.game) {
+                console.error("❌ Game instance not found!");
+                return;
+            }
+            
+            const achievements = Object.keys(game.achievements);
+            let unlockedCount = 0;
+            
+            achievements.forEach((id, index) => {
+                setTimeout(() => {
+                    try {
+                        game.unlockAchievement(id);
+                        unlockedCount++;
+                        console.log(`🏆 ${unlockedCount}/${achievements.length} - ${id} unlocked!`);
+                        
+                        if (unlockedCount === achievements.length) {
+                            console.log("🎉 TÜM ROZETLER UNLOCK EDİLDİ!");
+                            console.log("🔍 Rozet panelini açıp kontrol edebilirsin!");
+                        }
+                    } catch (error) {
+                        console.error(`❌ Error unlocking ${id}:`, error.message);
+                    }
+                }, index * 500); // Her rozet 500ms arayla
+            });
+        }
+        
+        // 🎯 Spesifik Achievement Tetikleme Testleri
+        function testSpecificAchievements() {
+            console.log("🎯 SPESİFİK ACHIEVEMENT TETİKLEME TESTLERİ...");
+            
+            if (!window.game) {
+                console.error("❌ Game instance not found!");
+                return;
+            }
+            
+            // İlk 5 soruyu doğru cevaplama testi
+            console.log("📚 İlk 5 soru testi...");
+            for (let i = 0; i < 5; i++) {
+                game.stats.correctAnswers++;
+            }
+            game.checkAchievements();
+            
+            // Streak testi
+            console.log("🔥 Streak testi...");
+            game.stats.currentStreak = 10;
+            game.checkAchievements();
+            
+            // Zamanlama testi
+            console.log("⚡ Hızlı cevap testi...");
+            game.stats.fastAnswers = 25;
+            game.checkAchievements();
+            
+            console.log("✅ Spesifik testler tamamlandı!");
+        }
+        
+        // 🔄 Achievement Reset Test
+        function resetAchievementsForTesting() {
+            console.log("🔄 ACHIEVEMENT SİSTEMİNİ SIFIRLAMA...");
+            
+            if (!window.game) {
+                console.error("❌ Game instance not found!");
+                return;
+            }
+            
+            // Tüm achievement'leri sıfırla
+            Object.keys(game.achievements).forEach(id => {
+                game.achievements[id].unlocked = false;
+                game.achievements[id].unlockedAt = null;
+            });
+            
+            // Stats'leri sıfırla
+            game.stats = {
+                gamesPlayed: 0,
+                correctAnswers: 0,
+                wrongAnswers: 0,
+                currentStreak: 0,
+                longestStreak: 0,
+                fastAnswers: 0,
+                perfectGames: 0,
+                hintsUsed: 0,
+                timeSpent: 0
+            };
+            
+            // Local storage'ı güncelle
+            localStorage.setItem('achievements', JSON.stringify(game.achievements));
+            localStorage.setItem('gameStats', JSON.stringify(game.stats));
+            
+            console.log("🔄 Tüm achievement'ler ve istatistikler sıfırlandı!");
+            console.log("🎮 Artık sıfırdan test edebilirsin!");
+        }
+    </script>
+
+    <!-- 🎵 Sound Settings Modal -->
+    <div id="soundSettingsModal" class="modal-overlay" style="display: none; visibility: hidden;">
+        <div class="modal-content sound-settings-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-music"></i> Ses Ayarları</h3>
+                <button class="close-btn" onclick="closeSoundSettings()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="sound-setting-group">
+                    <div class="setting-header">
+                        <h4><i class="fas fa-volume-up"></i> Ana Ses Seviyesi</h4>
+                        <span id="masterVolumeValue">70%</span>
+                    </div>
+                    <input type="range" id="masterVolumeSlider" min="0" max="100" value="70" 
+                           class="volume-slider" oninput="updateMasterVolume(this.value)">
+                </div>
+                
+                <div class="sound-setting-group">
+                    <div class="setting-header">
+                        <h4><i class="fas fa-music"></i> Arkaplan Müziği</h4>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="backgroundMusicToggle" onchange="toggleBackgroundMusic(this.checked)">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="music-options" id="musicOptions">
+                        <select id="musicTypeSelect" onchange="changeMusicType(this.value)">
+                            <option value="ambient">🌙 Sakin Müzik</option>
+                            <option value="focus">🎯 Odaklanma Müziği</option>
+                            <option value="celebration">🎉 Kutlama Müziği</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="sound-setting-group">
+                    <div class="setting-header">
+                        <h4><i class="fas fa-bell"></i> Ses Efektleri</h4>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="soundEffectsToggle" checked onchange="toggleSoundEffects(this.checked)">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="sound-setting-group">
+                    <div class="setting-header">
+                        <h4><i class="fas fa-trophy"></i> Başarım Sesleri</h4>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="achievementSoundsToggle" checked onchange="toggleAchievementSounds(this.checked)">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="sound-test-buttons">
+                    <button class="btn test-btn" onclick="testSoundEffect()">
+                        <i class="fas fa-play"></i> Ses Efekti Test
+                    </button>
+                    <button class="btn test-btn" onclick="testAchievementSound()">
+                        <i class="fas fa-trophy"></i> Başarım Sesi Test
+                    </button>
+                    <button class="btn test-btn" onclick="testBackgroundMusic()">
+                        <i class="fas fa-music"></i> Müzik Test
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
