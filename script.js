@@ -2356,6 +2356,16 @@ class ArabicLearningGame {
             button.className = 'option-btn';
             button.textContent = option;
             button.onclick = () => this.selectOption(button, index);
+            
+            // Add mobile touch events immediately
+            button.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('📱 Mobile touch on option', index);
+                this.selectOption(button, index);
+            }, { passive: false });
+            
+            console.log('✅ Button created with mobile support:', index);
             optionsContainer.appendChild(button);
         });
         
@@ -5273,6 +5283,7 @@ function resetGame() {
 }
 
 function selectOption(button, index) {
+    console.log('🎯 selectOption called with:', button, index);
     if (game) {
         game.selectOption(button, index);
     }
