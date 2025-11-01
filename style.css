@@ -6435,11 +6435,26 @@ input:checked + .toggle-slider:before {
     gap: 5px;
     font-size: 0.8rem;
     position: relative;
+    /* 📱 Mobile Touch Optimization */
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none;
 }
 
 .rarity-tab:hover {
     background: rgba(255, 255, 255, 0.1);
     color: white;
+}
+
+/* 📱 Mobile Touch States */
+.rarity-tab:active {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(0.98);
+}
+
+.rarity-tab:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .rarity-tab.active {
