@@ -17,8 +17,32 @@ const MobileDebugger = {
             console.error('🚨 CRITICAL ERROR:', e.message, 'at', e.filename + ':' + e.lineno);
         });
         
+        // Add mobile touch handlers for option buttons
+        document.addEventListener('DOMContentLoaded', () => {
+            this.addMobileTouchHandlers();
+        });
+        
         console.log('✅ Error monitoring active');
     },
+
+    addMobileTouchHandlers() {
+        // Handle option buttons specifically
+        const addTouchToButtons = (selector, handler) => {
+            const buttons = document.querySelectorAll(selector);
+            buttons.forEach((button, index) => {
+                button.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handler(button, index);
+                });
+            });
+        };
+
+        // Option buttons
+        addTouchToButtons('.option-btn', (button, index) => {
+            selectOption(button, index);
+        });
+    }
 
 };
 
