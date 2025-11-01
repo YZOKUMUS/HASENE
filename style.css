@@ -6228,12 +6228,41 @@ body.translation-mode .skip-btn:hover {
     }
 }
 
-/* Improved scrolling */
+/* 📱 Samsung M33 Enhanced Scrolling for All Areas */
 .achievements-list,
 .daily-missions-list,
-.modal-content {
+.modal-content,
+.stats-content,
+.calendar-modal-content,
+.hadis-content,
+.game-content,
+.leaderboard-list,
+.achievements-grid,
+.missions-grid,
+.achievements-container,
+.missions-content {
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
+    /* Samsung M33: Hide scrollbars but keep functionality */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.achievements-list::-webkit-scrollbar,
+.daily-missions-list::-webkit-scrollbar,
+.modal-content::-webkit-scrollbar,
+.stats-content::-webkit-scrollbar,
+.calendar-modal-content::-webkit-scrollbar,
+.hadis-content::-webkit-scrollbar,
+.game-content::-webkit-scrollbar,
+.leaderboard-list::-webkit-scrollbar,
+.achievements-grid::-webkit-scrollbar,
+.missions-grid::-webkit-scrollbar,
+.achievements-container::-webkit-scrollbar,
+.missions-content::-webkit-scrollbar {
+    display: none;
 }
 
 /* Share Button Styling */
