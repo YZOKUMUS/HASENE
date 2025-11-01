@@ -2631,12 +2631,25 @@ input:focus {
     transition: all 0.2s ease;
     font-weight: bold;
     text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    /* 📱 Samsung M33 Touch Optimization */
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none;
+    min-width: 44px;
+    min-height: 44px;
 }
 
 .close-modal-btn:hover {
     background: rgba(255,255,255,0.3);
     border-color: white;
     transform: scale(1.1);
+}
+
+/* 📱 Samsung M33 Close Button Touch Feedback */
+.close-modal-btn:active {
+    background: rgba(255,255,255,0.5);
+    transform: scale(0.95);
+    border-color: white;
 }
 
 .achievements-grid {
@@ -3065,12 +3078,24 @@ input:focus {
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
+    /* 📱 Samsung M33 Touch Optimization */
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none;
 }
 
 .calendar-nav:hover {
     border-color: var(--primary-blue);
     color: var(--primary-blue);
     transform: scale(1.1);
+}
+
+/* 📱 Samsung M33 Calendar Nav Touch Feedback */
+.calendar-nav:active {
+    background: var(--primary-blue);
+    color: white;
+    transform: scale(0.95);
+    border-color: var(--primary-blue);
 }
 
 #currentMonth {
@@ -4070,10 +4095,12 @@ input:focus {
         font-size: 1rem;
     }
     
+    /* 📱 Samsung M33 Calendar Navigation - Bigger Touch Area */
     .calendar-nav {
-        width: 32px;
-        height: 32px;
-        font-size: 1rem;
+        width: 44px;
+        height: 44px;
+        font-size: 1.2rem;
+        font-weight: bold;
     }
 }
 
