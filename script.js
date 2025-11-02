@@ -6249,10 +6249,10 @@ function showRandomHadis() {
     // Modalı aç
     document.getElementById('hadisModal').style.display = 'flex';
     
-    // Hasene ekle - Ana menüde de çalışması için direkt localStorage kullan
-    let currentHasene = parseInt(localStorage.getItem('haseneCount') || '0');
+    // Hasene ekle - Doğru key kullan: totalHasene
+    let currentHasene = parseInt(localStorage.getItem('totalHasene') || '0');
     currentHasene += 10;
-    localStorage.setItem('haseneCount', currentHasene.toString());
+    localStorage.setItem('totalHasene', currentHasene.toString());
     
     // Hasene display'ini güncelle
     const haseneElement = document.getElementById('haseneCount');
