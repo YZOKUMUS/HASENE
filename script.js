@@ -7110,11 +7110,27 @@ function initializeAllCloseButtonTouchEvents() {
 function initializeGameModeButtonTouchEvents() {
     const gameButtons = document.querySelectorAll('.game-mode-btn');
     gameButtons.forEach(button => {
+        let startY = 0;
+        let scrolling = false;
+        
         // Touch events for mobile
         button.addEventListener('touchstart', function(e) {
+            startY = e.touches[0].clientY;
+            scrolling = false;
+            
             // Visual feedback
             this.style.transform = 'scale(0.97)';
             this.style.filter = 'brightness(1.1)';
+        }, { passive: true });
+        
+        button.addEventListener('touchmove', function(e) {
+            const moveY = e.touches[0].clientY;
+            if (Math.abs(moveY - startY) > 10) {
+                scrolling = true;
+                // Reset visual feedback if scrolling
+                this.style.transform = 'scale(1)';
+                this.style.filter = 'brightness(1)';
+            }
         }, { passive: true });
         
         button.addEventListener('touchend', function() {
@@ -7123,11 +7139,6 @@ function initializeGameModeButtonTouchEvents() {
                 this.style.filter = 'brightness(1)';
             }, 150);
         });
-        
-        // Prevent double-tap zoom
-        button.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-        }, { passive: false });
     });
     
     
