@@ -170,7 +170,7 @@
                     <i class="fas fa-chart-bar" aria-hidden="true"></i>
                     <span>İstatistikler</span>
                 </button>
-                <button id="soundSettingsBtn" class="action-btn sound-settings" onclick="showSoundSettings()"
+                <button id="soundSettingsBtn" class="action-btn sound-settings" onclick="showSoundSettings()" ontouchstart="this.click()"
                         aria-label="Ses ayarları" title="Müzik ve ses efektleri ayarları" style="display: none;">
                     <i class="fas fa-music" aria-hidden="true"></i>
                     <span>Ses Ayarları</span>
@@ -180,11 +180,11 @@
                     <span>Takvim</span>
                 </button>
                 
-                <button id="musicButton" class="action-btn sound-control" onclick="playMusic()">
+                <button id="musicButton" class="action-btn sound-control" onclick="playMusic()" ontouchstart="this.click()">
                     <i class="fas fa-music"></i> İlahi
                 </button>
                 
-                <button class="action-btn hadis-control" onclick="showRandomHadis()" 
+                <button class="action-btn hadis-control" onclick="showRandomHadis()" ontouchstart="this.click()" 
                         aria-label="Kutub-i Sitte'den hadis oku" title="5972 hadis arasından rastgele bir hadis oku ve 10 hasene kazan">
                     <i class="fas fa-book-open" aria-hidden="true"></i> Kutub-i Sitte
                 </button>
@@ -213,19 +213,19 @@
             <div class="difficulty-section">
                 <h3>🎯 Zorluk Seviyesi Seç</h3>
                 <div class="difficulty-buttons">
-                                        <button class="difficulty-btn easy" id="easyBtn" onclick="setDifficulty('easy')" 
+                                        <button class="difficulty-btn easy" id="easyBtn" onclick="setDifficulty('easy')" ontouchstart="this.click()"
                             role="radio" aria-checked="false" aria-label="Kolay seviye" 
                             title="Temel seviye - Basit kelimeler">
                         <i class="fas fa-seedling" aria-hidden="true"></i>
                         <span>Kolay</span>
                     </button>
-                                        <button class="difficulty-btn medium active" id="mediumBtn" onclick="setDifficulty('medium')" 
+                                        <button class="difficulty-btn medium active" id="mediumBtn" onclick="setDifficulty('medium')" ontouchstart="this.click()"
                             role="radio" aria-checked="true" aria-label="Orta seviye" 
                             title="Orta seviye - Dengeli zorluk">
                         <i class="fas fa-balance-scale" aria-hidden="true"></i>
                         <span>Orta</span>
                     </button>
-                                        <button class="difficulty-btn hard" id="hardBtn" onclick="setDifficulty('hard')" 
+                                        <button class="difficulty-btn hard" id="hardBtn" onclick="setDifficulty('hard')" ontouchstart="this.click()"
                             role="radio" aria-checked="false" aria-label="Zor seviye" 
                             title="İleri seviye - Karmaşık kelimeler">
                         <i class="fas fa-fire" aria-hidden="true"></i>
@@ -270,7 +270,7 @@
 
             <!-- Reset Button -->
             <div class="reset-section" style="margin-top: 30px; text-align: center;">
-                <button class="reset-btn" onclick="resetGame()" 
+                <button class="reset-btn" onclick="resetGame()" ontouchstart="this.click()"
                         aria-label="Oyunu sıfırla" title="DİKKAT: Tüm ilerleme silinecek!" 
                         style="background: linear-gradient(135deg, #ff4444, #cc0000); color: white; border: none; padding: 12px 24px; border-radius: 10px; font-size: 16px; cursor: pointer; box-shadow: 0 4px 12px rgba(255, 68, 68, 0.3); transition: all 0.3s ease;">
                     <i class="fas fa-refresh" aria-hidden="true"></i>
@@ -309,7 +309,7 @@
                     <span id="questionTimer">10</span>s
                 </div>
             </div>
-            <button class="close-btn" onclick="returnToMenu()">
+            <button class="close-btn" onclick="returnToMenu()" ontouchstart="this.click()">
                 <i class="fas fa-times"></i>
             </button>
         </div>
