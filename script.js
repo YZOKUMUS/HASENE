@@ -7096,27 +7096,31 @@ function initializeAllModalTouchEvents() {
 function initializeAllCloseButtonTouchEvents() {
     const closeButtons = document.querySelectorAll('.close-modal-btn');
     closeButtons.forEach(button => {
+        let touchStartTime = 0;
+        
         // Touch events for mobile
         button.addEventListener('touchstart', function(e) {
+            touchStartTime = Date.now();
+            
             // Visual feedback
             this.style.transform = 'scale(0.95)';
             this.style.background = 'rgba(255,255,255,0.5)';
         }, { passive: true });
         
-        button.addEventListener('touchend', function() {
+        button.addEventListener('touchend', function(e) {
+            const touchDuration = Date.now() - touchStartTime;
+            
+            // If it was a quick tap (not a long press), trigger click
+            if (touchDuration < 300) {
+                this.click();
+            }
+            
             setTimeout(() => {
                 this.style.transform = 'scale(1)';
                 this.style.background = 'rgba(255,255,255,0.1)';
             }, 150);
         });
-        
-        // Prevent double-tap zoom
-        button.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-        }, { passive: false });
     });
-    
-    
 }
 
 // 🎮 Samsung M33 Game Mode Button Touch Events - ALL GAME BUTTONS

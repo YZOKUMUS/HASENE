@@ -1985,6 +1985,8 @@ body {
     max-width: 400px;
     width: 90%;
     max-height: 90vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     /* Scroll rules moved to global section at end */
     animation: scaleIn 0.3s ease;
 }
@@ -2853,6 +2855,8 @@ input:focus {
     /* 📱 Mobile touch scroll */
     scrollbar-width: none;
     -ms-overflow-style: none;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     /* Scroll rules in global section */
 }
 
@@ -6020,6 +6024,8 @@ body.translation-mode .skip-btn:hover {
 .missions-content {
     padding: 20px 0;
     max-height: 70vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     /* Scroll rules in global section */
 }
 
@@ -7000,6 +7006,8 @@ input:checked + .toggle-slider:before {
     padding: 30px;
     max-height: 60vh;
     position: relative;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     /* Scroll rules in global section */
 }
 
