@@ -464,7 +464,7 @@ async function showDuaTask() {
         if (!haseneGiven) {
             let listenedDuaCount = parseInt(localStorage.getItem('listenedDuaCount')) || 0;
             listenedDuaCount++;
-            localStorage.setItem('listenedDuaCount', listenedDuaHasene);
+            localStorage.setItem('listenedDuaCount', listenedDuaCount.toString());
             
             // Dua dinleme sayısını artır (istatistik için)
             let duaListens = parseInt(localStorage.getItem('duaListens')) || 0;
