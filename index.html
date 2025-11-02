@@ -153,38 +153,38 @@
             </div>
 
             <div class="quick-actions">
-                <button id="dailyMissionsBtn" class="action-btn missions" onclick="showDailyMissions()" ontouchstart="this.click()"
+                <button id="dailyMissionsBtn" class="action-btn missions" onclick="showDailyMissions()"
                         aria-label="Günlük görevleri görüntüle" title="Bugünün özel görevleri ve ödülleri">
                     <i class="fas fa-tasks" aria-hidden="true"></i>
                     <span>Günlük Görevler</span>
                     <span id="missionsBadgeCount" class="badge-counter" style="display: none;">0</span>
                 </button>
-                <button id="achievementsBtn" class="action-btn achievements" onclick="showAchievements()" ontouchstart="this.click()"
+                <button id="achievementsBtn" class="action-btn achievements" onclick="showAchievements()"
                         aria-label="Başarıları görüntüle" title="Başarıları ve rozetleri görüntüle">
                     <i class="fas fa-trophy" aria-hidden="true"></i>
                     <span>Başarılar</span>
                     <span id="unlockedBadgeCount" class="badge-counter" style="display: none;">0</span>
                 </button>
-                <button id="statsBtn" class="action-btn stats" onclick="showStats()" ontouchstart="this.click()"
+                <button id="statsBtn" class="action-btn stats" onclick="showStats()"
                         aria-label="İstatistikleri görüntüle" title="Öğrenme istatistiklerin ve ilerlemen">
                     <i class="fas fa-chart-bar" aria-hidden="true"></i>
                     <span>İstatistikler</span>
                 </button>
-                <button id="soundSettingsBtn" class="action-btn sound-settings" onclick="showSoundSettings()" ontouchstart="this.click()"
+                <button id="soundSettingsBtn" class="action-btn sound-settings" onclick="showSoundSettings()"
                         aria-label="Ses ayarları" title="Müzik ve ses efektleri ayarları" style="display: none;">
                     <i class="fas fa-music" aria-hidden="true"></i>
                     <span>Ses Ayarları</span>
                 </button>
-                <button class="action-btn calendar" onclick="toggleCalendar()" ontouchstart="this.click()" tabindex="0">
+                <button class="action-btn calendar" onclick="toggleCalendar()" tabindex="0">
                     <i class="fas fa-calendar-alt"></i>
                     <span>Takvim</span>
                 </button>
                 
-                <button id="musicButton" class="action-btn sound-control" onclick="playMusic()" ontouchstart="this.click()">
+                <button id="musicButton" class="action-btn sound-control" onclick="playMusic()">
                     <i class="fas fa-music"></i> İlahi
                 </button>
                 
-                <button class="action-btn hadis-control" onclick="showRandomHadis()" ontouchstart="this.click()" 
+                <button class="action-btn hadis-control" onclick="showRandomHadis()" 
                         aria-label="Kutub-i Sitte'den hadis oku" title="5972 hadis arasından rastgele bir hadis oku ve 10 hasene kazan">
                     <i class="fas fa-book-open" aria-hidden="true"></i> Kutub-i Sitte
                 </button>
@@ -251,19 +251,19 @@
             <div class="difficulty-section">
                 <h3>🎯 Zorluk Seviyesi Seç</h3>
                 <div class="difficulty-buttons">
-                                        <button class="difficulty-btn easy" id="easyBtn" onclick="setDifficulty('easy')" ontouchstart="this.click()"
+                                        <button class="difficulty-btn easy" id="easyBtn" onclick="setDifficulty('easy')"
                             role="radio" aria-checked="false" aria-label="Kolay seviye" 
                             title="Temel seviye - Basit kelimeler">
                         <i class="fas fa-seedling" aria-hidden="true"></i>
                         <span>Kolay</span>
                     </button>
-                                        <button class="difficulty-btn medium active" id="mediumBtn" onclick="setDifficulty('medium')" ontouchstart="this.click()"
+                                        <button class="difficulty-btn medium active" id="mediumBtn" onclick="setDifficulty('medium')"
                             role="radio" aria-checked="true" aria-label="Orta seviye" 
                             title="Orta seviye - Dengeli zorluk">
                         <i class="fas fa-balance-scale" aria-hidden="true"></i>
                         <span>Orta</span>
                     </button>
-                                        <button class="difficulty-btn hard" id="hardBtn" onclick="setDifficulty('hard')" ontouchstart="this.click()"
+                                        <button class="difficulty-btn hard" id="hardBtn" onclick="setDifficulty('hard')"
                             role="radio" aria-checked="false" aria-label="Zor seviye" 
                             title="İleri seviye - Karmaşık kelimeler">
                         <i class="fas fa-fire" aria-hidden="true"></i>
@@ -273,33 +273,33 @@
             </div>
 
             <div class="game-modes">
-                <button class="game-mode-btn primary" onclick="startGame('translation')" ontouchstart="this.click()" tabindex="0"
+                <button class="game-mode-btn primary" onclick="startGame('translation')" tabindex="0"
                         aria-label="Çeviri oyunu başlat" title="Arapça kelimeleri Türkçeye çevirerek öğren">
                     <i class="fas fa-language" aria-hidden="true"></i>
                     <h3>Çeviri Oyunu</h3>
                     <p>Arapça kelimeleri Türkçe'ye çevir</p>
                 </button>
-                <button class="game-mode-btn secondary" onclick="startGame('listening')" ontouchstart="this.click()" tabindex="0">
+                <button class="game-mode-btn secondary" onclick="startGame('listening')" tabindex="0">
                     <i class="fas fa-headphones"></i>
                     <h3>Dinleme Oyunu</h3>
                     <p>Sesi dinle ve anlamını bul</p>
                 </button>
-                <button class="game-mode-btn challenge" onclick="startGame('speed')" ontouchstart="this.click()" tabindex="0" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">
+                <button class="game-mode-btn challenge" onclick="startGame('speed')" tabindex="0" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">
                     <i class="fas fa-bolt"></i>
                     <h3>Hız Modu ⚡</h3>
                     <p>10 saniyede cevapla! Hızlı puan kazan!</p>
                 </button>
-                <button class="game-mode-btn fillblank" onclick="startGame('fillblank')" ontouchstart="this.click()" tabindex="0" style="background: linear-gradient(135deg, #9c27b0, #673ab7);">
+                <button class="game-mode-btn fillblank" onclick="startGame('fillblank')" tabindex="0" style="background: linear-gradient(135deg, #9c27b0, #673ab7);">
                     <i class="fas fa-puzzle-piece"></i>
                     <h3>Boşluk Doldur 📝</h3>
                     <p>Ayet'teki eksik kelimeleri bul!</p>
                 </button>
-                <button class="game-mode-btn ayet" onclick="showAyetTask()" ontouchstart="this.click()" tabindex="0" style="background: linear-gradient(135deg, #3f51b5, #2196f3); color: #fff; text-shadow: 0 2px 8px #0008;">
+                <button class="game-mode-btn ayet" onclick="showAyetTask()" tabindex="0" style="background: linear-gradient(135deg, #3f51b5, #2196f3); color: #fff; text-shadow: 0 2px 8px #0008;">
                     <i class="fas fa-book-open"></i>
                     <h3 style="color:#fff;text-shadow:0 2px 8px #0008;">Ayet Dinle &amp; Oku</h3>
                     <p style="color:#fff;text-shadow:0 2px 8px #0008;">Her gün bir ayet dinle ve oku!</p>
                 </button>
-                <button class="game-mode-btn dua" onclick="showDuaTask()" ontouchstart="this.click()" tabindex="0" style="background: linear-gradient(135deg, #009688, #26a69a); color: #fff; text-shadow: 0 2px 8px #0008;">
+                <button class="game-mode-btn dua" onclick="showDuaTask()" tabindex="0" style="background: linear-gradient(135deg, #009688, #26a69a); color: #fff; text-shadow: 0 2px 8px #0008;">
                     <i class="fas fa-pray"></i>
                     <h3 style="color:#fff;text-shadow:0 2px 8px #0008;">Dua Dinleme Görevi</h3>
                     <p style="color:#fff;text-shadow:0 2px 8px #0008;">Gün içinde dinlediğin dua kadar hasene kazan!</p>
@@ -308,7 +308,7 @@
 
             <!-- Reset Button -->
             <div class="reset-section" style="margin-top: 30px; text-align: center;">
-                <button class="reset-btn" onclick="resetGame()" ontouchstart="this.click()"
+                <button class="reset-btn" onclick="resetGame()"
                         aria-label="Oyunu sıfırla" title="DİKKAT: Tüm ilerleme silinecek!" 
                         style="background: linear-gradient(135deg, #ff4444, #cc0000); color: white; border: none; padding: 12px 24px; border-radius: 10px; font-size: 16px; cursor: pointer; box-shadow: 0 4px 12px rgba(255, 68, 68, 0.3); transition: all 0.3s ease;">
                     <i class="fas fa-refresh" aria-hidden="true"></i>
@@ -354,7 +354,7 @@
                     <span id="questionTimer">10</span>s
                 </div>
             </div>
-            <button class="close-btn" onclick="returnToMenu()" ontouchstart="this.click()">
+            <button class="close-btn" onclick="returnToMenu()">
                 <i class="fas fa-times"></i>
             </button>
         </div>
@@ -364,7 +364,7 @@
                 <div class="question-type" id="questionType">Arapça kelimeyi çevir</div>
                 <div class="question-text" id="questionText">خَتَمَ</div>
                 <div class="word-id" id="wordId">ID: 2:7:1</div>
-                <button class="audio-btn" id="audioBtn" onclick="playAudio()" ontouchend="playAudio()" ontouchstart="">
+                <button class="audio-btn" id="audioBtn" onclick="playAudio()">
                     <i class="fas fa-volume-up"></i>
                 </button>
             </div>
@@ -381,14 +381,14 @@
                 <!-- Text Input Mode -->
                 <div class="input-container" id="inputContainer" style="display: none;">
                     <input type="text" id="answerInput" placeholder="Arapça kelimeyi yazın..." onkeypress="checkEnter(event)" readonly>
-                    <button class="check-btn" onclick="checkAnswer()" ontouchend="checkAnswer()" ontouchstart="">Kontrol Et</button>
+                    <button class="check-btn" onclick="checkAnswer()">Kontrol Et</button>
                     
 
                 </div>
             </div>
 
             <div class="action-buttons">
-                <button class="skip-btn" onclick="skipQuestion()" ontouchend="skipQuestion()" ontouchstart="">Geç</button>
+                <button class="skip-btn" onclick="skipQuestion()">Geç</button>
             </div>
         </div>
 
@@ -553,34 +553,34 @@
                         </div>
                     </div>
                 </div>
-                <button class="close-modal-btn" onclick="closeAchievementsModal()" ontouchstart="this.click()" tabindex="0">
+                <button class="close-modal-btn" onclick="closeAchievementsModal()" tabindex="0">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             
             <!-- Rarity Filter Tabs -->
             <div class="rarity-tabs">
-                <button class="rarity-tab active" onclick="filterByRarity('all')" ontouchstart="this.click()" data-rarity="all" tabindex="0">
+                <button class="rarity-tab active" onclick="filterByRarity('all')" data-rarity="all" tabindex="0">
                     <i class="fas fa-medal"></i>
                     <span>Tümü</span>
                     <span class="tab-count" id="allCount">0</span>
                 </button>
-                <button class="rarity-tab bronze" onclick="filterByRarity('bronze')" ontouchstart="this.click()" data-rarity="bronze" tabindex="0">
+                <button class="rarity-tab bronze" onclick="filterByRarity('bronze')" data-rarity="bronze" tabindex="0">
                     <i class="fas fa-medal"></i>
                     <span>Bronz</span>
                     <span class="tab-count" id="bronzeCount">0</span>
                 </button>
-                <button class="rarity-tab silver" onclick="filterByRarity('silver')" ontouchstart="this.click()" data-rarity="silver" tabindex="0">
+                <button class="rarity-tab silver" onclick="filterByRarity('silver')" data-rarity="silver" tabindex="0">
                     <i class="fas fa-medal"></i>
                     <span>Gümüş</span>
                     <span class="tab-count" id="silverCount">0</span>
                 </button>
-                <button class="rarity-tab gold" onclick="filterByRarity('gold')" ontouchstart="this.click()" data-rarity="gold" tabindex="0">
+                <button class="rarity-tab gold" onclick="filterByRarity('gold')" data-rarity="gold" tabindex="0">
                     <i class="fas fa-medal"></i>
                     <span>Altın</span>
                     <span class="tab-count" id="goldCount">0</span>
                 </button>
-                <button class="rarity-tab diamond" onclick="filterByRarity('diamond')" ontouchstart="this.click()" data-rarity="diamond" tabindex="0">
+                <button class="rarity-tab diamond" onclick="filterByRarity('diamond')" data-rarity="diamond" tabindex="0">
                     <i class="fas fa-gem"></i>
                     <span>Elmas</span>
                     <span class="tab-count" id="diamondCount">0</span>
@@ -650,7 +650,7 @@
         <div class="modal-content missions-modal">
             <div class="modal-header">
                 <h2><i class="fas fa-tasks"></i> Günlük Görevler</h2>
-                <button class="close-modal-btn" onclick="closeDailyMissionsModal()" ontouchstart="this.click()" tabindex="0">
+                <button class="close-modal-btn" onclick="closeDailyMissionsModal()" tabindex="0">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -681,15 +681,15 @@
         <div class="modal-content calendar-modal">
             <div class="modal-header">
                 <h2><i class="fas fa-calendar-alt"></i> Streak Takviminiz</h2>
-                <button class="close-modal-btn" onclick="closeCalendarModal()" ontouchstart="this.click()" tabindex="0">
+                <button class="close-modal-btn" onclick="closeCalendarModal()" tabindex="0">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div class="calendar-modal-content">
                 <div class="calendar-header">
-                    <button class="calendar-nav" onclick="changeMonth(-1)" ontouchstart="this.click()" tabindex="0">‹</button>
+                    <button class="calendar-nav" onclick="changeMonth(-1)" tabindex="0">‹</button>
                     <h4 id="currentMonth">Ekim 2025</h4>
-                    <button class="calendar-nav" onclick="changeMonth(1)" ontouchstart="this.click()" tabindex="0">›</button>
+                    <button class="calendar-nav" onclick="changeMonth(1)" tabindex="0">›</button>
                 </div>
                 <div class="calendar-grid" id="calendarGrid">
                     <!-- Takvim günleri buraya JavaScript ile eklenecek -->
@@ -777,7 +777,7 @@
         <div class="modal-content hadis-modal">
             <div class="modal-header">
                 <h2><i class="fas fa-book-open"></i> Günün Hadisi</h2>
-                <button class="close-modal-btn" onclick="closeHadisModal()" ontouchstart="this.click()" tabindex="0">
+                <button class="close-modal-btn" onclick="closeHadisModal()" tabindex="0">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -792,7 +792,7 @@
         <div class="modal-content stats-modal">
             <div class="modal-header">
                 <h2><i class="fas fa-chart-bar"></i> Detaylı İstatistikler</h2>
-                <button class="close-modal-btn" onclick="closeStatsModal()" ontouchstart="this.click()" tabindex="0">
+                <button class="close-modal-btn" onclick="closeStatsModal()" tabindex="0">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -937,7 +937,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2>🛡️ Streak Koruma Mağazası</h2>
-                <button class="close-modal-btn" onclick="closeStreakShop()" ontouchstart="this.click()" tabindex="0">
+                <button class="close-modal-btn" onclick="closeStreakShop()" tabindex="0">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -950,7 +950,7 @@
                     <p>1 gün koruma sağlar. Bir gün oynayamazsan streak'in kırılmaz.</p>
                     <div class="item-price">💰 100 Hasene</div>
                     <div class="item-owned">Sahip olduğun: <span id="ownedStreakFreezes">0</span></div>
-                    <button class="shop-buy-btn" onclick="buyItem('streakFreeze')" ontouchstart="this.click()">Satın Al</button>
+                    <button class="shop-buy-btn" onclick="buyItem('streakFreeze')">Satın Al</button>
                 </div>
                 
                 <div class="shop-item">
@@ -959,7 +959,7 @@
                     <p>2 gün koruma sağlar. Hafta sonu için mükemmel!</p>
                     <div class="item-price">💰 180 Hasene</div>
                     <div class="item-owned">Sahip olduğun: <span id="ownedWeekendPasses">0</span></div>
-                    <button class="shop-buy-btn" onclick="buyItem('weekendPass')" ontouchstart="this.click()">Satın Al</button>
+                    <button class="shop-buy-btn" onclick="buyItem('weekendPass')">Satın Al</button>
                 </div>
             </div>
             
