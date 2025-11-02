@@ -1755,7 +1755,10 @@ class ArabicLearningGame {
         } else {
             const daysMissed = this.calculateDaysMissed(lastPlayDate, today);
             
-            if (daysMissed === 1) {
+            if (daysMissed === 0) {
+                // Aynı gün - streak değişmeden devam et (zaten oynanmış)
+                // Hiçbir şey yapma
+            } else if (daysMissed === 1) {
                 // Ardışık gün - streak artır
                 const oldStreak = this.streak;
                 this.streak++;
