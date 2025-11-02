@@ -1,6 +1,6 @@
 // 🏷️ Version Management System
 const APP_VERSION = {
-    version: "2.0.6",
+    version: "2.0.9",
     buildDate: new Date().toISOString().split('T')[0],
     buildTime: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }),
     buildNumber: (() => {
