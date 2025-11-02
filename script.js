@@ -95,6 +95,19 @@ function updateVersionInfo() {
     }
 }
 
+// 🕐 Build timestamp'i güncelle (gerçek zamanlı)
+function updateBuildTimestamp() {
+    const timestampElement = document.getElementById('buildTimestamp');
+    if (timestampElement) {
+        const now = new Date();
+        const day = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        timestampElement.textContent = `Build: ${day}${month}.${hours}${minutes}`;
+    }
+}
+
 // Sound Manager Class
 class SoundManager {
     constructor() {
@@ -5195,6 +5208,8 @@ let game = null;
 // Initialize game when page loads
 document.addEventListener('DOMContentLoaded', () => {
     
+    // 🕐 Build timestamp'i güncelle
+    updateBuildTimestamp();
     
     // 🏷️ Update version info in UI
     updateVersionInfo();
