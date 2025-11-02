@@ -5935,9 +5935,9 @@ body.translation-mode .skip-btn:hover {
 /* Achievement Grid Layout */
 .achievements-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 10px;
-    padding: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); /* Reduced from 140px */
+    gap: 8px; /* Reduced from 10px */
+    padding: 10px; /* Reduced from 15px */
     /* Show all achievements - modal handles scroll */
 }
 
@@ -6944,14 +6944,14 @@ input:checked + .toggle-slider:before {
     background: none;
     border: none;
     color: rgba(255, 255, 255, 0.7);
-    padding: 15px 10px;
+    padding: 10px 8px; /* Reduced from 15px 10px */
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
-    font-size: 0.8rem;
+    gap: 4px; /* Reduced from 5px */
+    font-size: 0.75rem; /* Reduced from 0.8rem */
     position: relative;
     /* 📱 Mobile Touch Optimization */
     -webkit-tap-highlight-color: transparent;
@@ -7007,7 +7007,7 @@ input:checked + .toggle-slider:before {
 /* Achievements Container */
 .achievements-container {
     background: white;
-    padding: 30px;
+    padding: 15px; /* Reduced from 30px */
     position: relative;
 }
 
@@ -7020,11 +7020,11 @@ input:checked + .toggle-slider:before {
 /* Individual Achievement Card */
 .achievement-item {
     background: white;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border-radius: 12px; /* Reduced from 15px */
+    padding: 12px; /* Reduced from 20px */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Reduced shadow */
     transition: all 0.3s ease;
-    border: 3px solid transparent;
+    border: 2px solid transparent; /* Reduced from 3px */
     position: relative;
     overflow: hidden;
 }
@@ -7035,7 +7035,7 @@ input:checked + .toggle-slider:before {
     top: 0;
     left: 0;
     right: 0;
-    height: 4px;
+    height: 3px; /* Reduced from 4px */
     background: #e0e0e0;
     transition: all 0.3s ease;
 }
@@ -7047,7 +7047,7 @@ input:checked + .toggle-slider:before {
 .achievement-item.diamond::before { background: linear-gradient(45deg, #b9f2ff, #e0f6ff); }
 
 .achievement-item:hover {
-    transform: translateY(-5px);
+    transform: translateY(-3px); /* Reduced from -5px */
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
 }
 
@@ -7063,19 +7063,19 @@ input:checked + .toggle-slider:before {
 .achievement-header {
     display: flex;
     align-items: center;
-    gap: 15px;
-    margin-bottom: 15px;
+    gap: 10px; /* Reduced from 15px */
+    margin-bottom: 10px; /* Reduced from 15px */
 }
 
 .achievement-icon {
-    width: 50px;
-    height: 50px;
+    width: 40px; /* Reduced from 50px */
+    height: 40px; /* Reduced from 50px */
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 12px;
+    border-radius: 10px; /* Reduced from 12px */
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 1.2rem; /* Reduced from 1.5rem */
     color: white;
     flex-shrink: 0;
 }
@@ -7090,24 +7090,24 @@ input:checked + .toggle-slider:before {
 }
 
 .achievement-title {
-    font-size: 1.1rem;
+    font-size: 0.95rem; /* Reduced from 1.1rem */
     font-weight: 700;
     color: #333;
-    margin: 0 0 5px 0;
+    margin: 0 0 4px 0; /* Reduced from 5px */
 }
 
 .achievement-description {
-    font-size: 0.9rem;
+    font-size: 0.8rem; /* Reduced from 0.9rem */
     color: #666;
-    line-height: 1.4;
-    margin: 0 0 10px 0;
+    line-height: 1.3; /* Reduced from 1.4 */
+    margin: 0 0 8px 0; /* Reduced from 10px */
 }
 
 .achievement-rarity {
     display: inline-block;
-    padding: 3px 8px;
-    border-radius: 12px;
-    font-size: 0.7rem;
+    padding: 2px 6px; /* Reduced from 3px 8px */
+    border-radius: 10px; /* Reduced from 12px */
+    font-size: 0.65rem; /* Reduced from 0.7rem */
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -7121,17 +7121,17 @@ input:checked + .toggle-slider:before {
 /* Progress Summary */
 .achievements-progress {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    padding: 25px 30px;
+    padding: 15px 20px; /* Reduced from 25px 30px */
     border-top: 1px solid #dee2e6;
 }
 
 .progress-header h3 {
     color: #495057;
-    margin: 0 0 20px 0;
-    font-size: 1.1rem;
+    margin: 0 0 12px 0; /* Reduced from 20px */
+    font-size: 1rem; /* Reduced from 1.1rem */
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px; /* Reduced from 8px */
 }
 
 .progress-bars {
