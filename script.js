@@ -420,8 +420,17 @@ async function showAyetTask() {
     if (ayetAudio) {
         ayetAudio.addEventListener('ended', giveAyetHasene);
     }
-    // Modal kapatılırken de hasene ver (dinlenmişse)
-    modal.querySelector('button[onclick]')?.addEventListener('click', giveAyetHasene);
+    
+    // Modal kapandığında hasene ver (ses bitmediyse bile)
+    const closeButtons = modal.querySelectorAll('button');
+    closeButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Audio'nun en az yarısı dinlendiyse hasene ver
+            if (ayetAudio && !ayetAudio.paused && ayetAudio.currentTime > ayetAudio.duration * 0.5) {
+                giveAyetHasene();
+            }
+        });
+    });
 }
 
 // Dua dinleme görevini tetikleyen fonksiyon
@@ -493,8 +502,17 @@ async function showDuaTask() {
     if (duaAudio) {
         duaAudio.addEventListener('ended', giveDuaHasene);
     }
-    // Modal kapatılırken de hasene ver (dinlenmişse)
-    modal.querySelector('button[onclick]')?.addEventListener('click', giveDuaHasene);
+    
+    // Modal kapandığında hasene ver (ses bitmediyse bile)
+    const closeButtons = modal.querySelectorAll('button');
+    closeButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Audio'nun en az yarısı dinlendiyse hasene ver
+            if (duaAudio && !duaAudio.paused && duaAudio.currentTime > duaAudio.duration * 0.5) {
+                giveDuaHasene();
+            }
+        });
+    });
 }
 
 // Duolingo-style Game Logic - Updated
