@@ -2894,6 +2894,9 @@ input:focus {
 .stats-content {
     padding: 15px; /* Reduced from 25px */
     position: relative;
+    max-height: 500px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .stats-content::-webkit-scrollbar {
@@ -6042,6 +6045,9 @@ body.translation-mode .skip-btn:hover {
 
 .missions-content {
     padding: 10px 0; /* Reduced from 20px */
+    max-height: 500px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .missions-content::-webkit-scrollbar {
@@ -7009,6 +7015,9 @@ input:checked + .toggle-slider:before {
     background: white;
     padding: 15px; /* Reduced from 30px */
     position: relative;
+    max-height: 500px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .achievements-container::-webkit-scrollbar {

@@ -1,6 +1,6 @@
 // HASENE Service Worker for offline functionality
 
-const CACHE_NAME = 'hasene-v2.3-compact-panels';
+const CACHE_NAME = 'hasene-v2.0.8-scroll-fix';
 const urlsToCache = [
   './',
   './index.html',
