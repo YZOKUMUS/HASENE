@@ -1014,6 +1014,62 @@
     </audio>
 
 
+    <!-- 📱 Smart Touch Handler - Prevent accidental clicks -->
+    <script>
+        // Global touch handler to prevent phantom touches
+        (function() {
+            let touchStartX = 0;
+            let touchStartY = 0;
+            let touchStartTime = 0;
+            const MOVE_THRESHOLD = 10; // 10px movement = scroll intent
+            const TIME_THRESHOLD = 100; // 100ms minimum touch time
+            
+            // Add smart touch handling to all interactive elements
+            document.addEventListener('DOMContentLoaded', function() {
+                // Find all elements with ontouchstart
+                const touchElements = document.querySelectorAll('[ontouchstart]');
+                
+                touchElements.forEach(element => {
+                    // Remove the immediate click trigger
+                    element.removeAttribute('ontouchstart');
+                    
+                    // Add smart touch handlers
+                    element.addEventListener('touchstart', function(e) {
+                        touchStartX = e.touches[0].clientX;
+                        touchStartY = e.touches[0].clientY;
+                        touchStartTime = Date.now();
+                    }, { passive: true });
+                    
+                    element.addEventListener('touchend', function(e) {
+                        const touchEndTime = Date.now();
+                        const touchDuration = touchEndTime - touchStartTime;
+                        
+                        // If touch was too quick (< 100ms), it might be accidental
+                        if (touchDuration < TIME_THRESHOLD) {
+                            return;
+                        }
+                        
+                        // Get touch end position
+                        const touchEndX = e.changedTouches[0].clientX;
+                        const touchEndY = e.changedTouches[0].clientY;
+                        
+                        // Calculate movement
+                        const moveX = Math.abs(touchEndX - touchStartX);
+                        const moveY = Math.abs(touchEndY - touchStartY);
+                        
+                        // If user moved more than threshold, it's a scroll, not a click
+                        if (moveX > MOVE_THRESHOLD || moveY > MOVE_THRESHOLD) {
+                            return;
+                        }
+                        
+                        // Valid tap - trigger click
+                        e.preventDefault();
+                        this.click();
+                    }, { passive: false });
+                });
+            });
+        })();
+    </script>
 
     <script src="sounds/audio-generator.js?v=2.0.3"></script>
     <script src="script.js?v=2.0.3"></script>
