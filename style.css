@@ -2364,6 +2364,9 @@ body {
         max-height: 90vh;
         overflow-y: auto;
         border-radius: 12px 12px 0 0;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
+        overscroll-behavior: contain;
     }
     
     .modal-header {
@@ -2789,6 +2792,16 @@ input:focus {
     padding: 25px;
     max-height: 500px;
     overflow-y: auto;
+    /* 📱 Mobile touch scroll */
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.calendar-modal-content::-webkit-scrollbar {
+    display: none;
 }
 
 .calendar-modal .calendar-header {
@@ -2805,6 +2818,16 @@ input:focus {
     padding: 25px;
     max-height: 500px;
     overflow-y: auto;
+    /* 📱 Mobile touch scroll */
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.stats-content::-webkit-scrollbar {
+    display: none;
 }
 
 .stats-summary {
@@ -3956,11 +3979,19 @@ input:focus {
     .calendar-modal-content {
         padding: 15px;
         max-height: calc(100vh - 80px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
+        overscroll-behavior: contain;
     }
 
     .stats-content {
         padding: 15px;
         max-height: calc(100vh - 80px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
+        overscroll-behavior: contain;
     }
     
     .stats-summary {
