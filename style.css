@@ -6308,15 +6308,15 @@ body.translation-mode .skip-btn:hover {
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
     .achievements-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-        padding: 10px;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+        padding: 10px !important;
     }
     
     .achievement-card {
-        min-height: 85px;
-        padding: 10px;
-        margin: 0;
+        min-height: 85px !important;
+        padding: 10px !important;
+        margin: 0 !important;
     }
     
     .achievement-icon {
@@ -7233,16 +7233,17 @@ input:checked + .toggle-slider:before {
     }
     
     .achievements-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-        padding: 5px;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+        padding: 10px !important;
         /* Scroll rules in global section */
     }
     
-    /* Achievement kartları mobilde tam genişlik */
+    /* Achievement kartları mobilde kompakt */
     .achievement-card {
         margin: 0;
-        width: 100%;
+        padding: 10px !important;
+        min-height: 85px !important;
         min-height: 110px;
     }
     
