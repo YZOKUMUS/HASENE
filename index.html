@@ -112,6 +112,20 @@
             opacity: 0.9;
         }
 
+        /* ============ ÜST BUTONLAR ============ */
+        .top-btn {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .top-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important;
+        }
+
+        .top-btn:active {
+            transform: translateY(0);
+        }
+
         /* ============ GERİ BUTONU ============ */
         .back-btn {
             background: #666;
@@ -558,21 +572,21 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
+            background: rgba(0,0,0,0.7);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
         }
 
         .modal-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
             background: white;
             padding: 30px;
             border-radius: 15px;
             text-align: center;
             width: 80%;
             max-width: 300px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
         }
 
         .modal h2 {
@@ -599,23 +613,76 @@
 </head>
 <body>
     <div class="container">
-        <!-- Başlık -->
-        <div class="header" style="border: 2px dashed #ccc; min-height: 60px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
-            <!-- Burası başka bir şey için kullanılacak -->
+        <!-- Oyun İstatistikleri Barı -->
+        <div class="header" style="background: white; border: 2px solid #e0e0e0; border-radius: 15px; padding: 12px 15px; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            <!-- Puan -->
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 3px;">
+                <div style="background: #FF9800; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px;" id="gamePoints">0</div>
+                <span style="font-size: 11px; color: #666;">Puan</span>
+            </div>
+            
+            <!-- Yıldız -->
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 3px;">
+                <div style="display: flex; align-items: center; gap: 3px;">
+                    <span style="font-size: 16px; color: #FFD700;">⭐</span>
+                    <span style="font-weight: bold; font-size: 14px; color: #333;" id="starPoints">0</span>
+                </div>
+                <span style="font-size: 11px; color: #666;">Yıldız</span>
+            </div>
+
+            <!-- Rozet -->
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 3px;">
+                <div style="display: flex; align-items: center; gap: 3px;">
+                    <span style="font-size: 16px;" id="topBadgeIcon">🥉</span>
+                    <span style="font-weight: bold; font-size: 14px; color: #333;" id="topBadgeCount">0</span>
+                </div>
+                <span style="font-size: 11px; color: #666;">Rozet</span>
+            </div>
+            
+            <!-- Seviye -->
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
+                <div style="display: flex; align-items: center; gap: 3px;">
+                    <span style="font-size: 11px; color: #666;">Lv</span>
+                    <span style="background: #9C27B0; color: white; padding: 2px 6px; border-radius: 8px; font-weight: bold; font-size: 11px;" id="playerLevel">1</span>
+                </div>
+                <!-- Seviye İlerleme Çubuğu -->
+                <div style="width: 60px; height: 3px; background: #e0e0e0; border-radius: 2px; overflow: hidden;">
+                    <div style="height: 100%; background: #9C27B0; transition: width 0.3s;" id="levelProgress"></div>
+                </div>
+            </div>
         </div>
 
         <!-- Ana Menü -->
         <div class="main-menu" id="mainMenu">
-            <div style="border: 2px dashed #ccc; min-height: 40px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center;">
-                <!-- Burası başka bir şey için kullanılacak -->
+            <!-- Üst Butonlar -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 15px;">
+                <button class="top-btn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; padding: 12px; font-size: 0.9em; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 3px 10px rgba(102,126,234,0.3); cursor: pointer;" onclick="showDailyTasksModal()">
+                    <span style="font-size: 1.2em;">📋</span>
+                    Günlük Görevler
+                </button>
+                
+                <button class="top-btn" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border: none; border-radius: 12px; padding: 12px; font-size: 0.9em; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 3px 10px rgba(245,87,108,0.3); cursor: pointer;" onclick="showBadgesModal()">
+                    <span style="font-size: 1.2em;">🏆</span>
+                    Başarılar
+                </button>
+                
+                <button class="top-btn" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); color: #333; border: none; border-radius: 12px; padding: 12px; font-size: 0.9em; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 3px 10px rgba(168,237,234,0.4); cursor: pointer;" onclick="alert('İstatistikler - Yakında!')">
+                    <span style="font-size: 1.2em;">📊</span>
+                    İstatistikler
+                </button>
+                
+                <button class="top-btn" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; border: none; border-radius: 12px; padding: 12px; font-size: 0.9em; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 3px 10px rgba(79,172,254,0.3); cursor: pointer;" onclick="showCalendarModal()"
+                    <span style="font-size: 1.2em;">📅</span>
+                    Takvim
+                </button>
             </div>
             
             <!-- Zorluk Butonları -->
             <div style="display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: nowrap; justify-content: center;">
-                <button class="diff-btn active" id="mainDiffKolay" style="flex: 1; min-width: 90px; max-width: 120px; margin: 0; padding: 10px; font-size: 0.85em; background: #4CAF50; color: white; border: 2px solid #4CAF50;">
+                <button class="diff-btn" id="mainDiffKolay" style="flex: 1; min-width: 90px; max-width: 120px; margin: 0; padding: 10px; font-size: 0.85em; background: white; color: #4CAF50; border: 2px solid #4CAF50;">
                     <strong>🌱 Kolay</strong>
                 </button>
-                <button class="diff-btn" id="mainDiffOrta" style="flex: 1; min-width: 90px; max-width: 120px; margin: 0; padding: 10px; font-size: 0.85em; background: white; color: #FF9800; border: 2px solid #FF9800;">
+                <button class="diff-btn active" id="mainDiffOrta" style="flex: 1; min-width: 90px; max-width: 120px; margin: 0; padding: 10px; font-size: 0.85em; background: #FF9800; color: white; border: 2px solid #FF9800;">
                     <strong>⚖️ Orta</strong>
                 </button>
                 <button class="diff-btn" id="mainDiffZor" style="flex: 1; min-width: 90px; max-width: 120px; margin: 0; padding: 10px; font-size: 0.85em; background: white; color: #f44336; border: 2px solid #f44336;">
@@ -625,37 +692,37 @@
 
             <h2 style="text-align: center; color: #2D5F3F; margin-bottom: 15px;">Oyun Modu Seç</h2>
             
-            <button class="menu-item" id="kelimeCevirBtn" style="margin-bottom: 10px; padding: 12px;">
+            <button class="menu-item" id="kelimeCevirBtn" style="margin-bottom: 10px; padding: 12px; background: linear-gradient(135deg, #ffd700 0%, #ffb347 100%); color: #8b4513; box-shadow: 0 4px 15px rgba(255,215,0,0.4); border: 2px solid #daa520;">
                 <div class="menu-icon" style="font-size: 1.8em; margin-bottom: 3px;">📚</div>
-                <div class="menu-title" style="font-size: 1em;">Kelime Çevir</div>
+                <div class="menu-title" style="font-size: 1em; font-weight: bold;">Kelime Çevir</div>
                 <div class="menu-desc" style="font-size: 0.8em;">Arapça kelimeyi Türkçe'ye çevir</div>
             </button>
 
-            <button class="menu-item" id="dinleBulBtn" style="margin-bottom: 10px; padding: 12px;">
+            <button class="menu-item" id="dinleBulBtn" style="margin-bottom: 10px; padding: 12px; background: linear-gradient(135deg, #74c0fc 0%, #339af0 100%); color: white; box-shadow: 0 4px 15px rgba(51,154,240,0.3);">
                 <div class="menu-icon" style="font-size: 1.8em; margin-bottom: 3px;">🎧</div>
                 <div class="menu-title" style="font-size: 1em;">Dinle ve Bul</div>
                 <div class="menu-desc" style="font-size: 0.8em;">Kelimeyi dinle, doğru kelimeyi bul</div>
             </button>
 
-            <button class="menu-item" id="boslukDoldurBtn" style="margin-bottom: 10px; padding: 12px;">
+            <button class="menu-item" id="boslukDoldurBtn" style="margin-bottom: 10px; padding: 12px; background: linear-gradient(135deg, #9775fa 0%, #7048e8 100%); color: white; box-shadow: 0 4px 15px rgba(112,72,232,0.3);">
                 <div class="menu-icon" style="font-size: 1.8em; margin-bottom: 3px;">✍️</div>
                 <div class="menu-title" style="font-size: 1em;">Boşluk Doldur</div>
                 <div class="menu-desc" style="font-size: 0.8em;">Ayetteki eksik kelimeyi tamamla</div>
             </button>
 
-            <button class="menu-item" id="duaEtBtn" style="margin-bottom: 10px; padding: 12px;">
+            <button class="menu-item" id="duaEtBtn" style="margin-bottom: 10px; padding: 12px; background: linear-gradient(135deg, #51cf66 0%, #37b24d 100%); color: white; box-shadow: 0 4px 15px rgba(55,178,77,0.3);">
                 <div class="menu-icon" style="font-size: 1.8em; margin-bottom: 3px;">🤲</div>
                 <div class="menu-title" style="font-size: 1em;">Dua Et ve Dinle</div>
                 <div class="menu-desc" style="font-size: 0.8em;">Kur'an'dan duaları öğren</div>
             </button>
 
-            <button class="menu-item" id="ayetOkuBtn" style="margin-bottom: 10px; padding: 12px;">
+            <button class="menu-item" id="ayetOkuBtn" style="margin-bottom: 10px; padding: 12px; background: linear-gradient(135deg, #4dabf7 0%, #1c7ed6 100%); color: white; box-shadow: 0 4px 15px rgba(28,126,214,0.3);">
                 <div class="menu-icon" style="font-size: 1.8em; margin-bottom: 3px;">📖</div>
                 <div class="menu-title" style="font-size: 1em;">Ayet Oku ve Dinle</div>
                 <div class="menu-desc" style="font-size: 0.8em;">Ayetleri dinle ve oku</div>
             </button>
 
-            <button class="menu-item" id="hadisOkuBtn" style="margin-bottom: 0; padding: 12px;">
+            <button class="menu-item" id="hadisOkuBtn" style="margin-bottom: 0; padding: 12px; background: linear-gradient(135deg, #ff8787 0%, #fa5252 100%); color: white; box-shadow: 0 4px 15px rgba(250,82,82,0.3);">
                 <div class="menu-icon" style="font-size: 1.8em; margin-bottom: 3px;">📜</div>
                 <div class="menu-title" style="font-size: 1em;">Hadis Oku</div>
                 <div class="menu-desc" style="font-size: 0.8em;">Hadis-i Şerifleri oku</div>
@@ -840,7 +907,153 @@
         <div class="modal-content">
             <h2>🎉 Tebrikler!</h2>
             <p>Seviye <span id="newLevel"></span>'e yükseldiniz!</p>
+            <p style="font-size: 0.9em; color: #666; margin-top: 10px;">
+                Toplam Puanınız: <strong id="modalTotalPoints">0</strong><br>
+                Bir sonraki seviye için: <strong id="modalNextLevelPoints">0</strong> puan gerekli
+            </p>
             <button class="modal-btn" id="modalBtn">Devam Et</button>
+        </div>
+    </div>
+
+    <!-- Başarılar Modal -->
+    <div class="modal" id="badgesModal">
+        <div class="modal-content" style="max-width: 400px; max-height: 80vh; overflow-y: auto;">
+            <h3 style="margin: 15px 0 10px 0; font-size: 1.3em;">🏆 Başarılarınız</h3>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0;">
+                <!-- Elmas -->
+                <div style="text-align: center; padding: 15px; border-radius: 12px; background: linear-gradient(135deg, #e1f5fe 0%, #b3e5fc 100%);">
+                    <div style="font-size: 2em;">💎</div>
+                    <div style="font-weight: bold; margin: 5px 0;">Elmas</div>
+                    <div style="font-size: 1.5em; font-weight: bold; color: #00bcd4;" id="diamondBadgeCount">0</div>
+                    <div style="font-size: 0.8em; color: #666;">5 Altın = 1 Elmas</div>
+                </div>
+                
+                <!-- Altın -->
+                <div style="text-align: center; padding: 15px; border-radius: 12px; background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);">
+                    <div style="font-size: 2em;">🥇</div>
+                    <div style="font-weight: bold; margin: 5px 0;">Altın</div>
+                    <div style="font-size: 1.5em; font-weight: bold; color: #ff9800;" id="goldBadgeCount">0</div>
+                    <div style="font-size: 0.8em; color: #666;">5 Gümüş = 1 Altın</div>
+                </div>
+                
+                <!-- Gümüş -->
+                <div style="text-align: center; padding: 15px; border-radius: 12px; background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);">
+                    <div style="font-size: 2em;">🥈</div>
+                    <div style="font-weight: bold; margin: 5px 0;">Gümüş</div>
+                    <div style="font-size: 1.5em; font-weight: bold; color: #9c27b0;" id="silverBadgeCount">0</div>
+                    <div style="font-size: 0.8em; color: #666;">5 Bronz = 1 Gümüş</div>
+                </div>
+                
+                <!-- Bronz -->
+                <div style="text-align: center; padding: 15px; border-radius: 12px; background: linear-gradient(135deg, #fff3e0 0%, #ffcc80 100%);">
+                    <div style="font-size: 2em;">🥉</div>
+                    <div style="font-weight: bold; margin: 5px 0;">Bronz</div>
+                    <div style="font-size: 1.5em; font-weight: bold; color: #ff5722;" id="bronzeBadgeCount">0</div>
+                    <div style="font-size: 0.8em; color: #666;">5 Yıldız = 1 Bronz</div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin: 15px 0; padding: 10px; background: #f5f5f5; border-radius: 8px;">
+                <div style="font-size: 1.1em; margin-bottom: 5px;">📊 İlerlemeniz</div>
+                <div>⭐ <span id="badgesModalStars">0</span> Yıldız</div>
+                <div>📈 <span id="badgesModalLevel">1</span>. Seviye</div>
+                <div>🎯 <span id="badgesModalPoints">0</span> Puan</div>
+            </div>
+            
+            <button class="modal-btn" onclick="closeBadgesModal()">Kapat</button>
+        </div>
+    </div>
+
+    <!-- Takvim Modal -->
+    <div class="modal" id="calendarModal">
+        <div class="modal-content" style="max-width: 500px; max-height: 80vh; overflow-y: auto;">
+            <h3 style="margin: 15px 0 10px 0; font-size: 1.3em;">📅 Günlük Takip</h3>
+            
+            <!-- Streak Bilgisi -->
+            <div style="text-align: center; margin: 15px 0; padding: 10px; background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%); border-radius: 8px; color: white;">
+                <span style="font-size: 1.2em;">🔥</span>
+                <span style="font-size: 1.3em; font-weight: bold; margin: 0 8px;" id="currentStreak">0</span>
+                <span style="font-size: 0.85em;">Ardışık Gün</span>
+            </div>
+            
+            <!-- İstatistikler -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0;">
+                <div style="text-align: center; padding: 10px; background: #f5f5f5; border-radius: 6px;">
+                    <div style="font-size: 1.2em; font-weight: bold; color: #4caf50;" id="totalPlayDays">0</div>
+                    <div style="font-size: 0.75em; color: #666;">Toplam Oyun Günü</div>
+                </div>
+                <div style="text-align: center; padding: 10px; background: #f5f5f5; border-radius: 6px;">
+                    <div style="font-size: 1.2em; font-weight: bold; color: #2196f3;" id="bestStreak">0</div>
+                    <div style="font-size: 0.75em; color: #666;">En İyi Streak</div>
+                </div>
+            </div>
+            
+            <!-- Mini Takvim -->
+            <div style="background: white; border: 2px solid #e0e0e0; border-radius: 12px; padding: 15px; margin: 15px 0;">
+                <div style="text-align: center; font-weight: bold; margin-bottom: 10px;" id="calendarMonth">Kasım 2025</div>
+                <div id="calendarGrid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center;">
+                    <!-- Takvim günleri buraya eklenecek -->
+                </div>
+            </div>
+            
+            <!-- Bugünkü Hedef -->
+            <div style="background: #e8f5e8; border-radius: 6px; padding: 10px; margin: 15px 0;">
+                <div style="font-weight: bold; margin-bottom: 5px; color: #2e7d2e; font-size: 0.9em;">🎯 Bugünkü Hedefin</div>
+                <div style="font-size: 0.8em; color: #666;">5 doğru cevap vererek günü tamamla!</div>
+                <div style="margin-top: 5px; font-size: 0.9em;">
+                    <span id="todayProgress">0</span>/5 ✅
+                </div>
+            </div>
+            
+            <button class="modal-btn" onclick="closeCalendarModal()">Kapat</button>
+        </div>
+    </div>
+
+    <!-- Günlük Görevler Modal -->
+    <div class="modal" id="dailyTasksModal">
+        <div class="modal-content" style="max-width: 480px; max-height: 80vh; overflow-y: auto;">
+            <h3 style="margin: 15px 0 10px 0; font-size: 1.3em;">🎯 Günlük Görevler</h3>
+            
+            <!-- Genel İlerleme -->
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px; border-radius: 8px; margin: 15px 0; text-align: center;">
+                <div style="font-size: 1.1em; font-weight: bold;">Bugünkü İlerleme</div>
+                <div style="font-size: 0.9em; margin-top: 5px;">
+                    <span id="completedTasks">0</span>/<span id="totalTasks">5</span> Görev Tamamlandı
+                </div>
+                <div style="background: rgba(255,255,255,0.3); border-radius: 10px; height: 8px; margin: 8px 0;">
+                    <div id="taskProgress" style="background: white; height: 100%; border-radius: 10px; width: 0%; transition: width 0.3s;"></div>
+                </div>
+            </div>
+
+            <!-- Temel Görevler -->
+            <div style="margin: 20px 0;">
+                <h4 style="margin: 10px 0; color: #333; font-size: 1.1em;">📋 Temel Görevler</h4>
+                
+                <div id="dailyTasksList">
+                    <!-- Görevler buraya dinamik eklenecek -->
+                </div>
+            </div>
+
+            <!-- Bonus Görevler -->
+            <div style="margin: 20px 0;">
+                <h4 style="margin: 10px 0; color: #333; font-size: 1.1em;">⭐ Bonus Görevler</h4>
+                
+                <div id="bonusTasksList">
+                    <!-- Bonus görevler buraya dinamik eklenecek -->
+                </div>
+            </div>
+
+            <!-- Ödül Toplama -->
+            <div id="rewardsSection" style="display: none; background: #e8f5e8; border-radius: 8px; padding: 15px; margin: 15px 0; text-align: center;">
+                <div style="font-size: 1.2em; color: #2e7d2e; font-weight: bold;">🎉 Tebrikler!</div>
+                <div style="font-size: 0.9em; color: #666; margin: 5px 0;">Tüm görevleri tamamladın!</div>
+                <button id="claimRewardsBtn" style="background: #4caf50; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 0.9em; cursor: pointer;">
+                    +5 ⭐ Ödül Topla
+                </button>
+            </div>
+
+            <button class="modal-btn" onclick="closeDailyTasksModal()">Kapat</button>
         </div>
     </div>
 
@@ -855,6 +1068,10 @@
     </div>
 
     <script>
+        // DOM yüklendikten sonra çalıştır
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 DOM yüklendi, oyun başlatılıyor...');
+            
         // ============ AYARLAR - BURADAN KONTROLEDEBİLİRSİN ============
         const CONFIG = {
             // OYUN MODLARI
@@ -900,31 +1117,31 @@
                     name: '😊 Kolay',
                     minDiff: 5,
                     maxDiff: 9,
-                    pointsMultiplier: 5
+                    pointsMultiplier: 1
                 },
                 orta: {
                     name: '😐 Orta',
                     minDiff: 10,
                     maxDiff: 11,
-                    pointsMultiplier: 10
+                    pointsMultiplier: 2
                 },
                 zor: {
                     name: '😤 Zor',
                     minDiff: 12,
                     maxDiff: 21,
-                    pointsMultiplier: 15
+                    pointsMultiplier: 3
                 },
                 karisik: {
                     name: '🎲 Karışık',
                     minDiff: 5,
                     maxDiff: 21,
-                    pointsMultiplier: 10
+                    pointsMultiplier: 2
                 }
             },
 
             // VARSAYILAN AYARLAR
             defaultMode: 'klasik',
-            defaultDifficulty: 'karisik',
+            defaultDifficulty: 'orta',  // UI'da mevcut olan zorluk seviyesi
             wrongAnswerPenalty: 5  // Yanlış cevap puan cezası
         };
 
@@ -957,13 +1174,65 @@
         let boslukCorrect = 0;
         let boslukWrong = 0;
         
+        // GLOBAL (KALICI) PUANLAR
+        let totalPoints = 0;  // Toplam oyun puanı (kalıcı)
+        let starPoints = 0;   // Yıldız puanı (her 500 puan = 1 yıldız)
+        let level = 1;        // Global seviye
+
+        // ROZET SİSTEMİ
+        let badges = {
+            bronze: 0,   // Bronz rozetler (5 yıldız = 1 bronz)
+            silver: 0,   // Gümüş rozetler (5 bronz = 1 gümüş)
+            gold: 0,     // Altın rozetler (5 gümüş = 1 altın)
+            diamond: 0   // Elmas rozetler (5 altın = 1 elmas)
+        };
+
+        // STREAK SİSTEMİ (GÜNLİK TAKİP)
+        let streakData = {
+            currentStreak: 0,    // Mevcut ardışık gün sayısı
+            bestStreak: 0,       // En iyi streak rekoru
+            lastPlayDate: '',    // Son oyun oynanan tarih (YYYY-MM-DD)
+            totalPlayDays: 0,    // Toplam oyun oynanan gün sayısı
+            dailyGoal: 5,        // Günlük hedef (doğru cevap sayısı)
+            todayProgress: 0,    // Bugünkü ilerleme
+            todayDate: '',       // Bugünün tarihi
+            playDates: []        // Oyun oynanan tarihler listesi
+        };
+
+        // GÜNLİK GÖREVLER SİSTEMİ
+        let dailyTasks = {
+            lastTaskDate: '',    // Son görev yenileme tarihi
+            tasks: [],           // Günlük görevler listesi
+            bonusTasks: [],      // Bonus görevler listesi
+            completedTasks: [],  // Tamamlanan görevler
+            rewardsClaimed: false, // Ödül toplandı mı?
+            todayStats: {        // Bugünkü oyun istatistikleri
+                kelimeCevir: 0,
+                ayetOku: 0,
+                duaOgre: 0,
+                hadisOku: 0,
+                toplamDogru: 0,
+                toplamPuan: 0,
+                perfectStreak: 0,
+                farklıZorluk: new Set()
+            }
+        };
+
+        // SESSION (OYUN İÇİ) PUANLAR
+        let sessionScore = 0;     // Bu oyunun puanı
+        let sessionCorrect = 0;   // Bu oyunun doğru sayısı
+        let sessionWrong = 0;     // Bu oyunun yanlış sayısı
+
+        // ESKI DEĞİŞKENLER (Geriye uyumluluk için)
         let score = 0;
-        let level = 1;
         let correct = 0;
         let wrong = 0;
         let questionCount = 0;
         let currentMode = CONFIG.defaultMode;
         let currentDifficulty = CONFIG.defaultDifficulty;
+        
+        console.log('Session değişkenleri başlatıldı:', {sessionScore, sessionCorrect, sessionWrong});
+        console.log(`🏁 Varsayılan zorluk seviyesi: ${currentDifficulty}`);
         let lives = 0;
         let timer = null;
         let timeLeft = 0;
@@ -1136,12 +1405,645 @@
             }
         }
 
+        // ============ İSTATİSTİK BAR FONKSİYONLARI ============
+        function loadStats() {
+            // Local storage'dan puanları yükle
+            totalPoints = parseInt(localStorage.getItem('hasene_totalPoints') || '0');
+            starPoints = Math.floor(totalPoints / 500);
+            level = calculateLevel(totalPoints);
+            
+            // Rozet sistemi yükle
+            const savedBadges = localStorage.getItem('hasene_badges');
+            if (savedBadges) {
+                badges = JSON.parse(savedBadges);
+            }
+            
+            // Streak sistemi yükle
+            const savedStreak = localStorage.getItem('hasene_streak');
+            if (savedStreak) {
+                streakData = { ...streakData, ...JSON.parse(savedStreak) };
+            }
+            
+            // Günlük görevler yükle
+            const savedTasks = localStorage.getItem('hasene_dailyTasks');
+            if (savedTasks) {
+                dailyTasks = { ...dailyTasks, ...JSON.parse(savedTasks) };
+                // Set nesnelerini yeniden oluştur
+                dailyTasks.todayStats.farklıZorluk = new Set(dailyTasks.todayStats.farklıZorluk || []);
+            }
+            
+            // Günlük kontrol
+            checkDailyProgress();
+            checkDailyTasks();
+        }
+
+        // Daha zorlu seviye hesaplama sistemi
+        function calculateLevel(points) {
+            if (points < 1000) return 1;        // Level 1: 0-999 puan
+            if (points < 2500) return 2;        // Level 2: 1000-2499 puan  
+            if (points < 5000) return 3;        // Level 3: 2500-4999 puan
+            if (points < 8500) return 4;        // Level 4: 5000-8499 puan
+            if (points < 13000) return 5;       // Level 5: 8500-12999 puan
+            if (points < 19000) return 6;       // Level 6: 13000-18999 puan
+            if (points < 26500) return 7;       // Level 7: 19000-26499 puan
+            if (points < 35500) return 8;       // Level 8: 26500-35499 puan
+            if (points < 46000) return 9;       // Level 9: 35500-45999 puan
+            if (points < 58000) return 10;      // Level 10: 46000-57999 puan
+            
+            // Level 10'dan sonra her seviye için 15000 puan artış
+            const afterLevel10 = points - 58000;
+            return 10 + Math.floor(afterLevel10 / 15000) + 1;
+        }
+
+        // Bir sonraki seviye için gereken puan
+        function getNextLevelRequiredPoints(currentLevel) {
+            const levelThresholds = [0, 1000, 2500, 5000, 8500, 13000, 19000, 26500, 35500, 46000, 58000];
+            
+            // currentLevel 1-10 arasındaysa threshold'u döndür
+            if (currentLevel >= 1 && currentLevel <= 10) {
+                return levelThresholds[currentLevel];
+            }
+            
+            // Level 10'dan sonra - her seviye için 15000 puan artış
+            if (currentLevel > 10) {
+                return 58000 + ((currentLevel - 10) * 15000);
+            }
+            
+            // Level 0 veya geçersiz değerler için
+            return levelThresholds[1]; // Level 1 threshold'u
+        }
+
+        function saveStats() {
+            // Local storage'a puanları kaydet
+            localStorage.setItem('hasene_totalPoints', totalPoints.toString());
+            localStorage.setItem('hasene_badges', JSON.stringify(badges));
+            localStorage.setItem('hasene_streak', JSON.stringify(streakData));
+            
+            // Set'i array'e çevir ve kaydet
+            const tasksToSave = { 
+                ...dailyTasks, 
+                todayStats: {
+                    ...dailyTasks.todayStats,
+                    farklıZorluk: Array.from(dailyTasks.todayStats.farklıZorluk)
+                }
+            };
+            localStorage.setItem('hasene_dailyTasks', JSON.stringify(tasksToSave));
+        }
+
+        function resetAllStats() {
+            // Tüm istatistikleri sıfırla
+            totalPoints = 0;
+            starPoints = 0;
+            level = 1;
+            sessionScore = 0;
+            sessionCorrect = 0;
+            sessionWrong = 0;
+            
+            // Local Storage'ı temizle
+            localStorage.removeItem('hasene_totalPoints');
+            
+            // Ekranı güncelle
+            updateStatsBar();
+            updateUI();
+            
+            console.log('✅ Tüm istatistikler sıfırlandı!');
+        }
+
+        function updateStatsBar() {
+            // Üst bar güncelle
+            document.getElementById('gamePoints').textContent = totalPoints;
+            
+            // Yıldız puanı güncelle (her 500 puana 1 yıldız)
+            starPoints = Math.floor(totalPoints / 500);
+            document.getElementById('starPoints').textContent = starPoints;
+            
+            // Rozet sistemini güncelle
+            updateBadgeSystem();
+            
+            // Seviye güncelle (yeni hesaplama sistemi)
+            level = calculateLevel(totalPoints);
+            document.getElementById('playerLevel').textContent = level;
+            
+            // Seviye ilerleme çubuğunu güncelle
+            let currentLevelStart, nextLevelStart;
+            
+            if (level === 1) {
+                currentLevelStart = 0;
+                nextLevelStart = 1000;
+            } else if (level <= 10) {
+                const thresholds = [0, 1000, 2500, 5000, 8500, 13000, 19000, 26500, 35500, 46000, 58000];
+                currentLevelStart = thresholds[level - 1];
+                nextLevelStart = thresholds[level];
+            } else {
+                // Level 10'dan sonra
+                currentLevelStart = 58000 + ((level - 11) * 15000);
+                nextLevelStart = 58000 + ((level - 10) * 15000);
+            }
+            
+            const currentLevelPoints = totalPoints - currentLevelStart;
+            const levelRequiredPoints = nextLevelStart - currentLevelStart;
+            const progressPercentage = Math.max(0, Math.min((currentLevelPoints / levelRequiredPoints) * 100, 100));
+            
+            const levelProgressElement = document.getElementById('levelProgress');
+            if (levelProgressElement) {
+                levelProgressElement.style.width = progressPercentage + '%';
+            }
+            
+            // Alt bar (oyun içi stats) güncelle
+            const scoreElement = document.getElementById('score');
+            const levelElement = document.getElementById('level');
+            if (scoreElement) scoreElement.textContent = totalPoints;
+            if (levelElement) levelElement.textContent = level;
+            
+            // Kaydet
+            saveStats();
+            
+            // Debug için mevcut değerleri logla
+            console.log('📊 Mevcut İstatistikler:', {
+                totalPoints: totalPoints,
+                starPoints: starPoints, 
+                level: level,
+                sessionScore: sessionScore,
+                sessionCorrect: sessionCorrect,
+                sessionWrong: sessionWrong
+            });
+        }
+
+        // SESSION PUAN FONKSİYONLARI
+        function addSessionPoints(points) {
+            console.log(`💰 === addSessionPoints(${points}) ÇAĞRILDI ===`);
+            console.log(`📊 Önce: sessionScore=${sessionScore}, sessionCorrect=${sessionCorrect}`);
+            sessionScore += points;
+            sessionCorrect++;
+            
+            // Geriye uyumluluk için eski değişkenleri de güncelle
+            score = sessionScore;
+            correct = sessionCorrect;
+            console.log(`📊 Sonra: sessionScore=${sessionScore}, sessionCorrect=${sessionCorrect}`);
+            console.log(`🎨 updateUI() çağrılıyor...`);
+            updateUI(); // Sadece oyun içi barı güncelle
+            console.log(`✅ addSessionPoints tamamlandı!`);
+        }
+
+        function addSessionWrong() {
+            console.log(`❌ === addSessionWrong() ÇAĞRILDI ===`);
+            console.log(`📊 Önce: sessionWrong=${sessionWrong}, wrong=${wrong}`);
+            sessionWrong++;
+            wrong = sessionWrong; // Geriye uyumluluk
+            console.log(`📊 Sonra: sessionWrong=${sessionWrong}, wrong=${wrong}`);
+            console.log(`🎨 updateUI() çağrılıyor...`);
+            updateUI();
+            console.log(`✅ addSessionWrong tamamlandı!`);
+        }
+
+        // ============ ROZET SİSTEMİ ============
+        function updateBadgeSystem() {
+            // Her 5 yıldız = 1 bronz rozet
+            // Her 5 bronz = 1 gümüş rozet  
+            // Her 5 gümüş = 1 altın rozet
+            // Her 5 altın = 1 elmas rozet
+            
+            const totalStars = starPoints;
+            const newBronze = Math.floor(totalStars / 5);
+            const newSilver = Math.floor(newBronze / 5);
+            const newGold = Math.floor(newSilver / 5);
+            const newDiamond = Math.floor(newGold / 5);
+            
+            // Rozet seviye kontrolü ve modal gösterimi
+            if (newDiamond > badges.diamond) {
+                badges.diamond = newDiamond;
+                showBadgeUpModal('diamond', '💎 Elmas');
+            } else if (newGold > badges.gold) {
+                badges.gold = newGold;
+                showBadgeUpModal('gold', '🥇 Altın');
+            } else if (newSilver > badges.silver) {
+                badges.silver = newSilver;
+                showBadgeUpModal('silver', '🥈 Gümüş');
+            } else if (newBronze > badges.bronze) {
+                badges.bronze = newBronze;
+                showBadgeUpModal('bronze', '🥉 Bronz');
+            }
+            
+            // Tüm rozet sayılarını güncelle
+            badges.bronze = newBronze;
+            badges.silver = newSilver;
+            badges.gold = newGold;
+            badges.diamond = newDiamond;
+            
+            // En yüksek rozeti göster
+            updateTopBadgeDisplay();
+        }
+
+        function updateTopBadgeDisplay() {
+            const topBadgeIcon = document.getElementById('topBadgeIcon');
+            const topBadgeCount = document.getElementById('topBadgeCount');
+            
+            if (badges.diamond > 0) {
+                topBadgeIcon.textContent = '💎';
+                topBadgeCount.textContent = badges.diamond;
+            } else if (badges.gold > 0) {
+                topBadgeIcon.textContent = '🥇';
+                topBadgeCount.textContent = badges.gold;
+            } else if (badges.silver > 0) {
+                topBadgeIcon.textContent = '🥈';
+                topBadgeCount.textContent = badges.silver;
+            } else if (badges.bronze > 0) {
+                topBadgeIcon.textContent = '🥉';
+                topBadgeCount.textContent = badges.bronze;
+            } else {
+                topBadgeIcon.textContent = '🥉';
+                topBadgeCount.textContent = '0';
+            }
+        }
+
+        function showBadgeUpModal(badgeType, badgeName) {
+            // Rozet atlama modalı - şimdilik alert, sonra düzeltiriz
+            alert(`🎉 Tebrikler! ${badgeName} rozeti kazandınız!`);
+        }
+
+        function showBadgesModal() {
+            // Tüm rozet sayılarını güncelle
+            document.getElementById('diamondBadgeCount').textContent = badges.diamond;
+            document.getElementById('goldBadgeCount').textContent = badges.gold;
+            document.getElementById('silverBadgeCount').textContent = badges.silver;
+            document.getElementById('bronzeBadgeCount').textContent = badges.bronze;
+            
+            // İlerleme bilgilerini güncelle
+            document.getElementById('badgesModalStars').textContent = starPoints;
+            document.getElementById('badgesModalLevel').textContent = level;
+            document.getElementById('badgesModalPoints').textContent = totalPoints.toLocaleString();
+            
+            // Modal'ı göster
+            document.getElementById('badgesModal').style.display = 'flex';
+        }
+
+        function closeBadgesModal() {
+            document.getElementById('badgesModal').style.display = 'none';
+        }
+
+        // ============ TAKVİM SİSTEMİ ============
+        function checkDailyProgress() {
+            const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+            
+            // Eğer bugün ilk defa açılıyorsa
+            if (streakData.todayDate !== today) {
+                // Önceki gün kontrolü
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                const yesterdayStr = yesterday.toISOString().split('T')[0];
+                
+                // Streak kontrolü
+                if (streakData.lastPlayDate === yesterdayStr) {
+                    // Dün oynadı, streak devam ediyor
+                    streakData.currentStreak++;
+                } else if (streakData.lastPlayDate !== today) {
+                    // Streak kırıldı
+                    streakData.currentStreak = 0;
+                }
+                
+                // Bugünün verilerini sıfırla
+                streakData.todayDate = today;
+                streakData.todayProgress = 0;
+            }
+        }
+
+        function updateDailyProgress(correctAnswers) {
+            const today = new Date().toISOString().split('T')[0];
+            
+            // Günlük ilerleme güncelle
+            streakData.todayProgress += correctAnswers;
+            
+            // Günlük hedef tamamlandı mı?
+            if (streakData.todayProgress >= streakData.dailyGoal && streakData.lastPlayDate !== today) {
+                // İlk defa bugün hedefi tamamladı
+                streakData.lastPlayDate = today;
+                streakData.totalPlayDays++;
+                
+                // Oyun tarihi listesine ekle
+                if (!streakData.playDates.includes(today)) {
+                    streakData.playDates.push(today);
+                    streakData.playDates.sort();
+                }
+                
+                // Streak güncelle
+                streakData.currentStreak = Math.max(streakData.currentStreak, 1);
+                if (streakData.currentStreak > streakData.bestStreak) {
+                    streakData.bestStreak = streakData.currentStreak;
+                }
+                
+                // Veriyi kaydet
+                saveStats();
+            }
+        }
+
+        function showCalendarModal() {
+            // Streak bilgilerini güncelle
+            document.getElementById('currentStreak').textContent = streakData.currentStreak;
+            document.getElementById('totalPlayDays').textContent = streakData.totalPlayDays;
+            document.getElementById('bestStreak').textContent = streakData.bestStreak;
+            document.getElementById('todayProgress').textContent = Math.min(streakData.todayProgress, streakData.dailyGoal);
+            
+            // Takvimi oluştur
+            generateCalendar();
+            
+            // Modal'ı göster
+            document.getElementById('calendarModal').style.display = 'flex';
+        }
+
+        function closeCalendarModal() {
+            document.getElementById('calendarModal').style.display = 'none';
+        }
+
+        function generateCalendar() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = today.getMonth();
+            const todayDate = today.getDate();
+            
+            // Ay adını güncelle
+            const monthNames = [
+                'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran',
+                'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'
+            ];
+            document.getElementById('calendarMonth').textContent = `${monthNames[month]} ${year}`;
+            
+            // Takvim grid'ini temizle ve yeni HTML oluştur (çok daha hızlı)
+            const grid = document.getElementById('calendarGrid');
+            
+            // HTML string olarak oluştur (DOM manipulation'dan çok daha hızlı)
+            let html = '';
+            
+            // Haftanın günlerini ekle
+            const dayNames = ['Pz', 'Pt', 'Sl', 'Çr', 'Pr', 'Cm', 'Ct'];
+            dayNames.forEach(day => {
+                html += `<div style="font-weight: bold; font-size: 0.8em; color: #666; padding: 5px;">${day}</div>`;
+            });
+            
+            // Ayın ilk gününün haftanın hangi günü olduğunu bul
+            const firstDay = new Date(year, month, 1);
+            const startingDayOfWeek = (firstDay.getDay() + 6) % 7; // Pazartesi = 0
+            
+            // Boş günler ekle
+            for (let i = 0; i < startingDayOfWeek; i++) {
+                html += '<div></div>';
+            }
+            
+            // playDates array'ini Set'e çevir (çok daha hızlı arama)
+            const playDatesSet = new Set(streakData.playDates);
+            
+            // Ayın günlerini ekle
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                
+                let style = 'padding: 8px 5px; border-radius: 50%; cursor: pointer; font-size: 0.9em;';
+                
+                // Bugün ise vurgula
+                if (day === todayDate) {
+                    style += ' background: #2196f3; color: white; font-weight: bold;';
+                }
+                // Oyun oynandıysa yeşil
+                else if (playDatesSet.has(dateStr)) {
+                    style += ' background: #4caf50; color: white;';
+                }
+                // Geçmiş günlerse gri
+                else if (day < todayDate) {
+                    style += ' color: #ccc;';
+                }
+                
+                html += `<div style="${style}">${day}</div>`;
+            }
+            
+            // Tek seferde HTML'i set et (çok hızlı)
+            grid.innerHTML = html;
+        }
+
+        // Global fonksiyonlar (window'a ekle ki HTML onclick çalışsın)
+        window.showCalendarModal = showCalendarModal;
+        window.closeCalendarModal = closeCalendarModal;
+
+        // ============ GÜNLİK GÖREVLER SİSTEMİ ============
+        function checkDailyTasks() {
+            const today = new Date().toISOString().split('T')[0];
+            
+            // Eğer yeni gün başladıysa görevleri yenile
+            if (dailyTasks.lastTaskDate !== today) {
+                generateDailyTasks(today);
+            }
+        }
+
+        function generateDailyTasks(date) {
+            // Temel görevler listesi
+            const baseTasks = [
+                { id: 'kelime5', name: '5 kelime çevir', target: 5, current: 0, type: 'kelimeCevir', reward: 1 },
+                { id: 'ayet3', name: '3 ayet oku', target: 3, current: 0, type: 'ayetOku', reward: 1 },
+                { id: 'dua2', name: '2 dua öğren', target: 2, current: 0, type: 'duaOgre', reward: 1 },
+                { id: 'dogru10', name: '10 doğru cevap ver', target: 10, current: 0, type: 'toplamDogru', reward: 1 },
+                { id: 'puan100', name: '100 puan topla', target: 100, current: 0, type: 'toplamPuan', reward: 1 }
+            ];
+
+            // Bonus görevler listesi
+            const bonusTasksList = [
+                { id: 'perfect5', name: 'Hiç yanlış yapmadan 5 soru çöz', target: 5, current: 0, type: 'perfectStreak', reward: 2 },
+                { id: 'allDiff', name: '3 farklı zorlukta oyna', target: 3, current: 0, type: 'farklıZorluk', reward: 2 },
+                { id: 'hadis1', name: '1 hadis dinle', target: 1, current: 0, type: 'hadisOku', reward: 2 }
+            ];
+
+            // Rastgele 2 bonus görev seç
+            const selectedBonus = bonusTasksList.sort(() => 0.5 - Math.random()).slice(0, 2);
+
+            dailyTasks.lastTaskDate = date;
+            dailyTasks.tasks = baseTasks;
+            dailyTasks.bonusTasks = selectedBonus;
+            dailyTasks.completedTasks = [];
+            dailyTasks.rewardsClaimed = false;
+            dailyTasks.todayStats = {
+                kelimeCevir: 0,
+                ayetOku: 0,
+                duaOgre: 0,
+                hadisOku: 0,
+                toplamDogru: 0,
+                toplamPuan: 0,
+                perfectStreak: 0,
+                farklıZorluk: new Set()
+            };
+
+            saveStats();
+        }
+
+        function updateTaskProgress(gameType, amount = 1) {
+            // Oyun tipine göre istatistiği güncelle
+            if (dailyTasks.todayStats[gameType] !== undefined) {
+                dailyTasks.todayStats[gameType] += amount;
+            }
+
+            // Zorluk takibi
+            if (currentDifficulty) {
+                dailyTasks.todayStats.farklıZorluk.add(currentDifficulty);
+            }
+
+            // Görevleri kontrol et ve güncelle
+            const allTasks = [...dailyTasks.tasks, ...dailyTasks.bonusTasks];
+            
+            allTasks.forEach(task => {
+                if (task.type === gameType) {
+                    task.current = Math.min(task.target, dailyTasks.todayStats[gameType]);
+                } else if (task.type === 'farklıZorluk') {
+                    task.current = dailyTasks.todayStats.farklıZorluk.size;
+                }
+
+                // Görev tamamlandı mı?
+                if (task.current >= task.target && !dailyTasks.completedTasks.includes(task.id)) {
+                    dailyTasks.completedTasks.push(task.id);
+                }
+            });
+
+            saveStats();
+        }
+
+        function showDailyTasksModal() {
+            // Görev verilerini güncelle
+            updateTasksDisplay();
+            
+            // Modal'ı göster
+            document.getElementById('dailyTasksModal').style.display = 'flex';
+        }
+
+        function closeDailyTasksModal() {
+            document.getElementById('dailyTasksModal').style.display = 'none';
+        }
+
+        function updateTasksDisplay() {
+            const completedCount = dailyTasks.completedTasks.length;
+            const totalCount = dailyTasks.tasks.length + dailyTasks.bonusTasks.length;
+            
+            // Genel ilerleme
+            document.getElementById('completedTasks').textContent = completedCount;
+            document.getElementById('totalTasks').textContent = totalCount;
+            
+            const progressPercent = (completedCount / totalCount) * 100;
+            document.getElementById('taskProgress').style.width = progressPercent + '%';
+
+            // Temel görevleri göster
+            const dailyList = document.getElementById('dailyTasksList');
+            dailyList.innerHTML = '';
+            
+            dailyTasks.tasks.forEach(task => {
+                const taskElement = createTaskElement(task);
+                dailyList.appendChild(taskElement);
+            });
+
+            // Bonus görevleri göster
+            const bonusList = document.getElementById('bonusTasksList');
+            bonusList.innerHTML = '';
+            
+            dailyTasks.bonusTasks.forEach(task => {
+                const taskElement = createTaskElement(task);
+                bonusList.appendChild(taskElement);
+            });
+
+            // Ödül bölümü
+            const rewardsSection = document.getElementById('rewardsSection');
+            if (completedCount === totalCount && !dailyTasks.rewardsClaimed) {
+                rewardsSection.style.display = 'block';
+            } else {
+                rewardsSection.style.display = 'none';
+            }
+        }
+
+        function createTaskElement(task) {
+            const isCompleted = dailyTasks.completedTasks.includes(task.id);
+            const progressPercent = (task.current / task.target) * 100;
+            
+            const div = document.createElement('div');
+            div.style.cssText = `
+                padding: 12px; 
+                border: 2px solid ${isCompleted ? '#4caf50' : '#e0e0e0'}; 
+                border-radius: 8px; 
+                margin: 8px 0;
+                background: ${isCompleted ? '#f1f8e9' : 'white'};
+            `;
+            
+            div.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <span style="font-weight: bold; color: ${isCompleted ? '#2e7d2e' : '#333'};">
+                        ${isCompleted ? '✅' : '⏳'} ${task.name}
+                    </span>
+                    <span style="font-size: 0.9em; color: #666;">+${task.reward} ⭐</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="flex: 1; background: #f0f0f0; border-radius: 10px; height: 6px; margin-right: 10px;">
+                        <div style="background: ${isCompleted ? '#4caf50' : '#2196f3'}; height: 100%; border-radius: 10px; width: ${progressPercent}%; transition: width 0.3s;"></div>
+                    </div>
+                    <span style="font-size: 0.8em; color: #666;">${task.current}/${task.target}</span>
+                </div>
+            `;
+            
+            return div;
+        }
+
+        function claimDailyRewards() {
+            const completedCount = dailyTasks.completedTasks.length;
+            const totalCount = dailyTasks.tasks.length + dailyTasks.bonusTasks.length;
+            
+            if (completedCount === totalCount && !dailyTasks.rewardsClaimed) {
+                // 5 yıldız bonus ver
+                const bonusPoints = 5 * 500; // 5 yıldız = 2500 puan
+                totalPoints += bonusPoints;
+                
+                dailyTasks.rewardsClaimed = true;
+                saveStats();
+                updateStatsBar();
+                
+                // Ödül modalı göster
+                alert('🎉 Tebrikler! 5 yıldız bonus kazandın!');
+                
+                updateTasksDisplay();
+            }
+        }
+
+        // Ödül butonu event listener
+        document.addEventListener('DOMContentLoaded', () => {
+            const claimBtn = document.getElementById('claimRewardsBtn');
+            if (claimBtn) {
+                claimBtn.addEventListener('click', claimDailyRewards);
+            }
+        });
+
+        // Global fonksiyonlar
+        window.showDailyTasksModal = showDailyTasksModal;
+        window.closeDailyTasksModal = closeDailyTasksModal;
+
+        // GLOBAL PUAN FONKSİYONU (Oyun bitince çağrılır)
+        function addToGlobalPoints(points, correctAnswers = 0) {
+            const oldLevel = calculateLevel(totalPoints);
+            totalPoints += points;
+            const newLevel = calculateLevel(totalPoints);
+            
+            // Seviye atlama kontrolü
+            if (newLevel > oldLevel) {
+                level = newLevel;
+                showLevelUpModal(newLevel);
+            }
+            
+            // Günlük ilerlemeyi güncelle
+            if (correctAnswers > 0) {
+                updateDailyProgress(correctAnswers);
+                
+                // Günlük görevleri güncelle
+                updateTaskProgress('toplamDogru', correctAnswers);
+                updateTaskProgress('toplamPuan', points);
+            }
+            
+            updateStatsBar(); // Global barı güncelle
+        }
+
         // ============ ANA MENÜ ZORLUK BUTONLARI ============
         function initMainMenuDifficultyButtons() {
             // console.log('🔧 initMainMenuDifficultyButtons çağrıldı');
             
             document.getElementById('mainDiffKolay').onclick = () => {
-                // console.log('✅ KOLAY seçildi');
+                console.log('🎯 Zorluk seçildi: KOLAY');
                 currentDifficulty = 'kolay';
                 // Kolay yeşil seçili, diğerleri kendi border renkleri ile beyaz
                 document.getElementById('mainDiffKolay').style.cssText = 'flex: 1; min-width: 90px; max-width: 120px; margin: 0; padding: 10px; font-size: 0.85em; background: #4CAF50; color: white; border: 2px solid #4CAF50;';
@@ -1153,7 +2055,7 @@
             };
             
             document.getElementById('mainDiffOrta').onclick = () => {
-                // console.log('✅ ORTA seçildi');
+                console.log('🎯 Zorluk seçildi: ORTA');
                 currentDifficulty = 'orta';
                 // Orta turuncu seçili, diğerleri kendi border renkleri ile beyaz
                 document.getElementById('mainDiffKolay').style.cssText = 'flex: 1; min-width: 90px; max-width: 120px; margin: 0; padding: 10px; font-size: 0.85em; background: white; color: #4CAF50; border: 2px solid #4CAF50;';
@@ -1165,7 +2067,7 @@
             };
             
             document.getElementById('mainDiffZor').onclick = () => {
-                // console.log('✅ ZOR seçildi');
+                console.log('🎯 Zorluk seçildi: ZOR');
                 currentDifficulty = 'zor';
                 // Zor kırmızı seçili, diğerleri kendi border renkleri ile beyaz
                 document.getElementById('mainDiffKolay').style.cssText = 'flex: 1; min-width: 90px; max-width: 120px; margin: 0; padding: 10px; font-size: 0.85em; background: white; color: #4CAF50; border: 2px solid #4CAF50;';
@@ -1180,44 +2082,86 @@
         // ============ ANA MENÜ NAVİGASYONU ============
         // Kelime Çevir modu - oyun modları seçici ile başlar
         elements.kelimeCevirBtn.onclick = () => {
+            console.log('📚 === KELİME ÇEVİR OYUNU BAŞLATILIYOR ===');
+            console.log('📋 1. Veri kontrol ediliyor...');
+            
             if (kelimeBulData.length === 0) {
+                console.log('❌ Kelime verileri yüklenemedi!');
                 alert('Kelime verileri yüklenemedi!');
                 return;
             }
+            console.log(`✅ Kelime verileri OK: ${kelimeBulData.length} kelime mevcut`);
+            console.log(`🎯 Mevcut zorluk: ${currentDifficulty}`);
+            
+            console.log('📋 2. Mode Selector açılıyor...');
             elements.mainMenu.style.display = 'none';
             elements.modeSelector.style.display = 'block';
             elements.settingsBtn.style.display = 'block';
+            console.log('✅ Mode Selector açıldı!');
         };
 
         // Dinle ve Bul modu - Doğrudan başlat
         elements.dinleBulBtn.onclick = () => {
+            console.log('🔥 === DINLE VE BUL OYUNU BAŞLATILIYOR ===');
+            console.log('📋 1. Veri kontrol ediliyor...');
+            
             if (kelimeBulData.length === 0) {
+                console.log('❌ Kelime verileri yüklenemedi!');
                 alert('Kelime verileri yüklenemedi!');
                 return;
             }
+            console.log(`✅ Kelime verileri OK: ${kelimeBulData.length} kelime mevcut`);
+            
+            console.log('📋 2. Zorluk seviyesi kontrol ediliyor...');
+            console.log(`🎯 Mevcut zorluk: ${currentDifficulty}`);
+            console.log(`🎯 Zorluk config:`, CONFIG.difficultyLevels[currentDifficulty]);
+            
+            console.log('📋 3. UI değiştiriliyor...');
             elements.mainMenu.style.display = 'none';
             elements.dinleMode.style.display = 'block';
+            console.log('✅ UI değişikliği tamamlandı');
+            
+            console.log('📋 4. Oyun değişkenleri sıfırlanıyor...');
+            console.log(`🔄 Önceki değerler: score=${dinleScore}, correct=${dinleCorrect}, wrong=${dinleWrong}, questionCount=${dinleQuestionCount}`);
             // Dinle modunu başlat
             dinleScore = 0;
             dinleCorrect = 0;
             dinleWrong = 0;
             dinleQuestionCount = 0;
+            console.log(`✅ Yeni değerler: score=${dinleScore}, correct=${dinleCorrect}, wrong=${dinleWrong}, questionCount=${dinleQuestionCount}`);
+            console.log(`📊 Session değerler: sessionScore=${sessionScore}, sessionCorrect=${sessionCorrect}, sessionWrong=${sessionWrong}`);
+            
             updateDinleUI();
             loadDinleQuestion();
         };
 
         // Boşluk Doldur modu
         elements.boslukDoldurBtn.onclick = () => {
+            console.log('📋 === BOŞLUK DOLDUR OYUNU BAŞLATILIYOR ===');
+            console.log('📋 1. Veri kontrol ediliyor...');
+            
             if (ayetOkuData.length === 0) {
+                console.log('❌ Ayet verileri yüklenemedi!');
                 alert('Ayet verileri yüklenemedi!');
                 return;
             }
+            console.log(`✅ Ayet verileri OK: ${ayetOkuData.length} ayet mevcut`);
+            console.log(`🎯 Mevcut zorluk: ${currentDifficulty}`);
+            
+            console.log('📋 2. UI değiştiriliyor...');
             elements.mainMenu.style.display = 'none';
             elements.boslukMode.style.display = 'block';
+            console.log('✅ UI değişikliği tamamlandı');
+            
+            console.log('📋 3. Oyun değişkenleri sıfırlanıyor...');
+            console.log(`🔄 Önceki değerler: score=${boslukScore}, correct=${boslukCorrect}, wrong=${boslukWrong}`);
             // Boşluk modunu başlat
             boslukScore = 0;
             boslukCorrect = 0;
             boslukWrong = 0;
+            console.log(`✅ Yeni değerler: score=${boslukScore}, correct=${boslukCorrect}, wrong=${boslukWrong}`);
+            console.log(`📊 Session değerler: sessionScore=${sessionScore}, sessionCorrect=${sessionCorrect}, sessionWrong=${sessionWrong}`);
+            
             updateBoslukUI();
             loadBoslukQuestion();
         };
@@ -1367,12 +2311,16 @@
 
             elements.currentMode.textContent = mode.name;
 
-            // Skoru sıfırla
+            // Session puanlarını sıfırla (global puanları koru)
+            sessionScore = 0;
+            sessionCorrect = 0;
+            sessionWrong = 0;
+            questionCount = 0;
+            
+            // Geriye uyumluluk için eski değişkenleri de sıfırla
             score = 0;
-            level = 1;
             correct = 0;
             wrong = 0;
-            questionCount = 0;
 
             updateUI();
 
@@ -1394,28 +2342,58 @@
         // ============ AYET GÖSTER ============
         // ============ SORU YÜKLEME (Kelime Çevir) ============
         function loadQuestion() {
-            const mode = CONFIG.gameModes[currentMode];
+            console.log('📚 === KELİME ÇEVİR SORU YÜKLENİYOR ===');
+            console.log(`📊 Mevcut soru sayısı: ${questionCount}`);
+            console.log(`🎯 Mevcut mod: ${currentMode}`);
+            console.log(`🎯 Zorluk: ${currentDifficulty}`);
             
+            const mode = CONFIG.gameModes[currentMode];
+            console.log(`📋 Mod detayları:`, mode);
+            
+            // Soru sayısı kontrolü - oyun bitirme
             if (questionCount >= mode.questionsPerLevel) {
-                levelUp();
+                console.log(`🏁 === KELİME ÇEVİR OYUNU BİTTİ ===`);
+                console.log(`✅ ${mode.questionsPerLevel} soru tamamlandı!`);
+                console.log(`📊 Final session score: ${sessionScore}`);
+                
+                // Session puanlarını global'e aktar
+                console.log(`💰 Session puanları global'e aktarılıyor: ${sessionScore} puan`);
+                addToGlobalPoints(sessionScore, sessionCorrect);
+                
+                // Direkt ana menüye dön (popup yok)
+                console.log(`🔄 Ana menüye dönülüyor...`);
+                elements.gameScreen.style.display = 'none';
+                elements.modeSelector.style.display = 'none';
+                elements.mainMenu.style.display = 'block';
+                console.log(`✅ Kelime Çevir oyunu bitti ve ana menüye dönüldü!`);
                 return;
             }
 
             // Can kontrolü
             if (mode.lives > 0 && lives <= 0) {
+                console.log(`💀 Can bitti! Oyun sona eriyor...`);
                 gameOver('Can bitti!');
                 return;
             }
 
+            console.log(`🔍 Zorluk filtreleme başlıyor...`);
+            console.log(`🎯 Seçili zorluk: ${currentDifficulty}`);
+            
             // Zorluk filtreleme
             const diffLevel = CONFIG.difficultyLevels[currentDifficulty];
+            console.log(`📋 Zorluk aralığı: ${diffLevel.minDiff}-${diffLevel.maxDiff}`);
+            console.log(`📦 Toplam kelime sayısı: ${kelimeBulData.length}`);
+            
             let filteredData = kelimeBulData.filter(w => 
                 w.difficulty >= diffLevel.minDiff && w.difficulty <= diffLevel.maxDiff
             );
+            console.log(`✅ Zorluk filtresi sonrası: ${filteredData.length} kelime`);
 
             // Mod özel zorluk kontrolü
             if (mode.minDifficulty) {
+                console.log(`📋 Mod minimum zorluk kontrolü: >= ${mode.minDifficulty}`);
                 filteredData = filteredData.filter(w => w.difficulty >= mode.minDifficulty);
+                console.log(`✅ Mod filtresi sonrası: ${filteredData.length} kelime`);
             }
 
             if (filteredData.length === 0) {
@@ -1493,37 +2471,55 @@
 
         // ============ CEVAP KONTROL ============
         function checkAnswer(button, isCorrect) {
+            console.log(`🚨 === KELİME ÇEVİR CEVAP KONTROLÜ ===`);
+            console.log(`👆 Tıklanan buton: "${button.textContent}"`);
+            console.log(`✅/❌ isCorrect parametresi: ${isCorrect}`);
+            console.log(`📊 Mevcut soru: #${questionCount + 1}`);
+            console.log(`📊 Önce - session: score=${sessionScore}, correct=${sessionCorrect}, wrong=${sessionWrong}`);
+            console.log(`📊 Önce - kelime çevir: score=${score}, correct=${correct}, wrong=${wrong}`);
+            
             stopTimer();
             
             // Tüm butonları kapat
             const allBtns = document.querySelectorAll('.option');
+            console.log(`🔒 ${allBtns.length} buton devre dışı bırakılıyor...`);
             allBtns.forEach(btn => btn.disabled = true);
 
             const mode = CONFIG.gameModes[currentMode];
             const diffLevel = CONFIG.difficultyLevels[currentDifficulty];
+            console.log(`🎯 Mod: ${currentMode}, Zorluk: ${currentDifficulty}`);
 
             if (isCorrect) {
+                console.log(`✅ === DOĞRU CEVAP İŞLEMİ ===`);
                 button.classList.add('correct');
                 elements.feedback.textContent = '✅ Doğru!';
                 elements.feedback.className = 'feedback correct';
                 
                 const points = currentQuestion.difficulty * diffLevel.pointsMultiplier;
-                score += points;
-                correct++;
+                console.log(`💰 Puan hesaplama: ${currentQuestion.difficulty} × ${diffLevel.pointsMultiplier} = ${points} puan`);
+                console.log(`📊 addSessionPoints(${points}) çağrılıyor...`);
+                addSessionPoints(points); // Session puanına ekle
+                console.log(`✅ Doğru cevap işlemi tamamlandı!`);
                 
                 updateUI();
             } else {
+                console.log(`❌ === YANLIŞ CEVAP İŞLEMİ ===`);
                 button.classList.add('wrong');
                 elements.feedback.textContent = `❌ Yanlış! Doğru: ${currentQuestion.anlam}`;
                 elements.feedback.className = 'feedback wrong';
                 
-                wrong++;
+                console.log(`📊 addSessionWrong() çağrılıyor...`);
+                addSessionWrong(); // Session yanlış sayısını artır
                 
+                console.log(`💸 Puan cezası uygulanıyor: ${CONFIG.wrongAnswerPenalty} puan`);
+                console.log(`📊 Eski score: ${score}`);
                 // Puan cezası
                 score = Math.max(0, score - CONFIG.wrongAnswerPenalty);
+                console.log(`📊 Yeni score: ${score}`);
                 
                 // Can kaybı
                 if (mode.lives > 0) {
+                    console.log(`💀 Can kaybı: ${lives} - 1 = ${lives - 1}`);
                     lives--;
                     elements.lives.textContent = lives;
                     
@@ -1567,10 +2563,11 @@
 
         // ============ UI GÜNCELLE ============
         function updateUI() {
-            elements.score.textContent = score;
-            elements.correct.textContent = correct;
-            elements.wrong.textContent = wrong;
-            elements.level.textContent = level;
+            // Alt bar: Sadece session (oyun içi) puanları göster
+            elements.score.textContent = sessionScore;
+            elements.correct.textContent = sessionCorrect;
+            elements.wrong.textContent = sessionWrong;
+            elements.level.textContent = level; // Global seviye
         }
 
         // ============ SÜRE YÖNETİMİ ============
@@ -1619,21 +2616,36 @@
         };
 
         // ============ SEVİYE ATLAMA ============
+        function showLevelUpModal(newLevel) {
+            elements.newLevel.textContent = newLevel;
+            
+            // Modal için ek bilgileri güncelle
+            const modalTotalPoints = document.getElementById('modalTotalPoints');
+            const modalNextLevelPoints = document.getElementById('modalNextLevelPoints');
+            
+            if (modalTotalPoints && modalNextLevelPoints) {
+                modalTotalPoints.textContent = totalPoints.toLocaleString();
+                modalNextLevelPoints.textContent = getNextLevelRequiredPoints(newLevel).toLocaleString();
+            }
+            
+            elements.modal.style.display = 'flex';
+        }
+
+        // Eski levelUp fonksiyonu artık kullanılmıyor
         function levelUp() {
-            level++;
-            questionCount = 0;
-            updateUI();
-            elements.newLevel.textContent = level;
-            elements.modal.style.display = 'block';
+            // Bu fonksiyon artık kullanılmıyor - yeni puan bazlı sistem kullanıyoruz
         }
 
         // ============ OYUN BİTTİ ============
         function gameOver(reason) {
             stopTimer();
             
+            // Session puanlarını global'e aktar
+            addToGlobalPoints(sessionScore, sessionCorrect);
+            
             elements.gameOverTitle.textContent = '😢 Oyun Bitti';
             elements.gameOverText.textContent = reason;
-            elements.finalScore.textContent = score;
+            elements.finalScore.textContent = `Bu Oyun: ${sessionScore} puan\nToplam: ${totalPoints} puan`;
             elements.gameOverModal.style.display = 'block';
         }
 
@@ -1649,8 +2661,7 @@
         // ============ MODAL KAPAT ============
         elements.modalBtn.onclick = () => {
             elements.modal.style.display = 'none';
-            updateProgress();
-            loadQuestion();
+            // Sadece modal'ı kapat - seviye yükselme bilgilendirmesi için gereksiz işlem yapma
         };
 
         // ============ DİNLE VE BUL MODU ============
@@ -1659,51 +2670,92 @@
         const DINLE_MAX_QUESTIONS = 10;
 
         function loadDinleQuestion() {
+            console.log(`🎪 === SORU YÜKLENİYOR ===`);
+            console.log(`📊 Mevcut soru sayısı: ${dinleQuestionCount}/${DINLE_MAX_QUESTIONS}`);
+            console.log(`📊 Oyun durumu: score=${dinleScore}, correct=${dinleCorrect}, wrong=${dinleWrong}`);
+            
             // 10 soru kontrolü
             if (dinleQuestionCount >= DINLE_MAX_QUESTIONS) {
-                // Oyun bitti - Ana menüye dön
-                alert(`🎉 Tebrikler!\n\nToplam Puan: ${dinleScore}\nDoğru: ${dinleCorrect}\nYanlış: ${dinleWrong}`);
+                console.log(`🏁 === OYUN BİTİŞİ TETİKLENDİ ===`);
+                console.log(`✅ ${DINLE_MAX_QUESTIONS} soru tamamlandı!`);
+                console.log(`📊 Final oyun skorları: dinleScore=${dinleScore}, dinleCorrect=${dinleCorrect}, dinleWrong=${dinleWrong}`);
+                console.log(`📊 Final session skorları: sessionScore=${sessionScore}, sessionCorrect=${sessionCorrect}, sessionWrong=${sessionWrong}`);
+                
+                console.log(`💰 Session puanları global'e aktarılıyor: ${sessionScore} puan`);
+                // Session puanlarını global'e aktar
+                addToGlobalPoints(sessionScore, sessionCorrect);
+                
+                console.log(`🔄 Ana menüye dönülüyor...`);
+                // Direkt ana menüye dön
                 elements.dinleMode.style.display = 'none';
                 elements.mainMenu.style.display = 'block';
+                
+                console.log(`🧹 Oyun değişkenleri temizleniyor...`);
                 // Sıfırla
                 dinleScore = 0;
                 dinleCorrect = 0;
                 dinleWrong = 0;
                 dinleQuestionCount = 0;
                 updateDinleUI();
+                console.log(`✅ Oyun bitti ve ana menüye dönüldü!`);
                 return;
             }
 
+            console.log(`🔍 Zorluk filtreleme başlıyor...`);
+            console.log(`🎯 Seçili zorluk: ${currentDifficulty}`);
             // Zorluk filtreleme (Kelime Çevir ile aynı)
             const diffLevel = CONFIG.difficultyLevels[currentDifficulty];
+            console.log(`📋 Zorluk aralığı: ${diffLevel.minDiff}-${diffLevel.maxDiff}`);
+            console.log(`📦 Toplam kelime sayısı: ${kelimeBulData.length}`);
+            
             let filteredData = kelimeBulData.filter(w => 
                 w.difficulty >= diffLevel.minDiff && w.difficulty <= diffLevel.maxDiff
             );
+            console.log(`✅ Filtrelenmiş kelime sayısı: ${filteredData.length}`);
 
             if (filteredData.length === 0) {
+                console.log(`⚠️ Filtrelenmiş veri boş! Tüm kelimeler kullanılacak.`);
                 filteredData = kelimeBulData;
             }
 
-            // Rastgele kelime seç
-            currentDinleQuestion = filteredData[Math.floor(Math.random() * filteredData.length)];
+            console.log(`🎲 Rastgele kelime seçiliyor...`);
+            const randomIndex = Math.floor(Math.random() * filteredData.length);
+            currentDinleQuestion = filteredData[randomIndex];
+            console.log(`✅ Seçilen index: ${randomIndex}/${filteredData.length}`);
+            
+            console.log(`📝 === SORU #${dinleQuestionCount + 1} ===`);
+            console.log(`🔤 Kelime: "${currentDinleQuestion.kelime}"`);
+            console.log(`💭 Anlam: "${currentDinleQuestion.anlam}"`);
+            console.log(`📊 Soru zorluğu: ${currentDinleQuestion.difficulty}`);
+            console.log(`📊 Seçili zorluk: ${currentDifficulty} (${diffLevel.minDiff}-${diffLevel.maxDiff})`);
+            console.log(`🎯 Puan hesaplama: ${currentDinleQuestion.difficulty} × 2 = ${currentDinleQuestion.difficulty * 2} puan`);
 
+            console.log(`🎨 UI güncelleniyor...`);
             // UI güncelle
             elements.dinleSureInfo.textContent = `${currentDinleQuestion.sure_adi} Suresi`;
+            console.log(`✅ Sure bilgisi: ${currentDinleQuestion.sure_adi} Suresi`);
 
+            console.log(`🔀 Seçenekler oluşturuluyor... (4 Arapça kelime)`);
             // Seçenekler oluştur (4 Arapça kelime) - aynı zorluktan
             const wrongAnswers = [];
-            while (wrongAnswers.length < 3) {
+            let attempts = 0;
+            while (wrongAnswers.length < 3 && attempts < 50) {
+                attempts++;
                 const random = filteredData[Math.floor(Math.random() * filteredData.length)];
                 if (random.kelime !== currentDinleQuestion.kelime && 
                     !wrongAnswers.find(w => w.kelime === random.kelime)) {
                     wrongAnswers.push(random);
+                    console.log(`✅ Yanlış cevap #${wrongAnswers.length}: "${random.kelime}" (zorluk: ${random.difficulty})`);
                 }
             }
+            console.log(`📊 Yanlış cevap oluşturma: ${attempts} deneme, ${wrongAnswers.length}/3 başarılı`);
 
             const allOptions = [
                 { text: currentDinleQuestion.kelime, correct: true },
                 ...wrongAnswers.map(w => ({ text: w.kelime, correct: false }))
             ];
+            console.log(`🎯 Doğru cevap: "${currentDinleQuestion.kelime}" (index: 0)`);
+            console.log(`❌ Yanlış cevaplar: ${wrongAnswers.map(w => `"${w.kelime}"`).join(', ')}`);
 
             shuffle(allOptions);
 
@@ -1735,42 +2787,90 @@
         };
 
         function checkDinleAnswer(button, isCorrect) {
+            console.log(`🚨 === CEVAP KONTROLÜ BAŞLIYOR ===`);
+            console.log(`👆 Tıklanan buton: "${button.textContent}"`);
+            console.log(`✅/❌ isCorrect parametresi: ${isCorrect}`);
+            console.log(`📊 Mevcut soru: #${dinleQuestionCount + 1}/${DINLE_MAX_QUESTIONS}`);
+            console.log(`� Önce - session score: ${sessionScore}, session correct: ${sessionCorrect}, session wrong: ${sessionWrong}`);
+            console.log(`📊 Önce - dinle score: ${dinleScore}, dinle correct: ${dinleCorrect}, dinle wrong: ${dinleWrong}`);
+            
             const allBtns = elements.dinleOptions.querySelectorAll('.option');
+            console.log(`🔒 ${allBtns.length} buton devre dışı bırakılıyor...`);
             allBtns.forEach(btn => btn.disabled = true);
 
             if (isCorrect) {
+                console.log(`✅ === DOĞRU CEVAP İŞLEMİ ===`);
                 button.classList.add('correct');
                 elements.dinleFeedback.textContent = '✅ Doğru!';
                 elements.dinleFeedback.className = 'feedback correct';
-                dinleScore += currentDinleQuestion.difficulty * 2;
+                
+                const points = currentDinleQuestion.difficulty * 2;
+                console.log(`💰 Puan hesaplama: ${currentDinleQuestion.difficulty} × 2 = ${points} puan`);
+                
+                console.log(`📊 Dinle score güncelleniyor: ${dinleScore} + ${points} = ${dinleScore + points}`);
+                dinleScore += points; // Local oyun puanı
+                
+                console.log(`📊 Dinle correct güncelleniyor: ${dinleCorrect} + 1 = ${dinleCorrect + 1}`);
                 dinleCorrect++;
+                
+                console.log(`📊 addSessionPoints(${points}) çağrılıyor...`);
+                addSessionPoints(points); // Session puanına ekle
+                console.log(`✅ Doğru cevap işlemi tamamlandı!`);
+                console.log(`📊 Sonra - session score: ${sessionScore}, session correct: ${sessionCorrect}`);
             } else {
+                console.log(`❌ === YANLIŞ CEVAP İŞLEMİ ===`);
                 button.classList.add('wrong');
                 elements.dinleFeedback.textContent = `❌ Yanlış! Doğru: ${currentDinleQuestion.kelime} (${currentDinleQuestion.anlam})`;
                 elements.dinleFeedback.className = 'feedback wrong';
+                
+                console.log(`📊 Dinle wrong güncelleniyor: ${dinleWrong} + 1 = ${dinleWrong + 1}`);
                 dinleWrong++;
+                
+                console.log(`📊 addSessionWrong() çağrılıyor...`);
+                addSessionWrong(); // Session yanlış sayısını artır
+                console.log(`❌ ÖNEMLI: Yanlış cevap için puan EKLENMEDİ!`);
+                console.log(`📊 Session score değişmedi: ${sessionScore}`);
 
+                console.log(`🔍 Doğru cevabı gösteriliyor...`);
                 // Doğru cevabı göster
+                let correctButtonFound = false;
                 allBtns.forEach(btn => {
                     if (btn.textContent.includes(currentDinleQuestion.kelime)) {
                         btn.classList.add('correct');
+                        correctButtonFound = true;
+                        console.log(`✅ Doğru buton bulundu ve işaretlendi: "${btn.textContent}"`);
                     }
                 });
+                if (!correctButtonFound) {
+                    console.log(`⚠️ Doğru buton bulunamadı!`);
+                }
             }
 
+            console.log(`📊 Soru sayacı artırılıyor: ${dinleQuestionCount} + 1 = ${dinleQuestionCount + 1}`);
             dinleQuestionCount++; // Soru sayacını artır
+            console.log(`📊 FINAL - session: score=${sessionScore}, correct=${sessionCorrect}, wrong=${sessionWrong}`);
+            console.log(`📊 FINAL - dinle: score=${dinleScore}, correct=${dinleCorrect}, wrong=${dinleWrong}, questionCount=${dinleQuestionCount}`);
+            console.log(`🚨 === CEVAP KONTROLÜ BİTTİ ===`);
+            console.log(`🎨 UI güncelleniyor ve Next butonu gösteriliyor...`);
             updateDinleUI();
             elements.dinleNextBtn.style.display = 'block';
+            console.log(`✅ Cevap işlemi tamamen tamamlandı!`);
         }
 
         elements.dinleNextBtn.onclick = () => {
+            console.log(`🔄 Next butonu tıklandı! Yeni soru yükleniyor...`);
+            console.log(`📊 Bir sonraki soru: #${dinleQuestionCount + 1}/${DINLE_MAX_QUESTIONS}`);
+            elements.dinleNextBtn.style.display = 'none';
             loadDinleQuestion();
         };
 
         function updateDinleUI() {
+            console.log(`🎨 DinleUI güncelleniyor...`);
+            console.log(`📊 Gösterilecek değerler: score=${dinleScore}, correct=${dinleCorrect}, wrong=${dinleWrong}`);
             elements.dinleScore.textContent = dinleScore;
             elements.dinleCorrect.textContent = dinleCorrect;
             elements.dinleWrong.textContent = dinleWrong;
+            console.log(`✅ DinleUI güncellendi!`);
         }
 
         // ============ BOŞLUK DOLDUR MODU ============
@@ -1781,32 +2881,62 @@
         const BOSLUK_MAX_QUESTIONS = 10;
 
         function loadBoslukQuestion() {
+            console.log('📋 === BOŞLUK DOLDUR SORU YÜKLENİYOR ===');
+            console.log(`📊 Mevcut soru sayısı: ${boslukQuestionCount}/${BOSLUK_MAX_QUESTIONS}`);
+            console.log(`📊 Oyun durumu: score=${boslukScore}, correct=${boslukCorrect}, wrong=${boslukWrong}`);
+            
             // 10 soru kontrolü
             if (boslukQuestionCount >= BOSLUK_MAX_QUESTIONS) {
-                // Oyun bitti - Ana menüye dön
-                alert(`🎉 Tebrikler!\n\nToplam Puan: ${boslukScore}\nDoğru: ${boslukCorrect}\nYanlış: ${boslukWrong}`);
+                console.log(`🏁 === BOŞLUK DOLDUR OYUNU BİTTİ ===`);
+                console.log(`✅ ${BOSLUK_MAX_QUESTIONS} soru tamamlandı!`);
+                console.log(`📊 Final oyun skorları: boslukScore=${boslukScore}, boslukCorrect=${boslukCorrect}, boslukWrong=${boslukWrong}`);
+                console.log(`📊 Final session skorları: sessionScore=${sessionScore}, sessionCorrect=${sessionCorrect}, sessionWrong=${sessionWrong}`);
+                
+                console.log(`💰 Session puanları global'e aktarılıyor: ${sessionScore} puan`);
+                // Session puanlarını global'e aktar
+                addToGlobalPoints(sessionScore, sessionCorrect);
+                
+                console.log(`🔄 Ana menüye dönülüyor...`);
+                // Direkt ana menüye dön
                 elements.boslukMode.style.display = 'none';
                 elements.mainMenu.style.display = 'block';
+                
+                console.log(`🧹 Oyun değişkenleri temizleniyor...`);
                 // Sıfırla
                 boslukScore = 0;
                 boslukCorrect = 0;
                 boslukWrong = 0;
                 boslukQuestionCount = 0;
                 updateBoslukUI();
+                console.log(`✅ Boşluk Doldur oyunu bitti ve ana menüye dönüldü!`);
                 return;
             }
 
+            console.log(`🔍 Ayet filtreleme başlıyor...`);
             // Rastgele ayet seç (ayet_metni olan ayetleri filtrele)
             const validAyets = ayetOkuData.filter(a => a.ayet_metni && a.ayet_metni.trim());
+            console.log(`📦 Toplam ayet sayısı: ${ayetOkuData.length}`);
+            console.log(`✅ Geçerli ayet sayısı: ${validAyets.length}`);
+            
             if (validAyets.length === 0) {
-                console.error('Geçerli ayet bulunamadı!');
+                console.error('❌ Geçerli ayet bulunamadı!');
                 return;
             }
             
-            const ayet = validAyets[Math.floor(Math.random() * validAyets.length)];
+            console.log(`🎲 Rastgele ayet seçiliyor...`);
+            const randomIndex = Math.floor(Math.random() * validAyets.length);
+            const ayet = validAyets[randomIndex];
+            console.log(`✅ Seçilen ayet index: ${randomIndex}/${validAyets.length}`);
+            
+            console.log(`📝 === SORU #${boslukQuestionCount + 1} ===`);
+            console.log(`📖 Sure: ${ayet.sure_adi || 'Bilinmiyor'}`);
+            console.log(`🔢 Ayet No: ${ayet.ayet_no || 'Bilinmiyor'}`);
+            console.log(`📝 Ayet Metni: "${ayet.ayet_metni}"`);
             
             // Ayet metnini kelimelere böl
             const words = ayet.ayet_metni.split(' ').filter(w => w && w.trim());
+            console.log(`🔤 Kelime sayısı: ${words.length}`);
+            console.log(`🔤 Kelimeler:`, words);
             
             if (words.length < 4) {
                 // Çok kısa ayetler için tekrar dene
@@ -1879,36 +3009,71 @@
         };
 
         function checkBoslukAnswer(button, isCorrect) {
+            console.log(`🚨 === BOŞLUK DOLDUR CEVAP KONTROLÜ ===`);
+            console.log(`👆 Tıklanan buton: "${button.textContent}"`);
+            console.log(`✅/❌ isCorrect parametresi: ${isCorrect}`);
+            console.log(`📊 Mevcut soru: #${boslukQuestionCount + 1}/${BOSLUK_MAX_QUESTIONS}`);
+            console.log(`📊 Eksik kelime: "${missingWord}"`);
+            console.log(`📊 Önce - session: score=${sessionScore}, correct=${sessionCorrect}, wrong=${sessionWrong}`);
+            console.log(`📊 Önce - boşluk: score=${boslukScore}, correct=${boslukCorrect}, wrong=${boslukWrong}`);
+            
             const allBtns = elements.boslukOptions.querySelectorAll('.option');
+            console.log(`🔒 ${allBtns.length} buton devre dışı bırakılıyor...`);
             allBtns.forEach(btn => btn.disabled = true);
 
             if (isCorrect) {
+                console.log(`✅ === DOĞRU CEVAP İŞLEMİ ===`);
                 button.classList.add('correct');
                 elements.boslukFeedback.textContent = '✅ Doğru!';
                 elements.boslukFeedback.className = 'feedback correct';
-                boslukScore += 10;
+                
+                console.log(`💰 Boşluk Doldur sabit puan: 10 puan ekleniyor`);
+                console.log(`📊 Boşluk score güncelleniyor: ${boslukScore} + 10 = ${boslukScore + 10}`);
+                boslukScore += 10; // Local oyun puanı
                 boslukCorrect++;
+                
+                console.log(`📊 addSessionPoints(10) çağrılıyor...`);
+                addSessionPoints(10); // Session puanına ekle
+                console.log(`✅ Doğru cevap işlemi tamamlandı!`);
 
                 // Tam ayeti göster
                 elements.boslukAyetText.textContent = currentBoslukQuestion.ayet_metni;
             } else {
+                console.log(`❌ === YANLIŞ CEVAP İŞLEMİ ===`);
                 button.classList.add('wrong');
                 elements.boslukFeedback.textContent = `❌ Yanlış! Doğru kelime: ${missingWord}`;
                 elements.boslukFeedback.className = 'feedback wrong';
+                
+                console.log(`📊 Boşluk wrong güncelleniyor: ${boslukWrong} + 1 = ${boslukWrong + 1}`);
                 boslukWrong++;
+                
+                console.log(`📊 addSessionWrong() çağrılıyor...`);
+                addSessionWrong(); // Session yanlış sayısını artır
+                console.log(`❌ ÖNEMLI: Yanlış cevap için puan EKLENMEDİ!`);
 
+                console.log(`🔍 Doğru cevabı gösteriliyor...`);
                 // Doğru cevabı göster
+                let correctButtonFound = false;
                 allBtns.forEach(btn => {
                     if (btn.textContent.includes(missingWord)) {
                         btn.classList.add('correct');
+                        correctButtonFound = true;
+                        console.log(`✅ Doğru buton bulundu: "${btn.textContent}"`);
                     }
                 });
+                if (!correctButtonFound) {
+                    console.log(`⚠️ Doğru buton bulunamadı! Aranan: "${missingWord}"`);
+                }
 
                 // Tam ayeti göster
                 elements.boslukAyetText.textContent = currentBoslukQuestion.ayet_metni;
             }
 
+            console.log(`📊 Soru sayacı artırılıyor: ${boslukQuestionCount} + 1 = ${boslukQuestionCount + 1}`);
             boslukQuestionCount++; // Soru sayacını artır
+            console.log(`📊 FINAL - session: score=${sessionScore}, correct=${sessionCorrect}, wrong=${sessionWrong}`);
+            console.log(`📊 FINAL - boşluk: score=${boslukScore}, correct=${boslukCorrect}, wrong=${boslukWrong}, questionCount=${boslukQuestionCount}`);
+            console.log(`🚨 === BOŞLUK DOLDUR CEVAP KONTROLÜ BİTTİ ===`);
             updateBoslukUI();
             elements.boslukNextBtn.style.display = 'block';
         }
@@ -1918,9 +3083,12 @@
         };
 
         function updateBoslukUI() {
+            console.log(`🎨 BoslukUI güncelleniyor...`);
+            console.log(`📊 Gösterilecek değerler: score=${boslukScore}, correct=${boslukCorrect}, wrong=${boslukWrong}`);
             elements.boslukScore.textContent = boslukScore;
             elements.boslukCorrect.textContent = boslukCorrect;
             elements.boslukWrong.textContent = boslukWrong;
+            console.log(`✅ BoslukUI güncellendi!`);
         }
 
         // ============ DUA ET MODU ============
@@ -2027,7 +3195,65 @@
         };
 
         // ============ OYUNU BAŞLAT ============
+        // TEST İÇİN: Tüm puanları sıfırla
+        resetAllStats();
+        
         loadData();
+        updateStatsBar(); // İstatistik barını initialize et
+            // Global debug fonksiyonu - console'dan çağırılabilir
+            window.debugStats = function() {
+                console.log('🔧 DEBUG - Mevcut Oyun İstatistikleri:');
+                console.log('Total Points:', typeof totalPoints !== 'undefined' ? totalPoints : 'Henüz yüklenmedi');
+                console.log('Star Points:', typeof starPoints !== 'undefined' ? starPoints : 'Henüz yüklenmedi');
+                console.log('Level:', typeof level !== 'undefined' ? level : 'Henüz yüklenmedi');
+                console.log('Session Score:', typeof sessionScore !== 'undefined' ? sessionScore : 'Henüz yüklenmedi');
+            };
+
+            // Seviye geçiş test fonksiyonu - console'dan çağırılabilir
+            window.testLevelUp = function(targetPoints) {
+                console.log('🎯 Seviye geçiş testi başlatılıyor...');
+                console.log('Mevcut puan:', totalPoints);
+                console.log('Hedef puan:', targetPoints);
+                
+                // Hedef puana sıçrama
+                const oldLevel = calculateLevel(totalPoints);
+                totalPoints = targetPoints;
+                const newLevel = calculateLevel(totalPoints);
+                
+                console.log('Eski seviye:', oldLevel);
+                console.log('Yeni seviye:', newLevel);
+                
+                // Seviye atlama kontrolü
+                if (newLevel > oldLevel) {
+                    level = newLevel;
+                    console.log('✅ Seviye atlandı! Modal gösteriliyor...');
+                    showLevelUpModal(newLevel);
+                } else {
+                    console.log('❌ Seviye atlanmadı.');
+                }
+                
+                updateStatsBar();
+                saveStats(); // Değişiklikleri kaydet
+            };
+
+            // Hızlı seviye test fonksiyonları
+            window.testLevel2 = () => testLevelUp(1000);   // Seviye 2'ye çık
+            window.testLevel3 = () => testLevelUp(2500);   // Seviye 3'e çık
+            window.testLevel5 = () => testLevelUp(8500);   // Seviye 5'e çık
+            window.testLevel10 = () => testLevelUp(46000); // Seviye 10'a çık
+            window.resetPoints = () => { 
+                totalPoints = 0; 
+                level = 1; 
+                updateStatsBar(); 
+                saveStats(); 
+                console.log('🔄 Puanlar sıfırlandı'); 
+            };
+
+            // Modal fonksiyonlarını global hale getir
+            window.showBadgesModal = showBadgesModal;
+            window.closeBadgesModal = closeBadgesModal;
+        
+        }); // DOMContentLoaded event listener sonu
     </script>
 </body>
 </html>
