@@ -1,0 +1,2013 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hasene Arapça Oyunu</title>
+    
+    <!-- Osmanlı Hafs Hattı Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ============ TEMEL AYARLAR ============ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #667eea;
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        /* ============ KONTEYNER ============ */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* ============ BAŞLIK ============ */
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2D5F3F;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+
+        .settings-btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            background: #F4C430;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        /* ============ ANA MENÜ ============ */
+        .main-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .menu-item {
+            background: linear-gradient(135deg, #2D5F3F 0%, #1E4D7B 100%);
+            color: white;
+            border: none;
+            padding: 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .menu-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .menu-item:active {
+            transform: translateY(0);
+        }
+
+        .menu-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .menu-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .menu-desc {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        /* ============ GERİ BUTONU ============ */
+        .back-btn {
+            background: #666;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            font-size: 1em;
+        }
+
+        .back-btn:active {
+            background: #555;
+        }
+
+        /* ============ MOD SEÇİCİ ============ */
+        .mode-selector {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .mode-selector h3 {
+            color: #2D5F3F;
+            margin: 15px 0 10px 0;
+            font-size: 1.1em;
+        }
+
+        .mode-btn, .diff-btn {
+            display: block;
+            width: 100%;
+            background: white;
+            border: 3px solid #ddd;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .mode-btn:hover, .diff-btn:hover {
+            border-color: #2D5F3F;
+            transform: translateX(5px);
+        }
+
+        .mode-btn.active, .diff-btn.active {
+            background: linear-gradient(135deg, #2D5F3F 0%, #1E4D7B 100%);
+            color: white;
+            border-color: #2D5F3F;
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(45, 95, 63, 0.3);
+        }
+
+        .mode-btn.active::after, .diff-btn.active::after {
+            content: '✓';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .mode-btn strong, .diff-btn strong {
+            display: block;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .mode-btn small, .diff-btn small {
+            display: block;
+            opacity: 0.8;
+        }
+
+        .start-btn {
+            width: 100%;
+            background: #F4C430;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .start-btn:active {
+            background: #d4a820;
+        }
+
+        /* ============ OYUN BİLGİSİ ============ */
+        .game-info {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 10px;
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        .game-info div {
+            font-weight: bold;
+        }
+
+        /* ============ İSTATİSTİKLER ============ */
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .stat {
+            flex: 1;
+            background: #2D5F3F;
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.8em;
+            opacity: 0.9;
+        }
+
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        /* ============ İLERLEME ÇUBUĞU ============ */
+        .progress {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #F4C430;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        /* ============ OYUN ALANI ============ */
+        .game-box {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .sure-info {
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .arabic {
+            font-size: 16px;   /* Arapça metin için büyük font boyutu */
+            text-align: center;
+            color: #2D5F3F;
+            font-weight: bold;
+            margin: 20px 0;
+            direction: rtl;
+            /* Osmanlı Hafs Hattı - Kur'an yazı tipi */
+            font-family: 'Amiri Quran', 'Scheherazade New', 'Traditional Arabic', 'Arabic Typesetting', serif;
+            font-weight: 400;
+            line-height: 1.8;
+            letter-spacing: 0;
+        }
+
+        /* ============ SES BUTONU ============ */
+        .audio-btn {
+            display: block;
+            width: 100%;
+            background: #F4C430;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .audio-btn:active {
+            background: #d4a820;
+        }
+
+        /* ============ İPUCU BUTONU ============ */
+        .hint-btn {
+            display: block;
+            width: 100%;
+            background: #64B5F6;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .hint-btn:active {
+            background: #42A5F5;
+        }
+
+        .hint-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* ============ SEÇENEKLER ============ */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {   /* Tek bir seçenek butonu */
+            background: white;
+            border: 2px solid #ddd;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 16px;       
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .option:active {
+            background: #f0f0f0;
+        }
+
+        .option.correct {
+            background: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        .option.wrong {
+            background: #f44336;
+            color: white;
+            border-color: #f44336;
+        }
+
+        .option:disabled {
+            cursor: default;
+        }
+
+        /* ============ GERİ BİLDİRİM ============ */
+        .feedback {
+            text-align: center;
+            font-size: 1.1em;
+            font-weight: bold;
+            min-height: 30px;
+            margin: 15px 0;
+        }
+
+        .feedback.correct {
+            color: #4CAF50;
+        }
+
+        .feedback.wrong {
+            color: #f44336;
+        }
+
+        /* ============ SONRAKİ BUTON ============ */
+        .next-btn {
+            display: none;
+            width: 100%;
+            background: #2D5F3F;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            cursor: pointer;
+        }
+
+        .next-btn:active {
+            background: #1d3f2f;
+        }
+
+        /* ============ AYET & DUA MODLARI ============ */
+        .ayet-card, .dua-card {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .translation {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            color: #333;
+            font-size: 1.1em;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .pronunciation {
+            background: #E3F2FD;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            color: #1565C0;
+            font-size: 1em;
+            font-style: italic;
+            text-align: center;
+        }
+
+        .dua-title {
+            text-align: center;
+            color: #2D5F3F;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .navigation-btns {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .nav-btn {
+            flex: 1;
+            background: #2D5F3F;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .nav-btn:active {
+            background: #1d3f2f;
+        }
+
+        .nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* ============ DUA KATEGORİLERİ ============ */
+        .dua-categories {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .category-btn {
+            background: white;
+            border: 2px solid #2D5F3F;
+            color: #2D5F3F;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .category-btn:active {
+            background: #2D5F3F;
+            color: white;
+        }
+
+        /* ============ HADİS KARTI ============ */
+        .hadis-card {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .hadis-category {
+            background: #2D5F3F;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .hadis-title {
+            color: #2D5F3F;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .hadis-header {
+            background: #E3F2FD;
+            padding: 10px;
+            border-radius: 8px;
+            color: #1565C0;
+            font-size: 0.95em;
+            margin-bottom: 15px;
+        }
+
+        .hadis-text {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .hadis-ref {
+            background: #FFF3E0;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.85em;
+            color: #E65100;
+            margin-bottom: 15px;
+        }
+
+        /* ============ MODAL ============ */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            width: 80%;
+            max-width: 300px;
+        }
+
+        .modal h2 {
+            color: #2D5F3F;
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .modal p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .modal-btn {
+            width: 100%;
+            background: #F4C430;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Başlık -->
+        <div class="header">
+            <h1>🕌 Hasene Arapça</h1>
+            <button class="settings-btn" id="settingsBtn" style="display: none;">⚙️</button>
+        </div>
+
+        <!-- Ana Menü -->
+        <div class="main-menu" id="mainMenu">
+            <h2 style="text-align: center; color: #2D5F3F; margin-bottom: 10px;">Zorluk Seç</h2>
+            
+            <!-- Zorluk Butonları -->
+            <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center;">
+                <button class="diff-btn" id="mainDiffKolay" style="flex: 1; min-width: 100px; max-width: 130px; margin: 0; padding: 12px; font-size: 0.9em;">
+                    <strong>😊 Kolay</strong>
+                </button>
+                <button class="diff-btn" id="mainDiffOrta" style="flex: 1; min-width: 100px; max-width: 130px; margin: 0; padding: 12px; font-size: 0.9em;">
+                    <strong>😐 Orta</strong>
+                </button>
+                <button class="diff-btn" id="mainDiffZor" style="flex: 1; min-width: 100px; max-width: 130px; margin: 0; padding: 12px; font-size: 0.9em;">
+                    <strong>😤 Zor</strong>
+                </button>
+                <button class="diff-btn active" id="mainDiffKarisik" style="flex: 1; min-width: 100px; max-width: 130px; margin: 0; padding: 12px; font-size: 0.9em;">
+                    <strong>🎲 Karışık</strong>
+                </button>
+            </div>
+
+            <h2 style="text-align: center; color: #2D5F3F; margin-bottom: 15px;">Oyun Modu Seç</h2>
+            
+            <button class="menu-item" id="kelimeCevirBtn" style="margin-bottom: 10px; padding: 12px;">
+                <div class="menu-icon" style="font-size: 1.8em; margin-bottom: 3px;">📚</div>
+                <div class="menu-title" style="font-size: 1em;">Kelime Çevir</div>
+                <div class="menu-desc" style="font-size: 0.8em;">Arapça kelimeyi Türkçe'ye çevir</div>
+            </button>
+
+            <button class="menu-item" id="dinleBulBtn" style="margin-bottom: 10px; padding: 12px;">
+                <div class="menu-icon" style="font-size: 1.8em; margin-bottom: 3px;">🎧</div>
+                <div class="menu-title" style="font-size: 1em;">Dinle ve Bul</div>
+                <div class="menu-desc" style="font-size: 0.8em;">Kelimeyi dinle, doğru kelimeyi bul</div>
+            </button>
+
+            <button class="menu-item" id="boslukDoldurBtn" style="margin-bottom: 10px; padding: 12px;">
+                <div class="menu-icon" style="font-size: 1.8em; margin-bottom: 3px;">✍️</div>
+                <div class="menu-title" style="font-size: 1em;">Boşluk Doldur</div>
+                <div class="menu-desc" style="font-size: 0.8em;">Ayetteki eksik kelimeyi tamamla</div>
+            </button>
+
+            <button class="menu-item" id="duaEtBtn" style="margin-bottom: 10px; padding: 12px;">
+                <div class="menu-icon" style="font-size: 1.8em; margin-bottom: 3px;">🤲</div>
+                <div class="menu-title" style="font-size: 1em;">Dua Et ve Dinle</div>
+                <div class="menu-desc" style="font-size: 0.8em;">Kur'an'dan duaları öğren</div>
+            </button>
+
+            <button class="menu-item" id="ayetOkuBtn" style="margin-bottom: 10px; padding: 12px;">
+                <div class="menu-icon" style="font-size: 1.8em; margin-bottom: 3px;">📖</div>
+                <div class="menu-title" style="font-size: 1em;">Ayet Oku ve Dinle</div>
+                <div class="menu-desc" style="font-size: 0.8em;">Ayetleri dinle ve oku</div>
+            </button>
+
+            <button class="menu-item" id="hadisOkuBtn" style="margin-bottom: 0; padding: 12px;">
+                <div class="menu-icon" style="font-size: 1.8em; margin-bottom: 3px;">📜</div>
+                <div class="menu-title" style="font-size: 1em;">Hadis Oku</div>
+                <div class="menu-desc" style="font-size: 0.8em;">Hadis-i Şerifleri oku</div>
+            </button>
+        </div>
+
+        <!-- Kelime Çevir Alt Mod Seçimi -->
+        <div class="mode-selector" id="modeSelector" style="display: none;">
+            <button class="back-btn" id="backToMenuBtn">← Geri</button>
+            
+            <h3>📚 Kelime Çevir - Oyun Modu Seç</h3>
+            <div id="modeButtons"></div>
+            
+            <button class="start-btn" id="startBtn">Oyunu Başlat</button>
+        </div>
+
+        <!-- Ayet Okuma Modu -->
+        <div class="ayet-mode" id="ayetMode" style="display: none;">
+            <button class="back-btn" id="backFromAyetBtn">← Geri</button>
+            <div class="ayet-card">
+                <div class="sure-info" id="ayetSureInfo">Yükleniyor...</div>
+                <div class="arabic" id="ayetArabic">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+                <div class="translation" id="ayetTranslation">Yükleniyor...</div>
+                <button class="audio-btn" id="ayetAudioBtn">🔊 Ayeti Dinle</button>
+                <div class="navigation-btns">
+                    <button class="nav-btn" id="prevAyetBtn">← Önceki</button>
+                    <button class="nav-btn" id="nextAyetBtn">Sonraki →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dua Modu -->
+        <div class="dua-mode" id="duaMode" style="display: none;">
+            <button class="back-btn" id="backFromDuaBtn">← Geri</button>
+            <div class="dua-card">
+                <div class="sure-info" id="duaSureInfo">Yükleniyor...</div>
+                <div class="arabic" id="duaArabic">Arapça Metin</div>
+                <div class="translation" id="duaTranslation">Anlamı</div>
+                <button class="audio-btn" id="duaAudioBtn">🔊 Duayı Dinle</button>
+                <div class="navigation-btns">
+                    <button class="nav-btn" id="prevDuaBtn">← Önceki</button>
+                    <button class="nav-btn" id="nextDuaBtn">Sonraki →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hadis Oku Modu -->
+        <div class="hadis-mode" id="hadisMode" style="display: none;">
+            <button class="back-btn" id="backFromHadisBtn">← Geri</button>
+            <div class="hadis-card">
+                <div class="hadis-category" id="hadisCategory">Kategori</div>
+                <div class="hadis-title" id="hadisTitle">Başlık</div>
+                <div class="hadis-header" id="hadisHeader">Ravi</div>
+                <div class="hadis-text" id="hadisText">Hadis Metni</div>
+                <div class="hadis-ref" id="hadisRef">Referans</div>
+                <div class="navigation-btns">
+                    <button class="nav-btn" id="prevHadisBtn">← Önceki</button>
+                    <button class="nav-btn" id="nextHadisBtn">Sonraki →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Boşluk Doldur Modu -->
+        <div class="bosluk-mode" id="boslukMode" style="display: none;">
+            <button class="back-btn" id="backFromBoslukBtn">← Geri</button>
+            
+            <!-- İstatistikler -->
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-label">Puan</div>
+                    <div class="stat-value" id="boslukScore">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Doğru</div>
+                    <div class="stat-value" id="boslukCorrect">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Yanlış</div>
+                    <div class="stat-value" id="boslukWrong">0</div>
+                </div>
+            </div>
+
+            <div class="game-box">
+                <div class="sure-info" id="boslukSureInfo">Yükleniyor...</div>
+                <div class="arabic" id="boslukAyetText">Ayet metni yükleniyor...</div>
+                <button class="audio-btn" id="boslukAudioBtn">🔊 Ayeti Dinle</button>
+                <div class="options" id="boslukOptions"></div>
+                <div class="feedback" id="boslukFeedback"></div>
+                <button class="next-btn" id="boslukNextBtn">Sonraki Soru →</button>
+            </div>
+        </div>
+
+        <!-- Dinle ve Bul Modu -->
+        <div class="dinle-mode" id="dinleMode" style="display: none;">
+            <button class="back-btn" id="backFromDinleBtn">← Geri</button>
+            
+            <!-- İstatistikler -->
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-label">Puan</div>
+                    <div class="stat-value" id="dinleScore">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Doğru</div>
+                    <div class="stat-value" id="dinleCorrect">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Yanlış</div>
+                    <div class="stat-value" id="dinleWrong">0</div>
+                </div>
+            </div>
+
+            <div class="game-box">
+                <div class="sure-info" id="dinleSureInfo">Ses dosyasını dinle</div>
+                <div style="text-align: center; margin: 30px 0;">
+                    <div style="font-size: 4em;">🎧</div>
+                </div>
+                <button class="audio-btn" id="dinleAudioBtn">🔊 Kelimeyi Dinle</button>
+                <div class="options" id="dinleOptions"></div>
+                <div class="feedback" id="dinleFeedback"></div>
+                <button class="next-btn" id="dinleNextBtn">Sonraki Soru →</button>
+            </div>
+        </div>
+
+        <!-- Oyun Ekranı -->
+        <div class="game-screen" id="gameScreen" style="display: none;">
+        <button class="back-btn" id="backFromGameBtn">← Geri</button>
+
+        <!-- İstatistikler -->
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-label">Puan</div>
+                <div class="stat-value" id="score">0</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Seviye</div>
+                <div class="stat-value" id="level">1</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Doğru</div>
+                <div class="stat-value" id="correct">0</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Yanlış</div>
+                <div class="stat-value" id="wrong">0</div>
+            </div>
+        </div>
+
+        <!-- Can ve Süre -->
+        <div class="game-info">
+            <div id="livesDisplay" style="display: none;">
+                ❤️ Can: <span id="lives">3</span>
+            </div>
+            <div id="timerDisplay" style="display: none;">
+                ⏱️ Süre: <span id="timer">30</span>s
+            </div>
+            <div>
+                📊 Mod: <span id="currentMode">Klasik</span>
+            </div>
+        </div>
+
+        <!-- İlerleme -->
+        <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <!-- Oyun Alanı -->
+        <div class="game-box">
+            <div class="sure-info" id="sureInfo">Yükleniyor...</div>
+            <div class="arabic" id="arabicWord">رَكَّبَكَ</div>
+            <button class="audio-btn" id="audioBtn">🔊 Sesi Dinle</button>
+            <button class="hint-btn" id="hintBtn" style="display: none;">💡 İpucu</button>
+            <div class="options" id="options"></div>
+            <div class="feedback" id="feedback"></div>
+            <button class="next-btn" id="nextBtn">Sonraki Soru →</button>
+        </div>
+        </div>  <!-- gameScreen sonu -->
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h2>🎉 Tebrikler!</h2>
+            <p>Seviye <span id="newLevel"></span>'e yükseldiniz!</p>
+            <button class="modal-btn" id="modalBtn">Devam Et</button>
+        </div>
+    </div>
+
+    <!-- Oyun Bitti Modal -->
+    <div class="modal" id="gameOverModal">
+        <div class="modal-content">
+            <h2 id="gameOverTitle">😢 Oyun Bitti</h2>
+            <p id="gameOverText"></p>
+            <p>Toplam Puan: <strong id="finalScore">0</strong></p>
+            <button class="modal-btn" id="restartBtn">Yeniden Başla</button>
+        </div>
+    </div>
+
+    <script>
+        // ============ AYARLAR - BURADAN KONTROLEDEBİLİRSİN ============
+        const CONFIG = {
+            // OYUN MODLARI
+            gameModes: {
+                klasik: {
+                    name: '📚 Klasik',
+                    description: 'Normal oyun modu',
+                    questionsPerLevel: 10,
+                    timeLimit: 0,  // 0 = süre yok
+                    lives: 0,      // 0 = sınırsız can
+                    showHint: true
+                },
+                hizli: {
+                    name: '⚡ Hızlı',
+                    description: '30 saniye süre',
+                    questionsPerLevel: 15,
+                    timeLimit: 30,
+                    lives: 0,
+                    showHint: false
+                },
+                hayat: {
+                    name: '❤️ 3 Can',
+                    description: '3 hak, yanlış = -1 can',
+                    questionsPerLevel: 20,
+                    timeLimit: 0,
+                    lives: 3,
+                    showHint: true
+                },
+                zorluk: {
+                    name: '🔥 Zorluk',
+                    description: 'Sadece zor kelimeler',
+                    questionsPerLevel: 10,
+                    timeLimit: 20,
+                    lives: 3,
+                    showHint: false,
+                    minDifficulty: 7  // 7-10 arası zorluk
+                }
+            },
+
+            // ZORLUK SEVİYELERİ (Eşit Dağılımlı: Her biri ~4945 kelime)
+            difficultyLevels: {
+                kolay: {
+                    name: '😊 Kolay',
+                    minDiff: 5,
+                    maxDiff: 9,
+                    pointsMultiplier: 5
+                },
+                orta: {
+                    name: '😐 Orta',
+                    minDiff: 10,
+                    maxDiff: 11,
+                    pointsMultiplier: 10
+                },
+                zor: {
+                    name: '😤 Zor',
+                    minDiff: 12,
+                    maxDiff: 21,
+                    pointsMultiplier: 15
+                },
+                karisik: {
+                    name: '🎲 Karışık',
+                    minDiff: 5,
+                    maxDiff: 21,
+                    pointsMultiplier: 10
+                }
+            },
+
+            // VARSAYILAN AYARLAR
+            defaultMode: 'klasik',
+            defaultDifficulty: 'karisik',
+            wrongAnswerPenalty: 5  // Yanlış cevap puan cezası
+        };
+
+        // ============ OYUN DURUMU ============
+        let kelimeBulData = [];  // kelimebul.json
+        let ayetOkuData = [];    // ayetoku.json
+        let duaData = [];        // duaet.json
+        let hadisData = [];      // hadisoku.json
+        
+        let currentQuestion = null;
+        let currentAyetIndex = 0;
+        let currentDuaIndex = 0;
+        let currentHadisIndex = 0;
+        
+        // Ses kontrolü için
+        let currentAudio = null;
+        
+        // Kelime Çevir oyunu için
+        let kelimeCevirScore = 0;
+        let kelimeCevirCorrect = 0;
+        let kelimeCevirWrong = 0;
+        
+        // Dinle ve Bul oyunu için
+        let dinleScore = 0;
+        let dinleCorrect = 0;
+        let dinleWrong = 0;
+        
+        // Boşluk Doldur oyunu için
+        let boslukScore = 0;
+        let boslukCorrect = 0;
+        let boslukWrong = 0;
+        
+        let score = 0;
+        let level = 1;
+        let correct = 0;
+        let wrong = 0;
+        let questionCount = 0;
+        let currentMode = CONFIG.defaultMode;
+        let currentDifficulty = CONFIG.defaultDifficulty;
+        let lives = 0;
+        let timer = null;
+        let timeLeft = 0;
+
+        // ============ DOM ELEMANLARI ============
+        const elements = {
+            // Ana menü
+            mainMenu: document.getElementById('mainMenu'),
+            kelimeCevirBtn: document.getElementById('kelimeCevirBtn'),
+            dinleBulBtn: document.getElementById('dinleBulBtn'),
+            boslukDoldurBtn: document.getElementById('boslukDoldurBtn'),
+            duaEtBtn: document.getElementById('duaEtBtn'),
+            ayetOkuBtn: document.getElementById('ayetOkuBtn'),
+            hadisOkuBtn: document.getElementById('hadisOkuBtn'),
+            
+            // Kelime oyunu
+            score: document.getElementById('score'),
+            level: document.getElementById('level'),
+            correct: document.getElementById('correct'),
+            wrong: document.getElementById('wrong'),
+            progressBar: document.getElementById('progressBar'),
+            sureInfo: document.getElementById('sureInfo'),
+            arabicWord: document.getElementById('arabicWord'),
+            audioBtn: document.getElementById('audioBtn'),
+            hintBtn: document.getElementById('hintBtn'),
+            options: document.getElementById('options'),
+            feedback: document.getElementById('feedback'),
+            nextBtn: document.getElementById('nextBtn'),
+            difficulty: document.getElementById('difficulty'),
+            modal: document.getElementById('modal'),
+            newLevel: document.getElementById('newLevel'),
+            modalBtn: document.getElementById('modalBtn'),
+            modeSelector: document.getElementById('modeSelector'),
+            gameScreen: document.getElementById('gameScreen'),
+            settingsBtn: document.getElementById('settingsBtn'),
+            startBtn: document.getElementById('startBtn'),
+            modeButtons: document.getElementById('modeButtons'),
+            difficultyButtons: document.getElementById('difficultyButtons'),
+            lives: document.getElementById('lives'),
+            livesDisplay: document.getElementById('livesDisplay'),
+            timer: document.getElementById('timer'),
+            timerDisplay: document.getElementById('timerDisplay'),
+            currentMode: document.getElementById('currentMode'),
+            gameOverModal: document.getElementById('gameOverModal'),
+            gameOverTitle: document.getElementById('gameOverTitle'),
+            gameOverText: document.getElementById('gameOverText'),
+            finalScore: document.getElementById('finalScore'),
+            restartBtn: document.getElementById('restartBtn'),
+            backToMenuBtn: document.getElementById('backToMenuBtn'),
+            backFromGameBtn: document.getElementById('backFromGameBtn'),
+            
+            // Ayet modu
+            ayetMode: document.getElementById('ayetMode'),
+            ayetSureInfo: document.getElementById('ayetSureInfo'),
+            ayetArabic: document.getElementById('ayetArabic'),
+            ayetTranslation: document.getElementById('ayetTranslation'),
+            ayetAudioBtn: document.getElementById('ayetAudioBtn'),
+            prevAyetBtn: document.getElementById('prevAyetBtn'),
+            nextAyetBtn: document.getElementById('nextAyetBtn'),
+            backFromAyetBtn: document.getElementById('backFromAyetBtn'),
+            
+            // Dua modu
+            duaMode: document.getElementById('duaMode'),
+            duaSureInfo: document.getElementById('duaSureInfo'),
+            duaArabic: document.getElementById('duaArabic'),
+            duaTranslation: document.getElementById('duaTranslation'),
+            duaAudioBtn: document.getElementById('duaAudioBtn'),
+            prevDuaBtn: document.getElementById('prevDuaBtn'),
+            nextDuaBtn: document.getElementById('nextDuaBtn'),
+            backFromDuaBtn: document.getElementById('backFromDuaBtn'),
+            
+            // Hadis modu
+            hadisMode: document.getElementById('hadisMode'),
+            hadisCategory: document.getElementById('hadisCategory'),
+            hadisTitle: document.getElementById('hadisTitle'),
+            hadisHeader: document.getElementById('hadisHeader'),
+            hadisText: document.getElementById('hadisText'),
+            hadisRef: document.getElementById('hadisRef'),
+            prevHadisBtn: document.getElementById('prevHadisBtn'),
+            nextHadisBtn: document.getElementById('nextHadisBtn'),
+            backFromHadisBtn: document.getElementById('backFromHadisBtn'),
+            
+            // Boşluk Doldur modu
+            boslukMode: document.getElementById('boslukMode'),
+            boslukSureInfo: document.getElementById('boslukSureInfo'),
+            boslukAyetText: document.getElementById('boslukAyetText'),
+            boslukAudioBtn: document.getElementById('boslukAudioBtn'),
+            boslukOptions: document.getElementById('boslukOptions'),
+            boslukFeedback: document.getElementById('boslukFeedback'),
+            boslukNextBtn: document.getElementById('boslukNextBtn'),
+            boslukScore: document.getElementById('boslukScore'),
+            boslukCorrect: document.getElementById('boslukCorrect'),
+            boslukWrong: document.getElementById('boslukWrong'),
+            backFromBoslukBtn: document.getElementById('backFromBoslukBtn'),
+            
+            // Dinle ve Bul modu
+            dinleMode: document.getElementById('dinleMode'),
+            dinleSureInfo: document.getElementById('dinleSureInfo'),
+            dinleAudioBtn: document.getElementById('dinleAudioBtn'),
+            dinleOptions: document.getElementById('dinleOptions'),
+            dinleFeedback: document.getElementById('dinleFeedback'),
+            dinleNextBtn: document.getElementById('dinleNextBtn'),
+            dinleScore: document.getElementById('dinleScore'),
+            dinleCorrect: document.getElementById('dinleCorrect'),
+            dinleWrong: document.getElementById('dinleWrong'),
+            backFromDinleBtn: document.getElementById('backFromDinleBtn')
+        };
+
+        // ============ SES ÇALMA FONKSİYONU ============
+        function playAudio(audioUrl, button) {
+            // Eğer ses çalıyorsa durdur
+            if (currentAudio && !currentAudio.paused) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+            }
+            
+            if (!audioUrl) {
+                console.error('Ses dosyası bulunamadı');
+                return;
+            }
+            
+            // Butonu devre dışı bırak
+            if (button) button.disabled = true;
+            
+            currentAudio = new Audio(audioUrl);
+            
+            currentAudio.play().catch(err => {
+                console.error('Ses hatası:', err);
+                if (button) button.disabled = false;
+            });
+            
+            // Ses bittiğinde butonu aktif et
+            currentAudio.onended = () => {
+                if (button) button.disabled = false;
+            };
+        }
+
+        // ============ VERİ YÜKLEME ============
+        async function loadData() {
+            try {
+                // Kelime verilerini yükle (Kelime Çevir ve Dinle ve Bul için)
+                const kelimeResponse = await fetch('kelimebul.json');
+                kelimeBulData = await kelimeResponse.json();
+                console.log(`${kelimeBulData.length} kelime yüklendi`);
+                
+                // Ayet verilerini yükle (Boşluk Doldur ve Ayet Oku için)
+                const ayetResponse = await fetch('ayetoku.json');
+                ayetOkuData = await ayetResponse.json();
+                console.log(`${ayetOkuData.length} ayet yüklendi`);
+                
+                // Dua verilerini yükle (Dua Et için)
+                const duaResponse = await fetch('duaet.json');
+                duaData = await duaResponse.json();
+                console.log(`${duaData.length} dua yüklendi`);
+                
+                // Hadis verilerini yükle (Hadis Oku için)
+                const hadisResponse = await fetch('hadisoku.json');
+                hadisData = await hadisResponse.json();
+                console.log(`${hadisData.length} hadis yüklendi`);
+                
+                // Mod seçiciyi başlat
+                initModeSelector();
+
+                // Ana menü zorluk butonlarını başlat
+                initMainMenuDifficultyButtons();
+                
+            } catch (error) {
+                console.error('Veri yükleme hatası:', error);
+                elements.mainMenu.innerHTML = '<p style="color: red; text-align: center;">Veriler yüklenemedi!</p>';
+            }
+        }
+
+        // ============ ANA MENÜ ZORLUK BUTONLARI ============
+        function initMainMenuDifficultyButtons() {
+            document.getElementById('mainDiffKolay').onclick = () => {
+                currentDifficulty = 'kolay';
+                document.querySelectorAll('#mainMenu .diff-btn').forEach(btn => btn.classList.remove('active'));
+                document.getElementById('mainDiffKolay').classList.add('active');
+            };
+            
+            document.getElementById('mainDiffOrta').onclick = () => {
+                currentDifficulty = 'orta';
+                document.querySelectorAll('#mainMenu .diff-btn').forEach(btn => btn.classList.remove('active'));
+                document.getElementById('mainDiffOrta').classList.add('active');
+            };
+            
+            document.getElementById('mainDiffZor').onclick = () => {
+                currentDifficulty = 'zor';
+                document.querySelectorAll('#mainMenu .diff-btn').forEach(btn => btn.classList.remove('active'));
+                document.getElementById('mainDiffZor').classList.add('active');
+            };
+            
+            document.getElementById('mainDiffKarisik').onclick = () => {
+                currentDifficulty = 'karisik';
+                document.querySelectorAll('#mainMenu .diff-btn').forEach(btn => btn.classList.remove('active'));
+                document.getElementById('mainDiffKarisik').classList.add('active');
+            };
+        }
+
+        // ============ ANA MENÜ NAVİGASYONU ============
+        // Kelime Çevir modu - oyun modları seçici ile başlar
+        elements.kelimeCevirBtn.onclick = () => {
+            if (kelimeBulData.length === 0) {
+                alert('Kelime verileri yüklenemedi!');
+                return;
+            }
+            elements.mainMenu.style.display = 'none';
+            elements.modeSelector.style.display = 'block';
+            elements.settingsBtn.style.display = 'block';
+        };
+
+        // Dinle ve Bul modu - Doğrudan başlat
+        elements.dinleBulBtn.onclick = () => {
+            if (kelimeBulData.length === 0) {
+                alert('Kelime verileri yüklenemedi!');
+                return;
+            }
+            elements.mainMenu.style.display = 'none';
+            elements.dinleMode.style.display = 'block';
+            // Dinle modunu başlat
+            dinleScore = 0;
+            dinleCorrect = 0;
+            dinleWrong = 0;
+            dinleQuestionCount = 0;
+            updateDinleUI();
+            loadDinleQuestion();
+        };
+
+        // Boşluk Doldur modu
+        elements.boslukDoldurBtn.onclick = () => {
+            if (ayetOkuData.length === 0) {
+                alert('Ayet verileri yüklenemedi!');
+                return;
+            }
+            elements.mainMenu.style.display = 'none';
+            elements.boslukMode.style.display = 'block';
+            // Boşluk modunu başlat
+            boslukScore = 0;
+            boslukCorrect = 0;
+            boslukWrong = 0;
+            updateBoslukUI();
+            loadBoslukQuestion();
+        };
+
+        // Dua Et modu
+        elements.duaEtBtn.onclick = () => {
+            if (duaData.length === 0) {
+                alert('Dua verileri yüklenemedi!');
+                return;
+            }
+            elements.mainMenu.style.display = 'none';
+            elements.duaMode.style.display = 'block';
+            currentDuaIndex = 0;
+            showDua();
+        };
+
+        // Ayet Oku modu
+        elements.ayetOkuBtn.onclick = () => {
+            if (ayetOkuData.length === 0) {
+                alert('Ayet verileri yüklenemedi!');
+                return;
+            }
+            elements.mainMenu.style.display = 'none';
+            elements.ayetMode.style.display = 'block';
+            currentAyetIndex = 0;
+            showAyet();
+        };
+
+        // Hadis Oku modu
+        elements.hadisOkuBtn.onclick = () => {
+            if (hadisData.length === 0) {
+                alert('Hadis verileri yüklenemedi!');
+                return;
+            }
+            elements.mainMenu.style.display = 'none';
+            elements.hadisMode.style.display = 'block';
+            currentHadisIndex = 0;
+            showHadis();
+        };
+
+        // Geri butonları
+        elements.backToMenuBtn.onclick = () => {
+            elements.modeSelector.style.display = 'none';
+            elements.mainMenu.style.display = 'block';
+            elements.settingsBtn.style.display = 'none';
+        };
+
+        elements.backFromGameBtn.onclick = () => {
+            stopTimer();
+            elements.gameScreen.style.display = 'none';
+            elements.modeSelector.style.display = 'none';
+            elements.mainMenu.removeAttribute('style');
+            elements.mainMenu.style.display = 'block';
+            elements.settingsBtn.style.display = 'none';
+        };
+
+        elements.backFromAyetBtn.onclick = () => {
+            elements.ayetMode.style.display = 'none';
+            elements.modeSelector.style.display = 'none';
+            elements.gameScreen.style.display = 'none';
+            elements.mainMenu.removeAttribute('style');
+            elements.mainMenu.style.display = 'block';
+            elements.settingsBtn.style.display = 'none';
+        };
+
+        elements.backFromDuaBtn.onclick = () => {
+            elements.duaMode.style.display = 'none';
+            elements.modeSelector.style.display = 'none';
+            elements.gameScreen.style.display = 'none';
+            elements.mainMenu.removeAttribute('style');
+            elements.mainMenu.style.display = 'block';
+            elements.settingsBtn.style.display = 'none';
+        };
+
+        elements.backFromHadisBtn.onclick = () => {
+            elements.hadisMode.style.display = 'none';
+            elements.modeSelector.style.display = 'none';
+            elements.gameScreen.style.display = 'none';
+            elements.mainMenu.removeAttribute('style');
+            elements.mainMenu.style.display = 'block';
+            elements.settingsBtn.style.display = 'none';
+        };
+
+        elements.backFromBoslukBtn.onclick = () => {
+            elements.boslukMode.style.display = 'none';
+            elements.modeSelector.style.display = 'none';
+            elements.gameScreen.style.display = 'none';
+            elements.mainMenu.removeAttribute('style');
+            elements.mainMenu.style.display = 'block';
+            elements.settingsBtn.style.display = 'none';
+        };
+
+        elements.backFromDinleBtn.onclick = () => {
+            elements.dinleMode.style.display = 'none';
+            elements.modeSelector.style.display = 'none';
+            elements.gameScreen.style.display = 'none';
+            elements.mainMenu.removeAttribute('style');
+            elements.mainMenu.style.display = 'block';
+            elements.settingsBtn.style.display = 'none';
+        };
+
+        // ============ MOD SEÇİCİYİ BAŞLAT (Sadece Kelime Çevir için) ============
+        function initModeSelector() {
+            // Sadece Kelime Çevir oyun modlarını oluştur
+            Object.keys(CONFIG.gameModes).forEach(modeKey => {
+                const mode = CONFIG.gameModes[modeKey];
+                const btn = document.createElement('button');
+                btn.className = 'mode-btn';
+                if (modeKey === currentMode) btn.classList.add('active');
+                btn.innerHTML = `<strong>${mode.name}</strong><small>${mode.description}</small>`;
+                btn.onclick = () => selectMode(modeKey);
+                elements.modeButtons.appendChild(btn);
+            });
+        }
+
+        // ============ MOD SEÇ ============
+        function selectMode(modeKey) {
+            currentMode = modeKey;
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.closest('.mode-btn').classList.add('active');
+        }
+
+        // ============ OYUNU BAŞLAT ============
+        elements.startBtn.onclick = () => {
+            const mode = CONFIG.gameModes[currentMode];
+            
+            // Ayarları uygula
+            lives = mode.lives;
+            if (lives > 0) {
+                elements.livesDisplay.style.display = 'block';
+                elements.lives.textContent = lives;
+            } else {
+                elements.livesDisplay.style.display = 'none';
+            }
+
+            if (mode.timeLimit > 0) {
+                elements.timerDisplay.style.display = 'block';
+            } else {
+                elements.timerDisplay.style.display = 'none';
+            }
+
+            if (mode.showHint) {
+                elements.hintBtn.style.display = 'block';
+            } else {
+                elements.hintBtn.style.display = 'none';
+            }
+
+            elements.currentMode.textContent = mode.name;
+
+            // Skoru sıfırla
+            score = 0;
+            level = 1;
+            correct = 0;
+            wrong = 0;
+            questionCount = 0;
+
+            updateUI();
+
+            // Ekranları değiştir - Sadece Kelime Çevir oyunu başlat
+            elements.modeSelector.style.display = 'none';
+            elements.gameScreen.style.display = 'block';
+            loadQuestion();
+        };
+
+        // ============ AYARLARA DÖN ============
+        elements.settingsBtn.onclick = () => {
+            stopTimer();
+            elements.gameScreen.style.display = 'none';
+            elements.modeSelector.style.display = 'block';
+        };
+
+        // ============ AYET GÖSTER ============
+        // ============ SORU YÜKLEME (Kelime Çevir) ============
+        function loadQuestion() {
+            const mode = CONFIG.gameModes[currentMode];
+            
+            if (questionCount >= mode.questionsPerLevel) {
+                levelUp();
+                return;
+            }
+
+            // Can kontrolü
+            if (mode.lives > 0 && lives <= 0) {
+                gameOver('Can bitti!');
+                return;
+            }
+
+            // Zorluk filtreleme
+            const diffLevel = CONFIG.difficultyLevels[currentDifficulty];
+            let filteredData = kelimeBulData.filter(w => 
+                w.difficulty >= diffLevel.minDiff && w.difficulty <= diffLevel.maxDiff
+            );
+
+            // Mod özel zorluk kontrolü
+            if (mode.minDifficulty) {
+                filteredData = filteredData.filter(w => w.difficulty >= mode.minDifficulty);
+            }
+
+            if (filteredData.length === 0) {
+                filteredData = kelimeBulData;
+            }
+
+            // Rastgele kelime seç
+            currentQuestion = filteredData[Math.floor(Math.random() * filteredData.length)];
+
+            // UI güncelle
+            elements.arabicWord.textContent = currentQuestion.kelime;
+            elements.sureInfo.textContent = `${currentQuestion.sure_adi} Suresi`;
+
+            // Seçenekler oluştur
+            const wrongAnswers = getWrongAnswers(3);
+            const allOptions = [
+                { text: currentQuestion.anlam, correct: true },
+                ...wrongAnswers.map(w => ({ text: w.anlam, correct: false }))
+            ];
+
+            // Karıştır
+            shuffle(allOptions);
+
+            // Seçenekleri göster
+            elements.options.innerHTML = '';
+            const labels = ['A', 'B', 'C', 'D'];
+            allOptions.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'option';
+                btn.textContent = `${labels[i]}) ${opt.text}`;
+                btn.onclick = () => checkAnswer(btn, opt.correct);
+                elements.options.appendChild(btn);
+            });
+
+            // Sıfırla
+            elements.feedback.textContent = '';
+            elements.feedback.className = 'feedback';
+            elements.nextBtn.style.display = 'none';
+            elements.hintBtn.disabled = false;
+
+            // İlerleme güncelle
+            updateProgress();
+
+            // Süreyi başlat
+            if (mode.timeLimit > 0) {
+                startTimer(mode.timeLimit);
+            }
+        }
+
+        // ============ YANLIŞ CEVAPLAR ============
+        function getWrongAnswers(count) {
+            const wrong = [];
+            const filtered = kelimeBulData.filter(w => w.id !== currentQuestion.id);
+            
+            while (wrong.length < count && filtered.length > 0) {
+                const idx = Math.floor(Math.random() * filtered.length);
+                const word = filtered[idx];
+                
+                if (!wrong.find(w => w.anlam === word.anlam)) {
+                    wrong.push(word);
+                }
+                filtered.splice(idx, 1);
+            }
+            
+            return wrong;
+        }
+
+        // ============ KARIŞTIR ============
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // ============ CEVAP KONTROL ============
+        function checkAnswer(button, isCorrect) {
+            stopTimer();
+            
+            // Tüm butonları kapat
+            const allBtns = document.querySelectorAll('.option');
+            allBtns.forEach(btn => btn.disabled = true);
+
+            const mode = CONFIG.gameModes[currentMode];
+            const diffLevel = CONFIG.difficultyLevels[currentDifficulty];
+
+            if (isCorrect) {
+                button.classList.add('correct');
+                elements.feedback.textContent = '✅ Doğru!';
+                elements.feedback.className = 'feedback correct';
+                
+                const points = currentQuestion.difficulty * diffLevel.pointsMultiplier;
+                score += points;
+                correct++;
+                
+                updateUI();
+            } else {
+                button.classList.add('wrong');
+                elements.feedback.textContent = `❌ Yanlış! Doğru: ${currentQuestion.anlam}`;
+                elements.feedback.className = 'feedback wrong';
+                
+                wrong++;
+                
+                // Puan cezası
+                score = Math.max(0, score - CONFIG.wrongAnswerPenalty);
+                
+                // Can kaybı
+                if (mode.lives > 0) {
+                    lives--;
+                    elements.lives.textContent = lives;
+                    
+                    if (lives <= 0) {
+                        setTimeout(() => gameOver('Canlarınız bitti!'), 1500);
+                    }
+                }
+
+                updateUI();
+
+                // Doğru cevabı göster
+                allBtns.forEach(btn => {
+                    if (btn.textContent.includes(currentQuestion.anlam)) {
+                        btn.classList.add('correct');
+                    }
+                });
+            }
+
+            questionCount++;
+            elements.nextBtn.style.display = 'block';
+        }
+
+        // ============ SES ÇALMA ============
+        elements.audioBtn.onclick = () => {
+            if (currentQuestion && currentQuestion.ses_dosyasi) {
+                playAudio(currentQuestion.ses_dosyasi, elements.audioBtn);
+            }
+        };
+
+        // ============ SONRAKİ SORU ============
+        elements.nextBtn.onclick = () => {
+            loadQuestion();
+        };
+
+        // ============ İLERLEME GÜNCELLE ============
+        function updateProgress() {
+            const mode = CONFIG.gameModes[currentMode];
+            const progress = (questionCount / mode.questionsPerLevel) * 100;
+            elements.progressBar.style.width = `${progress}%`;
+        }
+
+        // ============ UI GÜNCELLE ============
+        function updateUI() {
+            elements.score.textContent = score;
+            elements.correct.textContent = correct;
+            elements.wrong.textContent = wrong;
+            elements.level.textContent = level;
+        }
+
+        // ============ SÜRE YÖNETİMİ ============
+        function startTimer(seconds) {
+            stopTimer();
+            timeLeft = seconds;
+            elements.timer.textContent = timeLeft;
+            
+            timer = setInterval(() => {
+                timeLeft--;
+                elements.timer.textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    stopTimer();
+                    gameOver('Süre doldu!');
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (timer) {
+                clearInterval(timer);
+                timer = null;
+            }
+        }
+
+        // ============ İPUCU ============
+        elements.hintBtn.onclick = () => {
+            // Bir yanlış cevabı kaldır
+            const allBtns = document.querySelectorAll('.option');
+            const wrongBtns = Array.from(allBtns).filter(btn => 
+                !btn.textContent.includes(currentQuestion.anlam) && !btn.disabled
+            );
+            
+            if (wrongBtns.length > 0) {
+                const randomWrong = wrongBtns[Math.floor(Math.random() * wrongBtns.length)];
+                randomWrong.style.opacity = '0.3';
+                randomWrong.disabled = true;
+                
+                // İpucu puan cezası
+                score = Math.max(0, score - 10);
+                updateUI();
+                
+                elements.hintBtn.disabled = true;
+            }
+        };
+
+        // ============ SEVİYE ATLAMA ============
+        function levelUp() {
+            level++;
+            questionCount = 0;
+            updateUI();
+            elements.newLevel.textContent = level;
+            elements.modal.style.display = 'block';
+        }
+
+        // ============ OYUN BİTTİ ============
+        function gameOver(reason) {
+            stopTimer();
+            
+            elements.gameOverTitle.textContent = '😢 Oyun Bitti';
+            elements.gameOverText.textContent = reason;
+            elements.finalScore.textContent = score;
+            elements.gameOverModal.style.display = 'block';
+        }
+
+        // ============ YENİDEN BAŞLAT ============
+        elements.restartBtn.onclick = () => {
+            elements.gameOverModal.style.display = 'none';
+            elements.gameScreen.style.display = 'none';
+            elements.modeSelector.style.display = 'none';
+            elements.mainMenu.style.display = 'block';
+            elements.settingsBtn.style.display = 'none';
+        };
+
+        // ============ MODAL KAPAT ============
+        elements.modalBtn.onclick = () => {
+            elements.modal.style.display = 'none';
+            updateProgress();
+            loadQuestion();
+        };
+
+        // ============ DİNLE VE BUL MODU ============
+        let currentDinleQuestion = null;
+        let dinleQuestionCount = 0;
+        const DINLE_MAX_QUESTIONS = 10;
+
+        function loadDinleQuestion() {
+            // 10 soru kontrolü
+            if (dinleQuestionCount >= DINLE_MAX_QUESTIONS) {
+                // Oyun bitti - Ana menüye dön
+                alert(`🎉 Tebrikler!\n\nToplam Puan: ${dinleScore}\nDoğru: ${dinleCorrect}\nYanlış: ${dinleWrong}`);
+                elements.dinleMode.style.display = 'none';
+                elements.mainMenu.style.display = 'block';
+                // Sıfırla
+                dinleScore = 0;
+                dinleCorrect = 0;
+                dinleWrong = 0;
+                dinleQuestionCount = 0;
+                updateDinleUI();
+                return;
+            }
+
+            // Zorluk filtreleme (Kelime Çevir ile aynı)
+            const diffLevel = CONFIG.difficultyLevels[currentDifficulty];
+            let filteredData = kelimeBulData.filter(w => 
+                w.difficulty >= diffLevel.minDiff && w.difficulty <= diffLevel.maxDiff
+            );
+
+            if (filteredData.length === 0) {
+                filteredData = kelimeBulData;
+            }
+
+            // Rastgele kelime seç
+            currentDinleQuestion = filteredData[Math.floor(Math.random() * filteredData.length)];
+
+            // UI güncelle
+            elements.dinleSureInfo.textContent = `${currentDinleQuestion.sure_adi} Suresi`;
+
+            // Seçenekler oluştur (4 Arapça kelime) - aynı zorluktan
+            const wrongAnswers = [];
+            while (wrongAnswers.length < 3) {
+                const random = filteredData[Math.floor(Math.random() * filteredData.length)];
+                if (random.kelime !== currentDinleQuestion.kelime && 
+                    !wrongAnswers.find(w => w.kelime === random.kelime)) {
+                    wrongAnswers.push(random);
+                }
+            }
+
+            const allOptions = [
+                { text: currentDinleQuestion.kelime, correct: true },
+                ...wrongAnswers.map(w => ({ text: w.kelime, correct: false }))
+            ];
+
+            shuffle(allOptions);
+
+            // Seçenekleri göster
+            elements.dinleOptions.innerHTML = '';
+            const labels = ['A', 'B', 'C', 'D'];
+            allOptions.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'option';
+                btn.textContent = `${labels[i]}) ${opt.text}`;
+                btn.onclick = () => checkDinleAnswer(btn, opt.correct);
+                elements.dinleOptions.appendChild(btn);
+            });
+
+            elements.dinleFeedback.textContent = '';
+            elements.dinleFeedback.className = 'feedback';
+            elements.dinleNextBtn.style.display = 'none';
+
+            // Otomatik ses çal
+            if (currentDinleQuestion.ses_dosyasi) {
+                playAudio(currentDinleQuestion.ses_dosyasi, elements.dinleAudioBtn);
+            }
+        }
+
+        elements.dinleAudioBtn.onclick = () => {
+            if (currentDinleQuestion && currentDinleQuestion.ses_dosyasi) {
+                playAudio(currentDinleQuestion.ses_dosyasi, elements.dinleAudioBtn);
+            }
+        };
+
+        function checkDinleAnswer(button, isCorrect) {
+            const allBtns = elements.dinleOptions.querySelectorAll('.option');
+            allBtns.forEach(btn => btn.disabled = true);
+
+            if (isCorrect) {
+                button.classList.add('correct');
+                elements.dinleFeedback.textContent = '✅ Doğru!';
+                elements.dinleFeedback.className = 'feedback correct';
+                dinleScore += currentDinleQuestion.difficulty * 2;
+                dinleCorrect++;
+            } else {
+                button.classList.add('wrong');
+                elements.dinleFeedback.textContent = `❌ Yanlış! Doğru: ${currentDinleQuestion.kelime} (${currentDinleQuestion.anlam})`;
+                elements.dinleFeedback.className = 'feedback wrong';
+                dinleWrong++;
+
+                // Doğru cevabı göster
+                allBtns.forEach(btn => {
+                    if (btn.textContent.includes(currentDinleQuestion.kelime)) {
+                        btn.classList.add('correct');
+                    }
+                });
+            }
+
+            dinleQuestionCount++; // Soru sayacını artır
+            updateDinleUI();
+            elements.dinleNextBtn.style.display = 'block';
+        }
+
+        elements.dinleNextBtn.onclick = () => {
+            loadDinleQuestion();
+        };
+
+        function updateDinleUI() {
+            elements.dinleScore.textContent = dinleScore;
+            elements.dinleCorrect.textContent = dinleCorrect;
+            elements.dinleWrong.textContent = dinleWrong;
+        }
+
+        // ============ BOŞLUK DOLDUR MODU ============
+        let currentBoslukQuestion = null;
+        let missingWord = '';
+        let missingIndex = -1;
+        let boslukQuestionCount = 0;
+        const BOSLUK_MAX_QUESTIONS = 10;
+
+        function loadBoslukQuestion() {
+            // 10 soru kontrolü
+            if (boslukQuestionCount >= BOSLUK_MAX_QUESTIONS) {
+                // Oyun bitti - Ana menüye dön
+                alert(`🎉 Tebrikler!\n\nToplam Puan: ${boslukScore}\nDoğru: ${boslukCorrect}\nYanlış: ${boslukWrong}`);
+                elements.boslukMode.style.display = 'none';
+                elements.mainMenu.style.display = 'block';
+                // Sıfırla
+                boslukScore = 0;
+                boslukCorrect = 0;
+                boslukWrong = 0;
+                boslukQuestionCount = 0;
+                updateBoslukUI();
+                return;
+            }
+
+            // Rastgele ayet seç (ayet_metni olan ayetleri filtrele)
+            const validAyets = ayetOkuData.filter(a => a.ayet_metni && a.ayet_metni.trim());
+            if (validAyets.length === 0) {
+                console.error('Geçerli ayet bulunamadı!');
+                return;
+            }
+            
+            const ayet = validAyets[Math.floor(Math.random() * validAyets.length)];
+            
+            // Ayet metnini kelimelere böl
+            const words = ayet.ayet_metni.split(' ').filter(w => w && w.trim());
+            
+            if (words.length < 4) {
+                // Çok kısa ayetler için tekrar dene
+                loadBoslukQuestion();
+                return;
+            }
+
+            // Rastgele bir kelimeyi gizle
+            missingIndex = Math.floor(Math.random() * words.length);
+            missingWord = words[missingIndex];
+
+            // Boşluk ile değiştir
+            const displayText = words.map((w, i) => i === missingIndex ? '______' : w).join(' ');
+
+            currentBoslukQuestion = ayet;
+
+            // UI güncelle
+            elements.boslukSureInfo.textContent = `${ayet.sure_adı || 'Sûre'} - Ayet`;
+            elements.boslukAyetText.textContent = displayText;
+
+            // Seçenekler oluştur (boşluğa gelecek kelime)
+            const wrongWords = [];
+            let attempts = 0;
+            while (wrongWords.length < 3 && attempts < 100) {
+                attempts++;
+                const randomAyet = validAyets[Math.floor(Math.random() * validAyets.length)];
+                if (!randomAyet.ayet_metni) continue;
+                
+                const randomWords = randomAyet.ayet_metni.split(' ').filter(w => w && w.trim());
+                if (randomWords.length === 0) continue;
+                
+                const randomWord = randomWords[Math.floor(Math.random() * randomWords.length)];
+                if (randomWord && randomWord !== missingWord && !wrongWords.includes(randomWord)) {
+                    wrongWords.push(randomWord);
+                }
+            }
+            
+            // Eğer yeterli yanlış cevap bulunamadıysa, eksik olanları doldur
+            while (wrongWords.length < 3) {
+                wrongWords.push('...');
+            }
+
+            const allOptions = [
+                { text: missingWord, correct: true },
+                ...wrongWords.map(w => ({ text: w, correct: false }))
+            ];
+
+            shuffle(allOptions);
+
+            // Seçenekleri göster
+            elements.boslukOptions.innerHTML = '';
+            const labels = ['A', 'B', 'C', 'D'];
+            allOptions.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'option';
+                btn.textContent = `${labels[i]}) ${opt.text}`;
+                btn.onclick = () => checkBoslukAnswer(btn, opt.correct);
+                elements.boslukOptions.appendChild(btn);
+            });
+
+            elements.boslukFeedback.textContent = '';
+            elements.boslukFeedback.className = 'feedback';
+            elements.boslukNextBtn.style.display = 'none';
+        }
+
+        elements.boslukAudioBtn.onclick = () => {
+            if (currentBoslukQuestion && currentBoslukQuestion.ayet_ses_dosyasi) {
+                playAudio(currentBoslukQuestion.ayet_ses_dosyasi, elements.boslukAudioBtn);
+            }
+        };
+
+        function checkBoslukAnswer(button, isCorrect) {
+            const allBtns = elements.boslukOptions.querySelectorAll('.option');
+            allBtns.forEach(btn => btn.disabled = true);
+
+            if (isCorrect) {
+                button.classList.add('correct');
+                elements.boslukFeedback.textContent = '✅ Doğru!';
+                elements.boslukFeedback.className = 'feedback correct';
+                boslukScore += 10;
+                boslukCorrect++;
+
+                // Tam ayeti göster
+                elements.boslukAyetText.textContent = currentBoslukQuestion.ayet_metni;
+            } else {
+                button.classList.add('wrong');
+                elements.boslukFeedback.textContent = `❌ Yanlış! Doğru kelime: ${missingWord}`;
+                elements.boslukFeedback.className = 'feedback wrong';
+                boslukWrong++;
+
+                // Doğru cevabı göster
+                allBtns.forEach(btn => {
+                    if (btn.textContent.includes(missingWord)) {
+                        btn.classList.add('correct');
+                    }
+                });
+
+                // Tam ayeti göster
+                elements.boslukAyetText.textContent = currentBoslukQuestion.ayet_metni;
+            }
+
+            boslukQuestionCount++; // Soru sayacını artır
+            updateBoslukUI();
+            elements.boslukNextBtn.style.display = 'block';
+        }
+
+        elements.boslukNextBtn.onclick = () => {
+            loadBoslukQuestion();
+        };
+
+        function updateBoslukUI() {
+            elements.boslukScore.textContent = boslukScore;
+            elements.boslukCorrect.textContent = boslukCorrect;
+            elements.boslukWrong.textContent = boslukWrong;
+        }
+
+        // ============ DUA ET MODU ============
+        function showDua() {
+            const dua = duaData[currentDuaIndex];
+            if (!dua) return;
+
+            elements.duaSureInfo.textContent = `Ayet: ${dua.ayet || ''}`;
+            elements.duaArabic.textContent = dua.dua || '';
+            elements.duaTranslation.textContent = dua.tercume || '';
+
+            elements.prevDuaBtn.disabled = currentDuaIndex === 0;
+            elements.nextDuaBtn.disabled = currentDuaIndex === duaData.length - 1;
+        }
+
+        elements.prevDuaBtn.onclick = () => {
+            if (currentDuaIndex > 0) {
+                currentDuaIndex--;
+                showDua();
+            }
+        };
+
+        elements.nextDuaBtn.onclick = () => {
+            if (currentDuaIndex < duaData.length - 1) {
+                currentDuaIndex++;
+                showDua();
+            }
+        };
+
+        elements.duaAudioBtn.onclick = () => {
+            const dua = duaData[currentDuaIndex];
+            if (dua && dua.ses_url) {
+                // Ses başlangıç zamanı için özel işlem
+                if (currentAudio && !currentAudio.paused) {
+                    currentAudio.pause();
+                    currentAudio.currentTime = 0;
+                }
+                
+                elements.duaAudioBtn.disabled = true;
+                currentAudio = new Audio(dua.ses_url);
+                
+                if (dua.start) {
+                    currentAudio.currentTime = dua.start;
+                }
+                
+                currentAudio.play().catch(err => {
+                    console.error('Ses hatası:', err);
+                    elements.duaAudioBtn.disabled = false;
+                });
+                
+                currentAudio.onended = () => {
+                    elements.duaAudioBtn.disabled = false;
+                };
+            }
+        };
+
+        // ============ AYET OKU MODU (RASTGELE) ============
+        function showAyet() {
+            // Rastgele ayet seç
+            currentAyetIndex = Math.floor(Math.random() * ayetOkuData.length);
+            const ayet = ayetOkuData[currentAyetIndex];
+            if (!ayet) return;
+            
+            elements.ayetSureInfo.textContent = `${ayet.sure_adı || 'Sûre'} - Ayet`;
+            elements.ayetArabic.textContent = ayet.ayet_metni || '';
+            elements.ayetTranslation.textContent = ayet.meal || '';
+        }
+
+        elements.prevAyetBtn.onclick = () => {
+            showAyet(); // Rastgele önceki ayet
+        };
+
+        elements.nextAyetBtn.onclick = () => {
+            showAyet(); // Rastgele sonraki ayet
+        };
+
+        elements.ayetAudioBtn.onclick = () => {
+            const ayet = ayetOkuData[currentAyetIndex];
+            if (ayet && ayet.ayet_ses_dosyasi) {
+                playAudio(ayet.ayet_ses_dosyasi, elements.ayetAudioBtn);
+            }
+        };
+
+        // ============ HADİS OKU MODU (RASTGELE) ============
+        function showHadis() {
+            // Rastgele hadis seç
+            currentHadisIndex = Math.floor(Math.random() * hadisData.length);
+            const hadis = hadisData[currentHadisIndex];
+            if (!hadis) return;
+
+            elements.hadisCategory.textContent = hadis.section || '';
+            elements.hadisTitle.textContent = hadis.chapterName || '';
+            elements.hadisHeader.textContent = hadis.header || '';
+            elements.hadisText.textContent = hadis.text || '';
+            elements.hadisRef.textContent = hadis.refno || '';
+        }
+
+        elements.prevHadisBtn.onclick = () => {
+            showHadis(); // Rastgele önceki hadis
+        };
+
+        elements.nextHadisBtn.onclick = () => {
+            showHadis(); // Rastgele sonraki hadis
+        };
+
+        // ============ OYUNU BAŞLAT ============
+        loadData();
+    </script>
+</body>
+</html>
