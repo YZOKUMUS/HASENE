@@ -1790,6 +1790,12 @@
                 
                 // Veriyi kaydet
                 saveStats();
+                
+                // Eğer takvim açıksa otomatik yenile (mavi -> yeşil)
+                const calendarModal = document.getElementById('calendarModal');
+                if (calendarModal && calendarModal.style.display === 'flex') {
+                    generateCalendar();
+                }
             }
         }
 
