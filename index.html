@@ -3261,10 +3261,9 @@
                 
                 currentAudio.onended = () => {
                     elements.duaAudioBtn.disabled = false;
+                    // Daily task progress - SONUNA KADAR dinledi!
+                    updateTaskProgress('duaOgre', 1);
                 };
-                
-                // Daily task progress - GERÇEK dua dinleme
-                updateTaskProgress('duaOgre', 1);
             }
         };
 
@@ -3293,9 +3292,26 @@
         elements.ayetAudioBtn.onclick = () => {
             const ayet = ayetOkuData[currentAyetIndex];
             if (ayet && ayet.ayet_ses_dosyasi) {
-                playAudio(ayet.ayet_ses_dosyasi, elements.ayetAudioBtn);
-                // Daily task progress - GERÇEK ayet dinleme/okuma
-                updateTaskProgress('ayetOku', 1);
+                // Eğer ses çalıyorsa durdur
+                if (currentAudio && !currentAudio.paused) {
+                    currentAudio.pause();
+                    currentAudio.currentTime = 0;
+                }
+                
+                elements.ayetAudioBtn.disabled = true;
+                currentAudio = new Audio(ayet.ayet_ses_dosyasi);
+                
+                currentAudio.play().catch(err => {
+                    console.error('Ses hatası:', err);
+                    elements.ayetAudioBtn.disabled = false;
+                });
+                
+                // Ses sonuna kadar dinlendiğinde görev sayılsın
+                currentAudio.onended = () => {
+                    elements.ayetAudioBtn.disabled = false;
+                    // Daily task progress - SONUNA KADAR dinledi!
+                    updateTaskProgress('ayetOku', 1);
+                };
             }
         };
 
