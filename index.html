@@ -1498,15 +1498,13 @@
         }
 
         function saveStats() {
-            console.log('💾 saveStats() çağrıldı!');
-            console.log('📊 Kaydedilecek değerler:', {totalPoints, badges, streakData});
+            // MOBİL DEBUG - Kaydetme işlemini göster  
+            alert(`� KAYDETME:\n\n💰 Puan: ${totalPoints}\n🏆 Rozet: ${badges.bronze}\n🔥 Streak: ${streakData.currentStreak}`);
             
             // Local storage'a puanları kaydet
             localStorage.setItem('hasene_totalPoints', totalPoints.toString());
             localStorage.setItem('hasene_badges', JSON.stringify(badges));
             localStorage.setItem('hasene_streak', JSON.stringify(streakData));
-            
-            console.log('✅ localStorage\'a kaydedildi!');
             
             // Set'i array'e çevir ve kaydet
             const tasksToSave = { 
@@ -3420,23 +3418,21 @@
             
             // SON ADIM: Kaydedilmiş verileri yükle
             try {
-                console.log('🔍 localStorage DEBUG başlıyor...');
-                console.log('📊 localStorage mevcut mu?', typeof(Storage) !== "undefined");
-                console.log('💾 hasene_totalPoints:', localStorage.getItem('hasene_totalPoints'));
-                console.log('🏆 hasene_badges:', localStorage.getItem('hasene_badges'));
-                console.log('🔥 hasene_streak:', localStorage.getItem('hasene_streak'));
+                // MOBİL DEBUG - Alert ile göster
+                const localStorageExists = typeof(Storage) !== "undefined";
+                const savedPoints = localStorage.getItem('hasene_totalPoints');
+                
+                alert(`� MOBİL DEBUG:\n\n📊 localStorage mevcut: ${localStorageExists}\n💾 Kaydedilmiş puan: ${savedPoints}\n🔍 Debug devam ediyor...`);
                 
                 loadStats();
                 updateStatsBar();
                 
-                console.log('📊 Yükleme sonrası değerler:');
-                console.log('💰 totalPoints:', totalPoints);
-                console.log('⭐ starPoints:', starPoints);
-                console.log('📈 level:', level);
+                alert(`� YÜKLEME SONRASI:\n\n💰 totalPoints: ${totalPoints}\n⭐ starPoints: ${starPoints}\n📈 level: ${level}`);
+                
                 console.log('✅ localStorage debug tamamlandı!');
             } catch (error) {
+                alert(`❌ HATA: ${error.message}`);
                 console.error('❌ Veri yükleme hatası:', error);
-                // Hata olursa varsayılan değerlerle devam et
             }
         
         }); // DOMContentLoaded event listener sonu
