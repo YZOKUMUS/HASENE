@@ -3406,6 +3406,16 @@
             // Modal fonksiyonlarını global hale getir
             window.showBadgesModal = showBadgesModal;
             window.closeBadgesModal = closeBadgesModal;
+            
+            // SON ADIM: Kaydedilmiş verileri yükle
+            try {
+                loadStats();
+                updateStatsBar();
+                console.log('📊 Kaydedilmiş veriler başarıyla yüklendi');
+            } catch (error) {
+                console.error('❌ Veri yükleme hatası:', error);
+                // Hata olursa varsayılan değerlerle devam et
+            }
         
         }); // DOMContentLoaded event listener sonu
 
