@@ -632,6 +632,110 @@
             font-size: 0.85em;
             cursor: pointer;
         }
+
+        /* ============ MOBİL RESPONSİVE ============ */
+        @media (max-width: 768px) {
+            /* Ana container */
+            .container {
+                padding: 10px;
+                max-width: 100%;
+            }
+
+            /* Üst bar küçük ekranlar için */
+            .header {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+                padding: 10px;
+                margin-bottom: 15px;
+            }
+
+            /* Oyun kutusu mobil için */
+            .game-box {
+                padding: 15px;
+                margin: 10px 0;
+            }
+
+            /* Arapça font mobilde daha büyük */
+            .arabic {
+                font-size: 28px;  /* Mobilde daha büyük */
+                margin: 25px 0;
+                line-height: 1.6;
+            }
+
+            /* Seçenekler mobilde daha rahat */
+            .option {
+                font-size: 18px;
+                padding: 18px 15px;
+                margin: 8px 0;
+            }
+
+            /* Butonlar mobilde daha büyük */
+            .audio-btn, .hint-btn, .next-btn {
+                padding: 15px;
+                font-size: 1em;
+                margin: 12px 0;
+            }
+
+            /* Modal mobilde tam ekran */
+            .modal-content {
+                max-width: 95%;
+                max-height: 95vh;
+                margin: 10px auto;
+                padding: 20px;
+            }
+
+            /* İstatistikler grid mobilde */
+            .stats {
+                gap: 8px;
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+
+            .stat {
+                padding: 8px;
+            }
+
+            /* Ana menü butonları mobilde */
+            .main-btn {
+                padding: 18px;
+                font-size: 1em;
+                margin: 8px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            /* Çok küçük ekranlar için */
+            .arabic {
+                font-size: 32px;  /* Çok küçük ekranlarda daha da büyük */
+                margin: 30px 0;
+            }
+
+            .option {
+                font-size: 20px;
+                padding: 20px 15px;
+            }
+
+            .header {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .main-btn {
+                padding: 20px;
+                font-size: 1.1em;
+            }
+
+            /* Stats daha kompakt */
+            .stats {
+                grid-template-columns: 1fr 1fr;
+                gap: 5px;
+            }
+
+            /* Modal çok küçük ekranlarda */
+            .modal-content {
+                max-width: 98%;
+                padding: 15px;
+            }
+        }
     </style>
 </head>
 <body>
