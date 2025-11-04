@@ -1737,25 +1737,54 @@
                 }
             }
             
-            // Rozet sistemi yükle
-            const savedBadgesData = await loadFromIndexedDB('hasene_badges') || localStorage.getItem('hasene_badges');
+            // Rozet sistemi yükle (IndexedDB öncelikli)
+            const savedBadgesIndexedDB = await loadFromIndexedDB('hasene_badges');
+            const savedBadgesData = savedBadgesIndexedDB || localStorage.getItem('hasene_badges');
             if (savedBadgesData) {
-                badges = JSON.parse(savedBadgesData);
+                badges = JSON.parse(typeof savedBadgesData === 'string' ? savedBadgesData : JSON.stringify(savedBadgesData));
             }
             
-            // Streak sistemi yükle
-            const savedStreak = localStorage.getItem('hasene_streak');
+            // Streak sistemi yükle (IndexedDB öncelikli)
+            const savedStreakIndexedDB = await loadFromIndexedDB('hasene_streak');
+            const savedStreak = savedStreakIndexedDB || localStorage.getItem('hasene_streak');
             if (savedStreak) {
-                streakData = { ...streakData, ...JSON.parse(savedStreak) };
+                streakData = { ...streakData, ...JSON.parse(typeof savedStreak === 'string' ? savedStreak : JSON.stringify(savedStreak)) };
             }
             
-            // Günlük görevler yükle
-            const savedTasks = localStorage.getItem('hasene_dailyTasks');
+            // Günlük görevler yükle (IndexedDB öncelikli) - BU ÇOOK ÖNEMLİ!
+            const savedTasksIndexedDB = await loadFromIndexedDB('hasene_dailyTasks');
+            const savedTasks = savedTasksIndexedDB || localStorage.getItem('hasene_dailyTasks');
             if (savedTasks) {
-                dailyTasks = { ...dailyTasks, ...JSON.parse(savedTasks) };
+                dailyTasks = { ...dailyTasks, ...JSON.parse(typeof savedTasks === 'string' ? savedTasks : JSON.stringify(savedTasks)) };
                 // Set nesnelerini yeniden oluştur
                 dailyTasks.todayStats.farklıZorluk = new Set(dailyTasks.todayStats.farklıZorluk || []);
             }
+            
+            // Oyun ayarları yükle (currentMode ve currentDifficulty) - ÇOOK ÖNEMLİ!
+            const savedModeIndexedDB = await loadFromIndexedDB('hasene_currentMode');
+            const savedMode = savedModeIndexedDB || localStorage.getItem('hasene_currentMode');
+            if (savedMode && CONFIG.gameModes[savedMode]) {
+                currentMode = savedMode;
+                console.log(`🎮 Kaydedilen mod yüklendi: ${currentMode}`);
+            }
+            
+            const savedDifficultyIndexedDB = await loadFromIndexedDB('hasene_currentDifficulty');
+            const savedDifficulty = savedDifficultyIndexedDB || localStorage.getItem('hasene_currentDifficulty');
+            if (savedDifficulty && CONFIG.difficultyLevels[savedDifficulty]) {
+                currentDifficulty = savedDifficulty;
+                console.log(`🎯 Kaydedilen zorluk yüklendi: ${currentDifficulty}`);
+            }
+            
+            console.log('📋 Günlük görevler yüklendi:', {
+                completedTasks: dailyTasks.completedTasks.length,
+                todayStats: dailyTasks.todayStats,
+                lastTaskDate: dailyTasks.lastTaskDate
+            });
+            
+            console.log('🎮 Oyun ayarları yüklendi:', {
+                currentMode: currentMode,
+                currentDifficulty: currentDifficulty
+            });
             
             // Günlük kontrol
             checkDailyProgress();
@@ -1816,6 +1845,10 @@
                         }
                     };
                     saveToIndexedDB('hasene_dailyTasks', JSON.stringify(tasksToSave));
+                    
+                    // Oyun ayarları da kaydet (currentMode & currentDifficulty) - KRİTİK!
+                    saveToIndexedDB('hasene_currentMode', currentMode);
+                    saveToIndexedDB('hasene_currentDifficulty', currentDifficulty);
                 }
                 
                 // 2. localStorage (yedek sistem)
@@ -1823,6 +1856,20 @@
                     localStorage.setItem('hasene_totalPoints', totalPoints.toString());
                     localStorage.setItem('hasene_badges', JSON.stringify(badges));
                     localStorage.setItem('hasene_streak', JSON.stringify(streakData));
+                    
+                    // GÜNLÜK GÖREVLER de localStorage'a kaydet (kritik!)
+                    const tasksToSave = { 
+                        ...dailyTasks, 
+                        todayStats: {
+                            ...dailyTasks.todayStats,
+                            farklıZorluk: Array.from(dailyTasks.todayStats.farklıZorluk)
+                        }
+                    };
+                    localStorage.setItem('hasene_dailyTasks', JSON.stringify(tasksToSave));
+                    
+                    // Oyun ayarları da localStorage'a kaydet - KRİTİK!
+                    localStorage.setItem('hasene_currentMode', currentMode);
+                    localStorage.setItem('hasene_currentDifficulty', currentDifficulty);
                 } catch(e) { console.log('localStorage failed:', e); }
                 
                 // 3. URL sistemi (son çare - mobil için)
@@ -1878,11 +1925,38 @@
                 }
             };
             
-            // Local Storage'ı tamamen temizle
+            // ÜÇ SİSTEMİ DE TAMAMEN TEMİZLE!
+            
+            // 1. IndexedDB'yi temizle (ANA SİSTEM)
+            if (db) {
+                try {
+                    const transaction = db.transaction(['gameData'], 'readwrite');
+                    const store = transaction.objectStore('gameData');
+                    store.clear(); // Tüm IndexedDB verilerini sil
+                    console.log('🗑️ IndexedDB temizlendi');
+                } catch(e) { 
+                    console.log('IndexedDB temizleme hatası:', e); 
+                }
+            }
+            
+            // 2. localStorage'ı tamamen temizle
             localStorage.removeItem('hasene_totalPoints');
             localStorage.removeItem('hasene_badges');
             localStorage.removeItem('hasene_streak');
             localStorage.removeItem('hasene_dailyTasks');
+            localStorage.removeItem('hasene_currentMode');
+            localStorage.removeItem('hasene_currentDifficulty');
+            console.log('🗑️ localStorage tamamen temizlendi');
+            
+            // 3. URL geçmişini temizle (mümkünse)
+            try {
+                if (window.history.replaceState) {
+                    window.history.replaceState({}, '', window.location.pathname);
+                }
+                console.log('🗑️ URL geçmişi temizlendi');
+            } catch(e) { 
+                console.log('URL temizleme hatası:', e); 
+            }
             
             // Yeni günlük görevler oluştur
             generateDailyTasks(new Date().toISOString().split('T')[0]);
@@ -1891,8 +1965,8 @@
             updateStatsBar();
             updateUI();
             
-            console.log('✅ Tüm veriler sıfırlandı! Fresh start hazır!');
-            alert('🔄 Tüm veriler sıfırlandı! Oyuna sıfırdan başlayabilirsin.');
+            console.log('✅ TÜM 3 SİSTEM TEMİZLENDİ! IndexedDB + localStorage + URL');
+            alert('🔄 Tüm veriler TAMAMEN sıfırlandı! IndexedDB, localStorage ve URL geçmişi temizlendi.');
         }
 
         function updateStatsBar() {
@@ -2370,9 +2444,20 @@
         function checkDailyTasks() {
             const today = new Date().toISOString().split('T')[0];
             
+            console.log('🔍 Günlük görev kontrolü:', {
+                bugün: today,
+                sonGörevTarihi: dailyTasks.lastTaskDate,
+                yeniGünMü: dailyTasks.lastTaskDate !== today,
+                mevcutTamamlananlar: dailyTasks.completedTasks.length,
+                bugünküStats: dailyTasks.todayStats
+            });
+            
             // Eğer yeni gün başladıysa görevleri yenile
             if (dailyTasks.lastTaskDate !== today) {
+                console.log('🔄 Yeni gün başladı, görevler yenileniyor...');
                 generateDailyTasks(today);
+            } else {
+                console.log('✅ Aynı gün, mevcut görevler korunuyor');
             }
         }
 
@@ -2416,24 +2501,38 @@
                 farklıZorluk: new Set()
             };
 
+            console.log('🎯 Yeni günlük görevler oluşturuldu:', {
+                tarih: date,
+                temelGörevler: baseTasks.length,
+                bonusGörevler: selectedBonus.length,
+                tamamlananlar: dailyTasks.completedTasks.length,
+                stats: dailyTasks.todayStats
+            });
+
             saveStats();
         }
 
         function updateTaskProgress(gameType, amount = 1) {
+            console.log(`📋 updateTaskProgress çağrıldı: ${gameType} +${amount}`);
+            
             // Oyun tipine göre istatistiği güncelle
             if (dailyTasks.todayStats[gameType] !== undefined) {
+                const eskiDeger = dailyTasks.todayStats[gameType];
                 dailyTasks.todayStats[gameType] += amount;
+                console.log(`📊 ${gameType}: ${eskiDeger} → ${dailyTasks.todayStats[gameType]}`);
             }
 
             // Zorluk takibi
             if (currentDifficulty) {
                 dailyTasks.todayStats.farklıZorluk.add(currentDifficulty);
+                console.log(`🎯 Zorluk eklendi: ${currentDifficulty}, toplam: ${dailyTasks.todayStats.farklıZorluk.size}`);
             }
 
             // Görevleri kontrol et ve güncelle
             const allTasks = [...dailyTasks.tasks, ...dailyTasks.bonusTasks];
             
             allTasks.forEach(task => {
+                const eskiCurrent = task.current;
                 if (task.type === gameType) {
                     task.current = Math.min(task.target, dailyTasks.todayStats[gameType]);
                 } else if (task.type === 'farklıZorluk') {
@@ -2443,9 +2542,15 @@
                 // Görev tamamlandı mı?
                 if (task.current >= task.target && !dailyTasks.completedTasks.includes(task.id)) {
                     dailyTasks.completedTasks.push(task.id);
+                    console.log(`✅ Görev tamamlandı: ${task.id} (${task.name})`);
+                }
+                
+                if (eskiCurrent !== task.current) {
+                    console.log(`🎯 Görev ilerleme: ${task.id} ${eskiCurrent}/${task.target} → ${task.current}/${task.target}`);
                 }
             });
 
+            console.log(`📋 Toplam tamamlanan görev: ${dailyTasks.completedTasks.length}`);
             saveStats();
         }
 
@@ -2624,14 +2729,44 @@
             
             updateStatsBar(); // Global barı güncelle
         }
+        
+        // ============ ZORLUK UI GÜNCELLEYICI ============
+        function updateDifficultyUI() {
+            // Kaydedilen zorluk seviyesine göre UI'yı ayarla
+            console.log(`🎯 Zorluk UI güncelleniyor: ${currentDifficulty}`);
+            
+            // Tüm butonları başlangıç durumuna getir
+            document.getElementById('mainDiffKolay').style.cssText = 'flex: 1; min-width: 90px; max-width: 120px; margin: 0; padding: 10px; font-size: 0.85em; background: white; color: #4CAF50; border: 2px solid #4CAF50;';
+            document.getElementById('mainDiffOrta').style.cssText = 'flex: 1; min-width: 90px; max-width: 120px; margin: 0; padding: 10px; font-size: 0.85em; background: white; color: #FF9800; border: 2px solid #FF9800;';
+            document.getElementById('mainDiffZor').style.cssText = 'flex: 1; min-width: 90px; max-width: 120px; margin: 0; padding: 10px; font-size: 0.85em; background: white; color: #f44336; border: 2px solid #f44336;';
+            
+            // Active class'ları temizle
+            document.querySelectorAll('#mainMenu .diff-btn').forEach(btn => btn.classList.remove('active'));
+            
+            // Seçili zorluk seviyesini vurgula
+            if (currentDifficulty === 'kolay') {
+                document.getElementById('mainDiffKolay').style.cssText = 'flex: 1; min-width: 90px; max-width: 120px; margin: 0; padding: 10px; font-size: 0.85em; background: #4CAF50; color: white; border: 2px solid #4CAF50;';
+                document.getElementById('mainDiffKolay').classList.add('active');
+            } else if (currentDifficulty === 'orta') {
+                document.getElementById('mainDiffOrta').style.cssText = 'flex: 1; min-width: 90px; max-width: 120px; margin: 0; padding: 10px; font-size: 0.85em; background: #FF9800; color: white; border: 2px solid #FF9800;';
+                document.getElementById('mainDiffOrta').classList.add('active');
+            } else if (currentDifficulty === 'zor') {
+                document.getElementById('mainDiffZor').style.cssText = 'flex: 1; min-width: 90px; max-width: 120px; margin: 0; padding: 10px; font-size: 0.85em; background: #f44336; color: white; border: 2px solid #f44336;';
+                document.getElementById('mainDiffZor').classList.add('active');
+            }
+        }
 
         // ============ ANA MENÜ ZORLUK BUTONLARI ============
         function initMainMenuDifficultyButtons() {
             // console.log('🔧 initMainMenuDifficultyButtons çağrıldı');
             
+            // Kaydedilen zorluk seviyesini UI'da göster
+            updateDifficultyUI();
+            
             document.getElementById('mainDiffKolay').onclick = () => {
                 console.log('🎯 Zorluk seçildi: KOLAY');
                 currentDifficulty = 'kolay';
+                saveStats(); // Zorluk değiştiğinde kaydet!
                 // Kolay yeşil seçili, diğerleri kendi border renkleri ile beyaz
                 document.getElementById('mainDiffKolay').style.cssText = 'flex: 1; min-width: 90px; max-width: 120px; margin: 0; padding: 10px; font-size: 0.85em; background: #4CAF50; color: white; border: 2px solid #4CAF50;';
                 document.getElementById('mainDiffOrta').style.cssText = 'flex: 1; min-width: 90px; max-width: 120px; margin: 0; padding: 10px; font-size: 0.85em; background: white; color: #FF9800; border: 2px solid #FF9800;';
@@ -2644,6 +2779,7 @@
             document.getElementById('mainDiffOrta').onclick = () => {
                 console.log('🎯 Zorluk seçildi: ORTA');
                 currentDifficulty = 'orta';
+                saveStats(); // Zorluk değiştiğinde kaydet!
                 // Orta turuncu seçili, diğerleri kendi border renkleri ile beyaz
                 document.getElementById('mainDiffKolay').style.cssText = 'flex: 1; min-width: 90px; max-width: 120px; margin: 0; padding: 10px; font-size: 0.85em; background: white; color: #4CAF50; border: 2px solid #4CAF50;';
                 document.getElementById('mainDiffOrta').style.cssText = 'flex: 1; min-width: 90px; max-width: 120px; margin: 0; padding: 10px; font-size: 0.85em; background: #FF9800; color: white; border: 2px solid #FF9800;';
@@ -2656,6 +2792,7 @@
             document.getElementById('mainDiffZor').onclick = () => {
                 console.log('🎯 Zorluk seçildi: ZOR');
                 currentDifficulty = 'zor';
+                saveStats(); // Zorluk değiştiğinde kaydet!
                 // Zor kırmızı seçili, diğerleri kendi border renkleri ile beyaz
                 document.getElementById('mainDiffKolay').style.cssText = 'flex: 1; min-width: 90px; max-width: 120px; margin: 0; padding: 10px; font-size: 0.85em; background: white; color: #4CAF50; border: 2px solid #4CAF50;';
                 document.getElementById('mainDiffOrta').style.cssText = 'flex: 1; min-width: 90px; max-width: 120px; margin: 0; padding: 10px; font-size: 0.85em; background: white; color: #FF9800; border: 2px solid #FF9800;';
@@ -2872,6 +3009,7 @@
         // ============ MOD SEÇ ============
         function selectMode(modeKey) {
             currentMode = modeKey;
+            saveStats(); // Mod değiştiğinde kaydet!
             document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
             event.target.closest('.mode-btn').classList.add('active');
         }
