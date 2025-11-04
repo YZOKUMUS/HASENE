@@ -315,9 +315,11 @@
 
         .sure-info {
             text-align: center;
-            color: #666;
-            font-size: 0.9em;
-            margin-bottom: 15px;
+            color: #999;
+            font-size: 0.7em;    /* Çok küçük punto - kelime ID için */
+            margin: -5px 0 10px 0;  /* Arapça kelimeye yakın konumlandır */
+            font-family: 'Courier New', monospace;  /* ID'ler için mono font */
+            opacity: 0.8;
         }
 
         .arabic {
@@ -959,8 +961,8 @@
             </div>
 
             <div class="game-box">
-                <div class="sure-info" id="boslukSureInfo">Yükleniyor...</div>
                 <div class="arabic" id="boslukAyetText">Ayet metni yükleniyor...</div>
+                <div class="sure-info" id="boslukSureInfo">Ayet ID: 0</div>
                 <button class="audio-btn" id="boslukAudioBtn">🔊 Ayeti Dinle</button>
                 <div class="options" id="boslukOptions"></div>
                 <div class="feedback" id="boslukFeedback"></div>
@@ -989,10 +991,10 @@
             </div>
 
             <div class="game-box">
-                <div class="sure-info" id="dinleSureInfo">Ses dosyasını dinle</div>
                 <div style="text-align: center; margin: 30px 0;">
                     <div style="font-size: 4em;">🎧</div>
                 </div>
+                <div class="sure-info" id="dinleSureInfo">ID: 0</div>
                 <button class="audio-btn" id="dinleAudioBtn">🔊 Kelimeyi Dinle</button>
                 <div class="options" id="dinleOptions"></div>
                 <div class="feedback" id="dinleFeedback"></div>
@@ -1044,8 +1046,8 @@
 
         <!-- Oyun Alanı -->
         <div class="game-box">
-            <div class="sure-info" id="sureInfo">Yükleniyor...</div>
             <div class="arabic" id="arabicWord">رَكَّبَكَ</div>
+            <div class="sure-info" id="sureInfo">ID: 0</div>
             <button class="audio-btn" id="audioBtn">🔊 Sesi Dinle</button>
             <button class="hint-btn" id="hintBtn" style="display: none;">💡 İpucu</button>
             <div class="options" id="options"></div>
@@ -3593,7 +3595,7 @@
 
             // UI güncelle
             elements.arabicWord.textContent = currentQuestion.kelime;
-            elements.sureInfo.textContent = `${currentQuestion.sure_adi} Suresi`;
+            elements.sureInfo.textContent = `ID: ${currentQuestion.id}`;
 
             // Seçenekler oluştur
             const wrongAnswers = getWrongAnswers(3);
@@ -3936,8 +3938,8 @@
 
             console.log(`🎨 UI güncelleniyor...`);
             // UI güncelle
-            elements.dinleSureInfo.textContent = `${currentDinleQuestion.sure_adi} Suresi`;
-            console.log(`✅ Sure bilgisi: ${currentDinleQuestion.sure_adi} Suresi`);
+            elements.dinleSureInfo.textContent = `ID: ${currentDinleQuestion.id}`;
+            console.log(`✅ Kelime ID: ${currentDinleQuestion.id}`);
 
             console.log(`🔀 Seçenekler oluşturuluyor... (4 Arapça kelime)`);
             // Seçenekler oluştur (4 Arapça kelime) - aynı zorluktan
@@ -4175,7 +4177,7 @@
             currentBoslukQuestion = ayet;
 
             // UI güncelle
-            elements.boslukSureInfo.textContent = `${ayet.sure_adı || 'Sûre'} - Ayet`;
+            elements.boslukSureInfo.textContent = `Ayet ID: ${ayet.ayet_kimligi || randomIndex}`;
             elements.boslukAyetText.textContent = displayText;
 
             // Seçenekler oluştur (boşluğa gelecek kelime)
