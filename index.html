@@ -27,6 +27,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
     
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- Flutter Modern CSS -->
+    <link rel="stylesheet" href="flutter_modern.css">
+    
     <style>
         /* ============ TEMEL AYARLAR ============ */
         * {
@@ -37,19 +43,13 @@
         }
 
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+            background: #F7F7F7;
             min-height: 100vh;
-            padding: 10px;
-            padding-top: max(10px, env(safe-area-inset-top));
-            padding-bottom: max(10px, env(safe-area-inset-bottom));
-            padding-left: max(10px, env(safe-area-inset-left));
-            padding-right: max(10px, env(safe-area-inset-right));
+            padding: 0;
             position: relative;
             overflow-x: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            color: #1C1C1E;
         }
 
         /* Animated Background Pattern */
@@ -1504,53 +1504,44 @@
             </div>
         </div>
 
-        <!-- Günlük Hedef Progress Bar -->
-        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; padding: 12px; margin-bottom: 8px; box-shadow: 0 4px 15px rgba(102,126,234,0.3);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                    <span style="font-size: 1.3em;">🎯</span>
-                    <div>
-                        <div style="color: white; font-weight: 600; font-size: 0.9em;">Günlük Hedef</div>
-                        <div style="color: rgba(255,255,255,0.8); font-size: 0.75em;" id="dailyGoalText">2700 XP hedefine ulaş!</div>
-                    </div>
-                </div>
-                <button onclick="showDailyGoalSettings()" style="background: rgba(255,255,255,0.2); border: none; color: white; padding: 5px 10px; border-radius: 6px; font-size: 0.8em; cursor: pointer; transition: all 0.3s;">
-                    ⚙️
-                </button>
-            </div>
-            <div style="background: rgba(255,255,255,0.3); height: 12px; border-radius: 6px; overflow: hidden; position: relative;">
-                <div id="dailyGoalProgress" style="background: linear-gradient(90deg, #4ade80 0%, #22c55e 100%); height: 100%; width: 0%; border-radius: 6px; transition: width 0.5s ease; box-shadow: 0 2px 8px rgba(74,222,128,0.4);"></div>
-                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 0.7em; text-shadow: 0 1px 2px rgba(0,0,0,0.3);" id="dailyGoalProgressText">0 / 2700 XP</div>
-            </div>
-        </div>
+
 
         <!-- Ana Menü -->
         <div class="main-menu" id="mainMenu">
-            <!-- Üst Butonlar -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 6px;">
-                <button id="dailyTasksBtn" class="top-btn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; padding: 6px; font-size: 0.8em; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 4px; box-shadow: none; cursor: pointer; opacity: 0.92;">
-                    <span style="font-size: 1em;">📋</span>
-                    Günlük Görevler
-                </button>
-                
-                <button id="badgesBtn" class="top-btn" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border: none; border-radius: 8px; padding: 6px; font-size: 0.8em; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 4px; box-shadow: none; cursor: pointer; opacity: 0.92;">
-                    <span style="font-size: 1em;">🏆</span>
-                    Başarılar
-                </button>
-                
-                <button class="top-btn" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); color: #333; border: none; border-radius: 8px; padding: 6px; font-size: 0.8em; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 4px; box-shadow: none; cursor: pointer; opacity: 0.92;" onclick="showStatsModal()">
-                    <span style="font-size: 1em;">📊</span>
-                    İstatistikler
-                </button>
-                
-                <button class="top-btn" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; border: none; border-radius: 8px; padding: 6px; font-size: 0.8em; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 4px; box-shadow: none; cursor: pointer; opacity: 0.92;" onclick="showCalendarModal()">
-                    <span style="font-size: 1em;">�</span>
-                    Takvim
+            <!-- Flutter App Bar -->
+            <div class="flutter-app-bar">
+                <h1>🌙 Hasene Arapça Oyunu</h1>
+                <button class="flutter-fab" style="width: 48px; height: 48px;" onclick="showStatsModal()">
+                    <i class="material-icons">analytics</i>
                 </button>
             </div>
+
+            <!-- Günlük Hedef Progress Bar -->
+            <div class="daily-goal-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 28px;">🎯</span>
+                        <div>
+                            <div style="color: var(--text-primary); font-weight: 600; font-size: 16px;">Günlük Hedef</div>
+                            <div style="color: var(--text-secondary); font-size: 14px;" id="dailyGoalText">2700 XP hedefine ulaş!</div>
+                        </div>
+                    </div>
+                    <button onclick="showDailyGoalSettings()" class="flutter-fab" style="width: 40px; height: 40px; font-size: 16px;">
+                        <i class="material-icons">settings</i>
+                    </button>
+                </div>
+                <div style="background: #E5E5E7; height: 8px; border-radius: 4px; overflow: hidden; position: relative;">
+                    <div id="dailyGoalProgress" style="background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%); height: 100%; width: 0%; border-radius: 4px; transition: width 0.5s ease;"></div>
+                </div>
+                <div style="text-align: center; margin-top: 8px; color: var(--text-secondary); font-weight: 500; font-size: 14px;" id="dailyGoalProgressText">0 / 2700 XP</div>
+            </div>
+
+
+                    <span style="font-size: 1em;">�</span>
+
             
             <!-- XP Bilgi Butonu -->
-            <div style="margin-bottom: 6px;">
+            <div style="margin-bottom: 3px;">
                 <button id="xpInfoBtn" style="width: 100%; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: white; border: none; border-radius: 8px; padding: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; box-shadow: 0 2px 6px rgba(251,191,36,0.3); transition: all 0.3s; font-weight: 600; font-size: 0.8em;">
                     <span style="font-size: 1em;">�</span>
                     <div>XP Nasıl Kazanılır?</div>
@@ -1559,7 +1550,7 @@
             </div>
             
             <!-- Zorluk Butonları -->
-            <div style="display: flex; gap: 2px; margin-bottom: 6px; flex-wrap: nowrap; justify-content: center;">
+            <div style="display: flex; gap: 2px; margin-bottom: 3px; flex-wrap: nowrap; justify-content: center;">
                 <button class="diff-btn" id="mainDiffKolay" style="flex: 1; min-width: 60px; max-width: 85px; margin: 0; padding: 4px; font-size: 0.7em; background: white; color: #4CAF50; border: 1px solid #4CAF50; border-radius: 5px;">
                     <strong>🌱 Kolay</strong>
                 </button>
@@ -1571,41 +1562,44 @@
                 </button>
             </div>
 
-            <button class="menu-item" id="kelimeCevirBtn" style="margin-bottom: 10px; padding: 12px; background: linear-gradient(135deg, #ffd700 0%, #ffb347 100%); color: #8b4513; box-shadow: 0 4px 15px rgba(255,215,0,0.4); border: 2px solid #daa520;">
-                <div class="menu-icon" style="font-size: 1.8em; margin-bottom: 3px;">📚</div>
-                <div class="menu-title" style="font-size: 1em; font-weight: bold;">Kelime Çevir</div>
-                <div class="menu-desc" style="font-size: 0.8em;">Arapça kelimeyi Türkçe'ye çevir</div>
-            </button>
+            <!-- Flutter Oyun Kartları -->
+            <div class="flutter-game-grid">
+                <button class="flutter-game-card kelime" id="kelimeCevirBtn">
+                    <div class="game-card-icon">�</div>
+                    <div class="game-card-title">Kelime Çevir</div>
+                    <div class="game-card-desc">Arapça kelimeleri Türkçe'ye çevir</div>
+                </button>
 
-            <button class="menu-item" id="dinleBulBtn" style="margin-bottom: 10px; padding: 12px; background: linear-gradient(135deg, #74c0fc 0%, #339af0 100%); color: white; box-shadow: 0 4px 15px rgba(51,154,240,0.3);">
-                <div class="menu-icon" style="font-size: 1.8em; margin-bottom: 3px;">🎧</div>
-                <div class="menu-title" style="font-size: 1em;">Dinle ve Bul</div>
-                <div class="menu-desc" style="font-size: 0.8em;">Kelimeyi dinle, doğru kelimeyi bul</div>
-            </button>
+                <button class="flutter-game-card dinle" id="dinleBulBtn">
+                    <div class="game-card-icon">🎧</div>
+                    <div class="game-card-title">Dinle ve Bul</div>
+                    <div class="game-card-desc">Kelimeyi dinle ve doğru kelimeyi seç</div>
+                </button>
 
-            <button class="menu-item" id="boslukDoldurBtn" style="margin-bottom: 10px; padding: 12px; background: linear-gradient(135deg, #9775fa 0%, #7048e8 100%); color: white; box-shadow: 0 4px 15px rgba(112,72,232,0.3);">
-                <div class="menu-icon" style="font-size: 1.8em; margin-bottom: 3px;">✍️</div>
-                <div class="menu-title" style="font-size: 1em;">Boşluk Doldur</div>
-                <div class="menu-desc" style="font-size: 0.8em;">Ayetteki eksik kelimeyi tamamla</div>
-            </button>
+                <button class="flutter-game-card bosluk" id="boslukDoldurBtn">
+                    <div class="game-card-icon">✏️</div>
+                    <div class="game-card-title">Boşluk Doldur</div>
+                    <div class="game-card-desc">Ayetteki eksik kelimeyi tamamla</div>
+                </button>
 
-            <button class="menu-item" id="duaEtBtn" style="margin-bottom: 10px; padding: 12px; background: linear-gradient(135deg, #51cf66 0%, #37b24d 100%); color: white; box-shadow: 0 4px 15px rgba(55,178,77,0.3);">
-                <div class="menu-icon" style="font-size: 1.8em; margin-bottom: 3px;">🤲</div>
-                <div class="menu-title" style="font-size: 1em;">Dua Et ve Dinle</div>
-                <div class="menu-desc" style="font-size: 0.8em;">Kur'an'dan duaları öğren</div>
-            </button>
+                <button class="flutter-game-card dua" id="duaEtBtn">
+                    <div class="game-card-icon">🤲</div>
+                    <div class="game-card-title">Dua Et</div>
+                    <div class="game-card-desc">Kur'an'dan duaları öğren ve dinle</div>
+                </button>
 
-            <button class="menu-item" id="ayetOkuBtn" style="margin-bottom: 10px; padding: 12px; background: linear-gradient(135deg, #4dabf7 0%, #1c7ed6 100%); color: white; box-shadow: 0 4px 15px rgba(28,126,214,0.3);">
-                <div class="menu-icon" style="font-size: 1.8em; margin-bottom: 3px;">📖</div>
-                <div class="menu-title" style="font-size: 1em;">Ayet Oku ve Dinle</div>
-                <div class="menu-desc" style="font-size: 0.8em;">Ayetleri dinle ve oku</div>
-            </button>
+                <button class="flutter-game-card ayet" id="ayetOkuBtn">
+                    <div class="game-card-icon">📖</div>
+                    <div class="game-card-title">Ayet Oku</div>
+                    <div class="game-card-desc">Ayetleri oku ve anlamlarını öğren</div>
+                </button>
 
-            <button class="menu-item" id="hadisOkuBtn" style="margin-bottom: 0; padding: 12px; background: linear-gradient(135deg, #ff8787 0%, #fa5252 100%); color: white; box-shadow: 0 4px 15px rgba(250,82,82,0.3);">
-                <div class="menu-icon" style="font-size: 1.8em; margin-bottom: 3px;">📜</div>
-                <div class="menu-title" style="font-size: 1em;">Hadis Oku</div>
-                <div class="menu-desc" style="font-size: 0.8em;">Hadis-i Şerifleri oku</div>
-            </button>
+                <button class="flutter-game-card hadis" id="hadisOkuBtn">
+                    <div class="game-card-icon">📜</div>
+                    <div class="game-card-title">Hadis Oku</div>
+                    <div class="game-card-desc">Hadis-i şerifleri oku ve öğren</div>
+                </button>
+            </div>
         </div>
 
         <!-- Kelime Çevir Alt Mod Seçimi -->
@@ -1727,25 +1721,32 @@
 
         <!-- Oyun Ekranı -->
         <div class="game-screen" id="gameScreen" style="display: none;">
-        <button class="back-btn" id="backFromGameBtn">← Geri</button>
+        <!-- Flutter App Bar -->
+        <div class="flutter-app-bar">
+            <button class="back-btn" id="backFromGameBtn" style="background: none; border: none; color: white; padding: 8px; font-size: 24px;">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            <h1>📚 Kelime Çevir</h1>
+            <div></div>
+        </div>
 
         <!-- İstatistikler -->
-        <div class="stats">
-            <div class="stat">
-                <div class="stat-label">Puan</div>
-                <div class="stat-value" id="score">0</div>
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 20px;">
+            <div class="flutter-stat-card">
+                <div class="flutter-stat-value" id="score">0</div>
+                <div class="flutter-stat-label">Puan</div>
             </div>
-            <div class="stat">
-                <div class="stat-label">Seviye</div>
-                <div class="stat-value" id="level">1</div>
+            <div class="flutter-stat-card">
+                <div class="flutter-stat-value" id="level">1</div>
+                <div class="flutter-stat-label">Seviye</div>
             </div>
-            <div class="stat">
-                <div class="stat-label">Doğru</div>
-                <div class="stat-value" id="correct">0</div>
+            <div class="flutter-stat-card">
+                <div class="flutter-stat-value" id="correct">0</div>
+                <div class="flutter-stat-label">Doğru</div>
             </div>
-            <div class="stat">
-                <div class="stat-label">Yanlış</div>
-                <div class="stat-value" id="wrong">0</div>
+            <div class="flutter-stat-card">
+                <div class="flutter-stat-value" id="wrong">0</div>
+                <div class="flutter-stat-label">Yanlış</div>
             </div>
         </div>
 
@@ -1776,16 +1777,22 @@
         </div>
 
         <!-- Oyun Alanı -->
-        <div class="game-box">
-            <div class="arabic" id="arabicWord">رَكَّبَكَ</div>
-            <div class="sure-info" id="sureInfo">ID: 0</div>
-            <div class="button-row">
-                <button class="audio-btn" id="audioBtn"></button>
-                <button class="hint-btn" id="hintBtn" style="display: none;"></button>
+        <div class="flutter-card" style="margin: 16px;">
+            <div class="arabic-text arabic-large" id="arabicWord">رَكَّبَكَ</div>
+            <div class="sure-info" id="sureInfo" style="text-align: center; color: var(--md-on-surface-variant); font-size: 12px; margin: 8px 0;">ID: 0</div>
+            
+            <div style="display: flex; justify-content: center; gap: 16px; margin: 20px 0;">
+                <button class="flutter-fab" id="audioBtn">
+                    <i class="material-icons">volume_up</i>
+                </button>
+                <button class="flutter-fab" id="hintBtn" style="display: none;">
+                    <i class="material-icons">help_outline</i>
+                </button>
             </div>
+            
             <div class="options" id="options"></div>
             <div class="feedback" id="feedback"></div>
-            <button class="next-btn" id="nextBtn">Sonraki Soru →</button>
+            <button class="flutter-btn flutter-btn-primary" id="nextBtn" style="width: 100%; margin-top: 16px;">Sonraki Soru →</button>
         </div>
         </div>  <!-- gameScreen sonu -->
     </div>
@@ -6478,6 +6485,54 @@
             </div>
         </div>
     </div>
+
+    <!-- Flutter Bottom Navigation -->
+    <div class="flutter-bottom-nav">
+        <a class="flutter-nav-item active" onclick="showMainMenu()">
+            <i class="material-icons">home</i>
+            <span>Ana Sayfa</span>
+        </a>
+        <a class="flutter-nav-item" onclick="showStatsModal()">
+            <i class="material-icons">analytics</i>
+            <span>İstatistik</span>
+        </a>
+        <a class="flutter-nav-item" onclick="showDailyTasksModal()">
+            <i class="material-icons">task_alt</i>
+            <span>Görevler</span>
+        </a>
+        <a class="flutter-nav-item" onclick="showBadgesModal()">
+            <i class="material-icons">emoji_events</i>
+            <span>Başarılar</span>
+        </a>
+        <a class="flutter-nav-item" onclick="showCalendarModal()">
+            <i class="material-icons">calendar_today</i>
+            <span>Takvim</span>
+        </a>
+    </div>
+
+    <script>
+        // Ana menüyü göster
+        function showMainMenu() {
+            if (document.getElementById('mainMenu')) {
+                document.getElementById('mainMenu').style.display = 'block';
+                document.getElementById('gameScreen').style.display = 'none';
+                document.getElementById('modeSelector').style.display = 'none';
+                
+                // Navigation active state
+                document.querySelectorAll('.flutter-nav-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                document.querySelector('.flutter-nav-item').classList.add('active');
+            }
+        }
+
+        // Bottom navigation active state yönetimi
+        function setActiveNavItem(index) {
+            document.querySelectorAll('.flutter-nav-item').forEach((item, i) => {
+                item.classList.toggle('active', i === index);
+            });
+        }
+    </script>
 
 </body>
 </html>

@@ -1,0 +1,366 @@
+/* 🎨 FLUTTER MATERIAL DESIGN - MODERN OYUN STILI */
+
+:root {
+    /* Flutter Light Theme */
+    --primary: #6200EA;
+    --primary-light: #9C47FF;
+    --surface: #FFFFFF;
+    --background: #F7F7F7;
+    --text-primary: #1C1C1E;
+    --text-secondary: #6B7280;
+    
+    /* Game Mode Colors */
+    --kelime-color: #FF6B6B;
+    --dinle-color: #4ECDC4;
+    --bosluk-color: #45B7D1;
+    --dua-color: #96CEB4;
+    --ayet-color: #FECA57;
+    --hadis-color: #FF9FF3;
+    
+    /* Shadows */
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* ============ FLUTTER APP BAR ============ */
+.flutter-app-bar {
+    background: var(--surface);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-bottom: 1px solid #E5E5E7;
+}
+
+.flutter-app-bar h1 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* ============ FLUTTER GAME CARDS ============ */
+.flutter-game-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.flutter-game-card {
+    aspect-ratio: 1;
+    background: var(--surface);
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    box-shadow: var(--shadow);
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.flutter-game-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: var(--shadow-hover);
+}
+
+.flutter-game-card:active {
+    transform: translateY(-2px) scale(0.98);
+}
+
+/* Game Card Colors */
+.flutter-game-card.kelime { background: linear-gradient(135deg, var(--kelime-color), #FF5252); }
+.flutter-game-card.dinle { background: linear-gradient(135deg, var(--dinle-color), #26C6DA); }
+.flutter-game-card.bosluk { background: linear-gradient(135deg, var(--bosluk-color), #2196F3); }
+.flutter-game-card.dua { background: linear-gradient(135deg, var(--dua-color), #4CAF50); }
+.flutter-game-card.ayet { background: linear-gradient(135deg, var(--ayet-color), #FFC107); }
+.flutter-game-card.hadis { background: linear-gradient(135deg, var(--hadis-color), #E91E63); }
+
+.game-card-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.game-card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 6px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.game-card-desc {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.3;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+/* ============ STATS SECTION ============ */
+.flutter-stats-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.flutter-stat-card {
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 16px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease;
+}
+
+.flutter-stat-card:hover {
+    transform: translateY(-2px);
+}
+
+.flutter-stat-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 4px;
+}
+
+.flutter-stat-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ============ FLOATING ACTION BUTTON ============ */
+.flutter-fab {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    border: none;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    transition: all 0.3s ease;
+}
+
+.flutter-fab:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-hover);
+}
+
+/* ============ BOTTOM NAVIGATION ============ */
+.flutter-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--surface);
+    border-top: 1px solid #E5E5E7;
+    padding: 8px 0;
+    display: flex;
+    justify-content: space-around;
+    z-index: 1000;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+}
+
+.flutter-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--text-secondary);
+    text-decoration: none;
+    min-width: 60px;
+}
+
+.flutter-nav-item.active {
+    background: rgba(98, 0, 234, 0.1);
+    color: var(--primary);
+}
+
+.flutter-nav-item:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.flutter-nav-item i {
+    font-size: 20px;
+    margin-bottom: 2px;
+}
+
+.flutter-nav-item span {
+    font-size: 11px;
+    font-weight: 500;
+}
+
+/* ============ ARABIC TEXT ============ */
+.arabic-text {
+    font-family: 'Amiri Quran', 'Scheherazade New', serif;
+    direction: rtl;
+    text-align: center;
+    line-height: 1.8;
+    font-size: 32px;
+    color: #2D3748;
+    margin: 20px 0;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* ============ GAME SCREEN ============ */
+.game-screen {
+    padding-bottom: 80px;
+    background: var(--background);
+}
+
+.flutter-card {
+    background: var(--surface);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    padding: 24px;
+    margin: 20px;
+    border: none;
+}
+
+/* ============ OPTIONS BUTTONS ============ */
+.option {
+    width: 100%;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: 2px solid #E5E5E7;
+    border-radius: 16px;
+    background: var(--surface);
+    color: var(--text-primary);
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.option:hover {
+    background: #F0F0F0;
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.option.correct {
+    background: #E8F5E8;
+    border-color: #4CAF50;
+    color: #2E7D32;
+}
+
+.option.wrong {
+    background: #FFEBEE;
+    border-color: #F44336;
+    color: #C62828;
+    animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+}
+
+/* ============ BUTTONS ============ */
+.flutter-btn {
+    border: none;
+    border-radius: 16px;
+    padding: 14px 28px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: none;
+}
+
+.flutter-btn-primary {
+    background: var(--primary);
+    color: white;
+    box-shadow: var(--shadow);
+}
+
+.flutter-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 480px) {
+    .flutter-game-grid {
+        padding: 16px;
+        gap: 12px;
+    }
+    
+    .game-card-icon {
+        font-size: 36px;
+    }
+    
+    .game-card-title {
+        font-size: 14px;
+    }
+    
+    .game-card-desc {
+        font-size: 11px;
+    }
+    
+    .arabic-text {
+        font-size: 28px;
+    }
+}
+
+/* ============ MAIN MENU ============ */
+.main-menu {
+    padding-bottom: 80px;
+    background: var(--background);
+    min-height: 100vh;
+}
+
+/* ============ DAILY GOAL SECTION ============ */
+.daily-goal-section {
+    background: var(--surface);
+    margin: 20px;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+}
+
+/* ============ LOADING ============ */
+.loading-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: var(--background);
+}
+
+.loading-logo {
+    width: 120px;
+    height: 120px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
