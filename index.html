@@ -139,12 +139,13 @@
         }
 
         .loading-title {
+            font-family: 'Amiri Quran', 'Scheherazade New', serif;
             font-size: 3em;
-            font-weight: 900;
+            font-weight: 700;
             color: #FFD700;
             text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
             margin-bottom: 40px;
-            letter-spacing: 8px;
+            letter-spacing: 12px;
             animation: glow 2s ease-in-out infinite;
         }
 
@@ -1714,7 +1715,6 @@
 
             <div class="game-box">
                 <div class="arabic" id="boslukAyetText">Ayet metni yükleniyor...</div>
-                <div class="sure-info" id="boslukSureInfo">Ayet ID: 0</div>
                 <button class="audio-btn" id="boslukAudioBtn"></button>
                 <div class="options" id="boslukOptions"></div>
                 <div class="feedback" id="boslukFeedback"></div>
@@ -1891,7 +1891,7 @@
                 <div>🎯 <span id="badgesModalPoints">0</span> Puan</div>
             </div>
             
-            <button class="modal-btn" id="closeBadgesBtn">Kapat</button>
+            <button id="closeBadgesBtn" style="width: auto; max-width: 200px; padding: 10px 30px; background: #e74c3c; color: white; border: none; border-radius: 8px; font-size: 0.9em; font-weight: bold; cursor: pointer; margin: 20px auto 0; display: block;">Kapat</button>
         </div>
     </div>
 
@@ -1944,7 +1944,7 @@
                 </div>
             </div>
 
-            <button id="closeCalendarBtn" style="width: 100%; padding: 12px; background: #e74c3c; color: white; border: none; border-radius: 8px; font-size: 1em; font-weight: bold; cursor: pointer; margin-top: 20px;">Kapat</button>
+            <button id="closeCalendarBtn" style="width: auto; max-width: 200px; padding: 10px 30px; background: #e74c3c; color: white; border: none; border-radius: 8px; font-size: 0.9em; font-weight: bold; cursor: pointer; margin: 20px auto 0; display: block;">Kapat</button>
         </div>
     </div>
 
@@ -1973,8 +1973,6 @@
 
             <!-- Bonus Görevler -->
             <div style="margin: 16px 0;">
-                <h4 style="margin: 8px 0; color: #333; font-size: 0.95em;">⭐ Bonus Görevler</h4>
-                
                 <div id="bonusTasksList">
                     <!-- Bonus görevler buraya dinamik eklenecek -->
                 </div>
@@ -1989,7 +1987,7 @@
                 </button>
             </div>
 
-            <button class="modal-btn" id="closeDailyTasksBtn">Kapat</button>
+            <button id="closeDailyTasksBtn" style="width: auto; max-width: 200px; padding: 10px 30px; background: #e74c3c; color: white; border: none; border-radius: 8px; font-size: 0.9em; font-weight: bold; cursor: pointer; margin: 20px auto 0; display: block;">Kapat</button>
         </div>
     </div>
 
@@ -2045,30 +2043,30 @@
             <!-- Rozet Sistemi -->
             <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 12px; border-radius: 12px; margin: 12px 0; box-shadow: 0 4px 12px rgba(102,126,234,0.3);">
                 <h4 style="margin: 0 0 10px 0; color: white; font-size: 1em; text-align: center;">🏆 XP Bazlı Rozet Sistemi</h4>
-                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; text-align: center;">
-                    <div style="padding: 8px; background: white; border-radius: 8px; border: 2px solid #cd7f32;">
-                        <div style="font-size: 1.5em;">🥉</div>
-                        <div style="font-size: 0.7em; color: #666; margin: 4px 0;">Bronz</div>
-                        <div style="font-weight: bold; font-size: 0.9em; color: #cd7f32;" id="statsBronze">0</div>
-                        <div style="font-size: 0.6em; color: #888; margin-top: 2px;">2K XP</div>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; text-align: center;">
+                    <div style="padding: 6px 4px; background: white; border-radius: 8px; border: 2px solid #cd7f32;">
+                        <div style="font-size: 1.3em;">🥉</div>
+                        <div style="font-size: 0.65em; color: #666; margin: 2px 0;">Bronz</div>
+                        <div style="font-weight: bold; font-size: 0.85em; color: #cd7f32;" id="statsBronze">0</div>
+                        <div style="font-size: 0.55em; color: #888; margin-top: 2px;">2K XP</div>
                     </div>
-                    <div style="padding: 8px; background: white; border-radius: 8px; border: 2px solid #c0c0c0;">
-                        <div style="font-size: 1.5em;">🥈</div>
-                        <div style="font-size: 0.7em; color: #666; margin: 4px 0;">Gümüş</div>
-                        <div style="font-weight: bold; font-size: 0.9em; color: #c0c0c0;" id="statsSilver">0</div>
-                        <div style="font-size: 0.6em; color: #888; margin-top: 2px;">8.5K XP</div>
+                    <div style="padding: 6px 4px; background: white; border-radius: 8px; border: 2px solid #c0c0c0;">
+                        <div style="font-size: 1.3em;">🥈</div>
+                        <div style="font-size: 0.65em; color: #666; margin: 2px 0;">Gümüş</div>
+                        <div style="font-weight: bold; font-size: 0.85em; color: #c0c0c0;" id="statsSilver">0</div>
+                        <div style="font-size: 0.55em; color: #888; margin-top: 2px;">8.5K XP</div>
                     </div>
-                    <div style="padding: 8px; background: white; border-radius: 8px; border: 2px solid #ffd700;">
-                        <div style="font-size: 1.5em;">🥇</div>
-                        <div style="font-size: 0.7em; color: #666; margin: 4px 0;">Altın</div>
-                        <div style="font-weight: bold; font-size: 0.9em; color: #ffd700;" id="statsGold">0</div>
-                        <div style="font-size: 0.6em; color: #888; margin-top: 2px;">25.5K XP</div>
+                    <div style="padding: 6px 4px; background: white; border-radius: 8px; border: 2px solid #ffd700;">
+                        <div style="font-size: 1.3em;">🥇</div>
+                        <div style="font-size: 0.65em; color: #666; margin: 2px 0;">Altın</div>
+                        <div style="font-weight: bold; font-size: 0.85em; color: #ffd700;" id="statsGold">0</div>
+                        <div style="font-size: 0.55em; color: #888; margin-top: 2px;">25.5K XP</div>
                     </div>
-                    <div style="padding: 8px; background: white; border-radius: 8px; border: 2px solid #b9f2ff;">
-                        <div style="font-size: 1.5em;">💎</div>
-                        <div style="font-size: 0.7em; color: #666; margin: 4px 0;">Elmas</div>
-                        <div style="font-weight: bold; font-size: 0.9em; color: #00d9ff;" id="statsDiamond">0</div>
-                        <div style="font-size: 0.6em; color: #888; margin-top: 2px;">85K XP</div>
+                    <div style="padding: 6px 4px; background: white; border-radius: 8px; border: 2px solid #b9f2ff;">
+                        <div style="font-size: 1.3em;">💎</div>
+                        <div style="font-size: 0.65em; color: #666; margin: 2px 0;">Elmas</div>
+                        <div style="font-weight: bold; font-size: 0.85em; color: #00d9ff;" id="statsDiamond">0</div>
+                        <div style="font-size: 0.55em; color: #888; margin-top: 2px;">85K XP</div>
                     </div>
                 </div>
                 <div style="margin-top: 10px; padding: 8px; background: rgba(255,255,255,0.2); border-radius: 6px; color: white; font-size: 0.75em; text-align: center;">
@@ -2241,51 +2239,51 @@
             <!-- Kelime İstatistikleri Tab Sonu -->
 
             <!-- Kapat Butonu -->
-            <button class="modal-btn" id="closeStatsBtn">Kapat</button>
+            <button id="closeStatsBtn" style="width: auto; max-width: 200px; padding: 10px 30px; background: #e74c3c; color: white; border: none; border-radius: 8px; font-size: 0.9em; font-weight: bold; cursor: pointer; margin: 20px auto 0; display: block;">Kapat</button>
         </div>
     </div>
 
     <!-- Daily Goal Settings Modal -->
     <div class="modal" id="dailyGoalModal">
         <div class="modal-content" style="max-width: 360px;">
-            <h3 style="margin: 0 0 15px 0; font-size: 1.2em; text-align: center;">🎯 Günlük Hedef Seç</h3>
-            <p style="text-align: center; color: #666; font-size: 0.9em; margin-bottom: 20px;">
+            <h3 style="margin: 0 0 15px 0; font-size: 1.05em; text-align: center;">🎯 Günlük Hedef Seç</h3>
+            <p style="text-align: center; color: #666; font-size: 0.8em; margin-bottom: 20px;">
                 Ne kadar çalışmak istiyorsun?
             </p>
             
             <div style="display: flex; flex-direction: column; gap: 12px;">
                 <button onclick="setDailyGoal('easy')" style="background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%); color: white; border: none; padding: 16px; border-radius: 12px; cursor: pointer; text-align: left; transition: transform 0.3s; box-shadow: 0 4px 12px rgba(74,222,128,0.3);">
                     <div style="display: flex; align-items: center; gap: 12px;">
-                        <span style="font-size: 2em;">🌱</span>
+                        <span style="font-size: 1.8em;">🌱</span>
                         <div>
-                            <div style="font-weight: 600; font-size: 1.1em;">Rahat</div>
-                            <div style="font-size: 0.85em; opacity: 0.9;">Günde 1,300 XP - ~10 dakika</div>
+                            <div style="font-weight: 600; font-size: 0.95em;">Rahat</div>
+                            <div style="font-size: 0.75em; opacity: 0.9;">Günde 1,300 XP - ~10 dakika</div>
                         </div>
                     </div>
                 </button>
                 
                 <button onclick="setDailyGoal('normal')" style="background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%); color: white; border: none; padding: 16px; border-radius: 12px; cursor: pointer; text-align: left; transition: transform 0.3s; box-shadow: 0 4px 12px rgba(96,165,250,0.3);">
                     <div style="display: flex; align-items: center; gap: 12px;">
-                        <span style="font-size: 2em;">🎯</span>
+                        <span style="font-size: 1.8em;">🎯</span>
                         <div>
-                            <div style="font-weight: 600; font-size: 1.1em;">Normal</div>
-                            <div style="font-size: 0.85em; opacity: 0.9;">Günde 2,700 XP - ~20 dakika</div>
+                            <div style="font-weight: 600; font-size: 0.95em;">Normal</div>
+                            <div style="font-size: 0.75em; opacity: 0.9;">Günde 2,700 XP - ~20 dakika</div>
                         </div>
                     </div>
                 </button>
                 
                 <button onclick="setDailyGoal('serious')" style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color: white; border: none; padding: 16px; border-radius: 12px; cursor: pointer; text-align: left; transition: transform 0.3s; box-shadow: 0 4px 12px rgba(249,115,22,0.3);">
                     <div style="display: flex; align-items: center; gap: 12px;">
-                        <span style="font-size: 2em;">🔥</span>
+                        <span style="font-size: 1.8em;">🔥</span>
                         <div>
-                            <div style="font-weight: 600; font-size: 1.1em;">Ciddi</div>
-                            <div style="font-size: 0.85em; opacity: 0.9;">Günde 6,000 XP - ~45 dakika</div>
+                            <div style="font-weight: 600; font-size: 0.95em;">Ciddi</div>
+                            <div style="font-size: 0.75em; opacity: 0.9;">Günde 6,000 XP - ~45 dakika</div>
                         </div>
                     </div>
                 </button>
             </div>
             
-            <button id="closeDailyGoalBtn" style="background: #e5e7eb; color: #333; border: none; padding: 12px; border-radius: 8px; margin-top: 15px; width: 100%; cursor: pointer; font-weight: 600;">
+            <button id="closeDailyGoalBtn" style="width: auto; max-width: 200px; padding: 10px 30px; background: #e74c3c; color: white; border: none; border-radius: 8px; font-size: 0.9em; font-weight: bold; cursor: pointer; margin: 20px auto 0; display: block;">
                 Kapat
             </button>
         </div>
@@ -2294,23 +2292,23 @@
     <!-- XP Info Modal -->
     <div class="modal" id="xpInfoModal">
         <div class="modal-content" style="max-width: 400px;">
-            <h3 style="margin: 0 0 15px 0; font-size: 1.3em; text-align: center; color: #667eea;">💎 XP Sistemi</h3>
+            <h3 style="margin: 0 0 15px 0; font-size: 1.1em; text-align: center; color: #667eea;">💎 XP Sistemi</h3>
             
             <div style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); padding: 12px; border-radius: 10px; margin-bottom: 15px; text-align: center;">
-                <div style="font-size: 0.9em; color: #555; font-weight: 600;">1 Saat Oyun = ~8,500 XP</div>
+                <div style="font-size: 0.8em; color: #555; font-weight: 600;">1 Saat Oyun = ~8,500 XP</div>
             </div>
             
             <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
-                <h4 style="margin: 0 0 10px 0; color: #667eea; font-size: 1em;">⭐ Yıldız Sistemi</h4>
-                <div style="font-size: 0.85em; color: #555; line-height: 1.6;">
+                <h4 style="margin: 0 0 10px 0; color: #667eea; font-size: 0.9em;">⭐ Yıldız Sistemi</h4>
+                <div style="font-size: 0.75em; color: #555; line-height: 1.6;">
                     <strong>100 XP = 1 Yıldız</strong><br>
                     Sık geri bildirim için. Her soruda ilerleme görürsün!
                 </div>
             </div>
             
             <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
-                <h4 style="margin: 0 0 10px 0; color: #667eea; font-size: 1em;">🏆 Rozet Sistemi</h4>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.85em; color: #555;">
+                <h4 style="margin: 0 0 10px 0; color: #667eea; font-size: 0.9em;">🏆 Rozet Sistemi</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.75em; color: #555;">
                     <div>🥉 <strong>2,000 XP</strong><br><span style="font-size: 0.85em; color: #888;">Bronz (~15 dk)</span></div>
                     <div>🥈 <strong>8,500 XP</strong><br><span style="font-size: 0.85em; color: #888;">Gümüş (~1 saat)</span></div>
                     <div>🥇 <strong>25,500 XP</strong><br><span style="font-size: 0.85em; color: #888;">Altın (~3 gün)</span></div>
@@ -2319,22 +2317,22 @@
             </div>
             
             <div style="background: #fff7e6; padding: 12px; border-radius: 10px; margin-bottom: 15px;">
-                <h4 style="margin: 0 0 8px 0; color: #f97316; font-size: 1em;">🔥 Combo Bonusu</h4>
-                <div style="font-size: 0.85em; color: #555;">
+                <h4 style="margin: 0 0 8px 0; color: #f97316; font-size: 0.9em;">🔥 Combo Bonusu</h4>
+                <div style="font-size: 0.75em; color: #555;">
                     <strong>Her 3 doğru cevap = +5 XP bonus!</strong><br>
                     Combo yap, ekstra XP kazan!
                 </div>
             </div>
             
             <div style="background: #f0f9ff; padding: 12px; border-radius: 10px; margin-bottom: 15px;">
-                <h4 style="margin: 0 0 8px 0; color: #3b82f6; font-size: 1em;">🎯 Günlük Hedef Bonusu</h4>
-                <div style="font-size: 0.85em; color: #555;">
+                <h4 style="margin: 0 0 8px 0; color: #3b82f6; font-size: 0.9em;">🎯 Günlük Hedef Bonusu</h4>
+                <div style="font-size: 0.75em; color: #555;">
                     Günlük hedefini tamamla:<br>
                     <strong style="color: #3b82f6; font-size: 1.1em;">+1,000 XP Bonus!</strong>
                 </div>
             </div>
             
-            <button id="closeXPInfoBtn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; cursor: pointer; font-weight: 600; font-size: 1em;">
+            <button id="closeXPInfoBtn" style="width: auto; max-width: 200px; padding: 10px 30px; background: #e74c3c; color: white; border: none; border-radius: 8px; font-size: 0.9em; font-weight: bold; cursor: pointer; margin: 20px auto 0; display: block;">
                 Anladım! 🚀
             </button>
         </div>
@@ -2353,10 +2351,10 @@
     <!-- Custom Alert Modal (Professional Replacement for alert()) -->
     <div id="customAlertModal" class="modal" style="display: none;">
         <div class="modal-content" style="max-width: 420px; text-align: center; padding: 30px;">
-            <div id="customAlertIcon" style="font-size: 3.5em; margin-bottom: 15px;">ℹ️</div>
-            <div id="customAlertTitle" style="font-size: 1.3em; font-weight: bold; color: #333; margin-bottom: 10px;">Bilgi</div>
-            <div id="customAlertMessage" style="font-size: 1em; color: #666; margin-bottom: 25px; line-height: 1.6;"></div>
-            <button id="customAlertOKBtn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 12px 40px; border-radius: 8px; font-size: 1em; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(102,126,234,0.3); transition: transform 0.2s;">
+            <div id="customAlertIcon" style="font-size: 2.5em; margin-bottom: 12px;">ℹ️</div>
+            <div id="customAlertTitle" style="font-size: 1.1em; font-weight: bold; color: #333; margin-bottom: 8px;">Bilgi</div>
+            <div id="customAlertMessage" style="font-size: 0.9em; color: #666; margin-bottom: 20px; line-height: 1.5;"></div>
+            <button id="customAlertOKBtn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 10px 35px; border-radius: 8px; font-size: 0.95em; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(102,126,234,0.3); transition: transform 0.2s;">
                 Tamam
             </button>
         </div>
@@ -6271,7 +6269,6 @@
             currentBoslukQuestion = ayet;
 
             // UI güncelle
-            elements.boslukSureInfo.textContent = `Ayet ID: ${ayet.ayet_kimligi || randomIndex}`;
             elements.boslukAyetText.textContent = displayText;
 
             // Seçenekler oluştur (boşluğa gelecek kelime)
