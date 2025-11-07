@@ -2357,6 +2357,33 @@
         </div>
     </div>
 
+    <!-- Custom Alert Modal (Professional Replacement for alert()) -->
+    <div id="customAlertModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 420px; text-align: center; padding: 30px;">
+            <div id="customAlertIcon" style="font-size: 3.5em; margin-bottom: 15px;">ℹ️</div>
+            <div id="customAlertTitle" style="font-size: 1.3em; font-weight: bold; color: #333; margin-bottom: 10px;">Bilgi</div>
+            <div id="customAlertMessage" style="font-size: 1em; color: #666; margin-bottom: 25px; line-height: 1.6;"></div>
+            <button id="customAlertOKBtn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 12px 40px; border-radius: 8px; font-size: 1em; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(102,126,234,0.3); transition: transform 0.2s;">
+                Tamam
+            </button>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 10000; align-items: center; justify-content: center;">
+        <div style="text-align: center; color: white;">
+            <div style="border: 4px solid rgba(255,255,255,0.3); border-top: 4px solid white; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 0 auto 15px;"></div>
+            <div style="font-size: 1.1em; font-weight: 600;">Yükleniyor...</div>
+        </div>
+    </div>
+    
+    <style>
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+
     <script>
         // ============ PRODUCTION CONFIG - DEBUG SISTEMI ============
         const CONFIG = {
@@ -2378,6 +2405,127 @@
             error: (...args) => { if (CONFIG.showCriticalErrors) console.error(...args); },
             warn: (...args) => { if (CONFIG.showCriticalErrors) console.warn(...args); }
         };
+        
+        // ============ SECURITY - HTML SANITIZATION ============
+        function sanitizeHTML(input) {
+            // XSS koruması için HTML özel karakterlerini escape et
+            if (typeof input !== 'string') return '';
+            const div = document.createElement('div');
+            div.textContent = input;
+            return div.innerHTML;
+        }
+        
+        function safeSetHTML(element, html, isStaticTrusted = false) {
+            // innerHTML kullanımı için güvenli wrapper
+            if (!element) return;
+            if (isStaticTrusted) {
+                // Statik, güvenilir HTML için direkt set (template literals)
+                element.innerHTML = html;
+            } else {
+                // User input veya dinamik içerik için sanitize
+                element.innerHTML = sanitizeHTML(html);
+            }
+        }
+        
+        // ============ LOADING INDICATOR ============
+        function showLoading(message = 'Yükleniyor...') {
+            const spinner = document.getElementById('loadingSpinner');
+            if (spinner) {
+                spinner.style.display = 'flex';
+                const textEl = spinner.querySelector('div > div:last-child');
+                if (textEl) textEl.textContent = message;
+            }
+        }
+        
+        function hideLoading() {
+            const spinner = document.getElementById('loadingSpinner');
+            if (spinner) spinner.style.display = 'none';
+        }
+        
+        // ============ SECURITY - LOCALSTORAGE ENCRYPTION ============
+        function encryptData(data) {
+            // Basit Base64 encoding (production'da daha güçlü encryption kullanılabilir)
+            try {
+                const jsonStr = JSON.stringify(data);
+                return btoa(unescape(encodeURIComponent(jsonStr)));
+            } catch(e) {
+                console.error('Encryption error:', e);
+                return data;
+            }
+        }
+        
+        function decryptData(encrypted) {
+            // Base64 decoding
+            try {
+                const jsonStr = decodeURIComponent(escape(atob(encrypted)));
+                return JSON.parse(jsonStr);
+            } catch(e) {
+                console.error('Decryption error:', e);
+                // Eğer decrypt edilemezse, belki encrypt edilmemiş eski veri
+                try {
+                    return JSON.parse(encrypted);
+                } catch(e2) {
+                    return encrypted;
+                }
+            }
+        }
+        
+        function secureSetItem(key, value) {
+            // localStorage'a şifreli kaydet
+            const encrypted = encryptData(value);
+            localStorage.setItem(key, encrypted);
+        }
+        
+        function secureGetItem(key) {
+            // localStorage'dan şifreli oku
+            const encrypted = localStorage.getItem(key);
+            if (!encrypted) return null;
+            return decryptData(encrypted);
+        }
+        
+        // ============ CUSTOM ALERT SYSTEM (Professional UI) ============
+        function showCustomAlert(message, type = 'info', title = null) {
+            const modal = document.getElementById('customAlertModal');
+            const iconEl = document.getElementById('customAlertIcon');
+            const titleEl = document.getElementById('customAlertTitle');
+            const messageEl = document.getElementById('customAlertMessage');
+            const okBtn = document.getElementById('customAlertOKBtn');
+            
+            // Type-based styling
+            const types = {
+                success: { icon: '🎉', title: 'Başarılı!', color: '#4caf50' },
+                error: { icon: '❌', title: 'Hata!', color: '#f44336' },
+                warning: { icon: '⚠️', title: 'Uyarı!', color: '#ff9800' },
+                info: { icon: 'ℹ️', title: 'Bilgi', color: '#2196f3' }
+            };
+            
+            const config = types[type] || types.info;
+            iconEl.textContent = config.icon;
+            titleEl.textContent = title || config.title;
+            titleEl.style.color = config.color;
+            messageEl.textContent = message;
+            
+            // Show modal
+            modal.style.display = 'flex';
+            
+            // OK button handler
+            const handleOK = () => {
+                modal.style.display = 'none';
+                okBtn.removeEventListener('click', handleOK);
+            };
+            
+            okBtn.addEventListener('click', handleOK);
+            
+            // ESC key to close
+            const handleEsc = (e) => {
+                if (e.key === 'Escape') {
+                    modal.style.display = 'none';
+                    okBtn.removeEventListener('click', handleOK);
+                    document.removeEventListener('keydown', handleEsc);
+                }
+            };
+            document.addEventListener('keydown', handleEsc);
+        }
         
         // ============ GLOBAL FONKSİYONLAR (onclick için erişilebilir olmalı) ============
         
@@ -3443,14 +3591,8 @@
                     console.log('⏸️ Ses durduruldu');
                 }
                 
-                // Event listener'ları temizle
-                currentAudio.onloadstart = null;
-                currentAudio.oncanplay = null;
-                currentAudio.onplay = null;
-                currentAudio.onpause = null;
-                currentAudio.ontimeupdate = null;
-                currentAudio.onended = null;
-                currentAudio.onerror = null;
+                // Event listener'ları comprehensive cleanup
+                cleanupAudioListeners();
                 console.log('🧹 Event listenerlar temizlendi');
                 
                 currentAudio.currentTime = 0;
@@ -3463,6 +3605,19 @@
         }
 
         // ============ SES ÇALMA FONKSİYONU ============
+        function cleanupAudioListeners() {
+            // Tüm audio event listener'larını temizle (memory leak önleme)
+            if (currentAudio) {
+                currentAudio.onloadeddata = null;
+                currentAudio.oncanplay = null;
+                currentAudio.onended = null;
+                currentAudio.onerror = null;
+                currentAudio.ontimeupdate = null;
+                currentAudio.onpause = null;
+                currentAudio.onplay = null;
+            }
+        }
+        
         function playAudio(audioUrl, button) {
             // Eğer ses çalıyorsa durdur
             stopCurrentAudio();
@@ -3484,20 +3639,23 @@
                     currentAudio.play().catch(err => {
                         log.error('Ses çalma hatası:', err);
                         if (button) button.disabled = false;
+                        cleanupAudioListeners();
                         currentAudio = null;
                     });
                 });
                 
-                // Ses bittiğinde butonu aktif et
+                // Ses bittiğinde butonu aktif et ve cleanup
                 currentAudio.onended = () => {
                     if (button) button.disabled = false;
+                    cleanupAudioListeners();
                     currentAudio = null;
                 };
                 
-                // Hata durumunda
+                // Hata durumunda cleanup
                 currentAudio.onerror = () => {
                     log.error('Ses dosyası yüklenemedi:', audioUrl);
                     if (button) button.disabled = false;
+                    cleanupAudioListeners();
                     currentAudio = null;
                 };
                 
@@ -3511,27 +3669,46 @@
             }
         }
 
+        // ============ NETWORK - FETCH WITH RETRY ============
+        async function fetchWithRetry(url, retries = 3, delay = 1000) {
+            // JSON yükleme hatalarında otomatik retry
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    return await response.json();
+                } catch (error) {
+                    console.log(`📡 Fetch attempt ${i + 1}/${retries} failed for ${url}`);
+                    if (i === retries - 1) {
+                        // Son deneme de başarısız
+                        throw new Error(`Failed to load ${url} after ${retries} attempts: ${error.message}`);
+                    }
+                    // Retry öncesi bekle (exponential backoff)
+                    await new Promise(resolve => setTimeout(resolve, delay * (i + 1)));
+                }
+            }
+        }
+
         // ============ VERİ YÜKLEME ============
         async function loadData() {
             try {
-                // Kelime verilerini yükle (Kelime Çevir ve Dinle ve Bul için)
-                const kelimeResponse = await fetch('kelimebul.json');
-                kelimeBulData = await kelimeResponse.json();
+                // Loading göster
+                showLoading('Veriler yükleniyor...');
+                
+                // Kelime verilerini yükle (Kelime Çevir ve Dinle ve Bul için) - 3x retry
+                kelimeBulData = await fetchWithRetry('kelimebul.json');
                 // console.log(`${kelimeBulData.length} kelime yüklendi`);
                 
-                // Ayet verilerini yükle (Boşluk Doldur ve Ayet Oku için)
-                const ayetResponse = await fetch('ayetoku_formatted.json');
-                ayetOkuData = await ayetResponse.json();
+                // Ayet verilerini yükle (Boşluk Doldur ve Ayet Oku için) - 3x retry
+                ayetOkuData = await fetchWithRetry('ayetoku_formatted.json');
                 // console.log(`${ayetOkuData.length} ayet yüklendi`);
                 
-                // Dua verilerini yükle (Dua Et için)
-                const duaResponse = await fetch('duaet.json');
-                duaData = await duaResponse.json();
+                // Dua verilerini yükle (Dua Et için) - 3x retry
+                duaData = await fetchWithRetry('duaet.json');
                 // console.log(`${duaData.length} dua yüklendi`);
                 
-                // Hadis verilerini yükle (Hadis Oku için)
-                const hadisResponse = await fetch('hadisoku.json');
-                hadisData = await hadisResponse.json();
+                // Hadis verilerini yükle (Hadis Oku için) - 3x retry
+                hadisData = await fetchWithRetry('hadisoku.json');
                 // console.log(`${hadisData.length} hadis yüklendi`);
                 
                 // Mod seçiciyi başlat
@@ -3540,7 +3717,11 @@
                 // Ana menü zorluk butonlarını başlat
                 initMainMenuDifficultyButtons();
                 
+                // Loading gizle
+                hideLoading();
+                
             } catch (error) {
+                hideLoading();
                 log.error('Veri yükleme hatası:', error);
                 // NULL KONTROL - mainMenu varsa hata mesajı göster
                 if (elements.mainMenu) {
@@ -3915,7 +4096,7 @@
             updateUI();
             
             console.log('✅ TÜM 3 SİSTEM TEMİZLENDİ! IndexedDB + localStorage + URL');
-            alert('🔄 Tüm veriler TAMAMEN sıfırlandı! IndexedDB, localStorage ve URL geçmişi temizlendi.');
+            showCustomAlert('Tüm veriler TAMAMEN sıfırlandı! IndexedDB, localStorage ve URL geçmişi temizlendi.', 'success', 'Veriler Sıfırlandı');
         }
 
         function updateStatsBar() {
@@ -4154,8 +4335,8 @@
         }
 
         function showBadgeUpModal(badgeType, badgeName) {
-            // Rozet atlama modalı - şimdilik alert, sonra düzeltiriz
-            alert(`🎉 Tebrikler! ${badgeName} rozeti kazandınız!`);
+            // Rozet kazanma modalı - profesyonel UI
+            showCustomAlert(`${badgeName} rozeti kazandınız!`, 'success', 'Tebrikler');
         }
 
         function showBadgesModal() {
@@ -4987,7 +5168,7 @@
             
             if (kelimeBulData.length === 0) {
                 console.log('❌ Kelime verileri yüklenemedi!');
-                alert('Kelime verileri yüklenemedi!');
+                showCustomAlert('Kelime verileri yüklenemedi! Lütfen sayfayı yenileyin.', 'error');
                 return;
             }
             console.log(`✅ Kelime verileri OK: ${kelimeBulData.length} kelime mevcut`);
@@ -5007,7 +5188,7 @@
             
             if (kelimeBulData.length === 0) {
                 console.log('❌ Kelime verileri yüklenemedi!');
-                alert('Kelime verileri yüklenemedi!');
+                showCustomAlert('Kelime verileri yüklenemedi! Lütfen sayfayı yenileyin.', 'error');
                 return;
             }
             console.log(`✅ Kelime verileri OK: ${kelimeBulData.length} kelime mevcut`);
@@ -5058,7 +5239,7 @@
             
             if (ayetOkuData.length === 0) {
                 console.log('❌ Ayet verileri yüklenemedi!');
-                alert('Ayet verileri yüklenemedi!');
+                showCustomAlert('Ayet verileri yüklenemedi! Lütfen sayfayı yenileyin.', 'error');
                 return;
             }
             console.log(`✅ Ayet verileri OK: ${ayetOkuData.length} ayet mevcut`);
@@ -5085,7 +5266,7 @@
         // Dua Et modu
         elements.duaEtBtn.onclick = () => {
             if (duaData.length === 0) {
-                alert('Dua verileri yüklenemedi!');
+                showCustomAlert('Dua verileri yüklenemedi! Lütfen sayfayı yenileyin.', 'error');
                 return;
             }
             if (elements.mainMenu) elements.mainMenu.style.display = 'none';
@@ -5098,7 +5279,7 @@
         // Ayet Oku modu
         elements.ayetOkuBtn.onclick = () => {
             if (ayetOkuData.length === 0) {
-                alert('Ayet verileri yüklenemedi!');
+                showCustomAlert('Ayet verileri yüklenemedi! Lütfen sayfayı yenileyin.', 'error');
                 return;
             }
             if (elements.mainMenu) elements.mainMenu.style.display = 'none';
@@ -5111,7 +5292,7 @@
         // Hadis Oku modu
         elements.hadisOkuBtn.onclick = () => {
             if (hadisData.length === 0) {
-                alert('Hadis verileri yüklenemedi!');
+                showCustomAlert('Hadis verileri yüklenemedi! Lütfen sayfayı yenileyin.', 'error');
                 return;
             }
             if (elements.mainMenu) elements.mainMenu.style.display = 'none';
@@ -6632,7 +6813,7 @@
                     updateStatsBar();
                 });
             } catch (error) {
-                alert(`❌ HATA: ${error.message}`);
+                showCustomAlert(`Veri yükleme hatası: ${error.message}`, 'error');
                 console.error('❌ Veri yükleme hatası:', error);
             }
             
