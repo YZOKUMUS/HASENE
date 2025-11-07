@@ -1508,40 +1508,38 @@
 
             <!-- Günlük Hedef Progress Bar -->
             <div class="daily-goal-section">
-                <!-- Üst Stats Cards -->
-                <div style="display: flex; justify-content: space-between; gap: 8px; margin-bottom: 16px;">
-                    <div style="flex: 1; background: linear-gradient(135deg, #FFA726, #FF8F00); border-radius: 12px; padding: 12px; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 8px rgba(255,167,38,0.3);">
-                        <div style="background: rgba(255,255,255,0.2); border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;">
-                            <i class="material-icons" style="color: white; font-size: 20px;">monetization_on</i>
-                        </div>
-                        <div>
-                            <div style="color: white; font-weight: 700; font-size: 16px;" id="gamePoints">0</div>
-                            <div style="color: rgba(255,255,255,0.8); font-size: 11px; font-weight: 500;">Puan</div>
-                        </div>
+            <!-- Üst Stats Cards -->
+            <div style="display: flex; justify-content: space-between; gap: 6px; margin-bottom: 16px;">
+                <div style="flex: 1; background: linear-gradient(135deg, #FFA726, #FF8F00); border-radius: 12px; padding: 10px 8px; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 8px rgba(255,167,38,0.3);">
+                    <div style="background: rgba(255,255,255,0.2); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                        <i class="material-icons" style="color: white; font-size: 18px;">monetization_on</i>
                     </div>
-                    
-                    <div style="flex: 1; background: linear-gradient(135deg, #FFD54F, #FFC107); border-radius: 12px; padding: 12px; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 8px rgba(255,213,79,0.3);">
-                        <div style="background: rgba(255,255,255,0.2); border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;">
-                            <i class="material-icons" style="color: white; font-size: 20px;">star</i>
-                        </div>
-                        <div>
-                            <div style="color: white; font-weight: 700; font-size: 16px;" id="starPoints">0</div>
-                            <div style="color: rgba(255,255,255,0.8); font-size: 11px; font-weight: 500;">Yıldız</div>
-                        </div>
-                    </div>
-                    
-                    <div style="flex: 1; background: linear-gradient(135deg, #9C27B0, #7B1FA2); border-radius: 12px; padding: 12px; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 8px rgba(156,39,176,0.3);">
-                        <div style="background: rgba(255,255,255,0.2); border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;">
-                            <i class="material-icons" style="color: white; font-size: 20px;">trending_up</i>
-                        </div>
-                        <div>
-                            <div style="color: white; font-weight: 700; font-size: 16px;" id="playerLevel">Lv 1</div>
-                            <div style="color: rgba(255,255,255,0.8); font-size: 11px; font-weight: 500;">Level</div>
-                        </div>
+                    <div>
+                        <div style="color: white; font-weight: 700; font-size: 15px;" id="gamePoints">0</div>
+                        <div style="color: rgba(255,255,255,0.8); font-size: 10px; font-weight: 500;">Puan</div>
                     </div>
                 </div>
                 
-                <!-- Günlük Hedef -->
+                <div style="flex: 1; background: linear-gradient(135deg, #FFD54F, #FFC107); border-radius: 12px; padding: 10px 8px; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 8px rgba(255,213,79,0.3);">
+                    <div style="background: rgba(255,255,255,0.2); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                        <i class="material-icons" style="color: white; font-size: 18px;">star</i>
+                    </div>
+                    <div>
+                        <div style="color: white; font-weight: 700; font-size: 15px;" id="starPoints">0</div>
+                        <div style="color: rgba(255,255,255,0.8); font-size: 10px; font-weight: 500;">Yıldız</div>
+                    </div>
+                </div>
+                
+                <div style="flex: 1; background: linear-gradient(135deg, #9C27B0, #7B1FA2); border-radius: 12px; padding: 10px 8px; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 8px rgba(156,39,176,0.3);">
+                    <div style="background: rgba(255,255,255,0.2); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                        <i class="material-icons" style="color: white; font-size: 18px;">trending_up</i>
+                    </div>
+                    <div>
+                        <div style="color: white; font-weight: 700; font-size: 15px;" id="playerLevel">Lv 1</div>
+                        <div style="color: rgba(255,255,255,0.8); font-size: 10px; font-weight: 500;">Level</div>
+                    </div>
+                </div>
+            </div>                <!-- Günlük Hedef -->
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                     <div style="display: flex; align-items: center; gap: 12px;">
                         <div>
@@ -1914,9 +1912,9 @@
                 <!-- Başlık kaldırıldı -->
                 
                 <!-- Mini Takvim -->
-                <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 10px;">
-                    <div style="text-align: center; font-weight: bold; margin-bottom: 12px; font-size: 1em; color: #ecf0f1;" id="calendarMonth">Kasım 2025</div>
-                    <div id="calendarGrid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; text-align: center; max-width: 100%;">
+                <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 8px;">
+                    <div style="text-align: center; font-weight: bold; margin-bottom: 10px; font-size: 0.95em; color: #ecf0f1;" id="calendarMonth">Kasım 2025</div>
+                    <div id="calendarGrid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; max-width: 100%;">
                         <!-- Takvim günleri buraya eklenecek -->
                     </div>
                     
@@ -4689,7 +4687,7 @@
             // Haftanın günlerini ekle (daha kısa isimler + küçük font)
             const dayNames = ['Pz', 'Pt', 'Sl', 'Çr', 'Pr', 'Cm', 'Ct'];
             dayNames.forEach(day => {
-                html += `<div style="font-weight: 600; font-size: 0.65em; color: #95a5a6; padding: 2px; text-align: center; min-height: 18px; display: flex; align-items: center; justify-content: center;">${day}</div>`;
+                html += `<div style="font-weight: 600; font-size: 0.55em; color: #95a5a6; padding: 1px; text-align: center; min-height: 14px; display: flex; align-items: center; justify-content: center;">${day}</div>`;
             });
             
             // Ayın ilk gününün haftanın hangi günü olduğunu bul
@@ -4721,7 +4719,7 @@
             for (let day = 1; day <= daysInMonth; day++) {
                 const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
                 
-                let style = 'padding: 6px 3px; border-radius: 50%; cursor: pointer; font-size: 0.7em; min-height: 28px; max-height: 32px; display: flex; align-items: center; justify-content: center; color: #ecf0f1; flex-direction: column;';
+                let style = 'padding: 4px 2px; border-radius: 50%; cursor: pointer; font-size: 0.6em; min-height: 24px; max-height: 28px; max-width: 28px; display: flex; align-items: center; justify-content: center; color: #ecf0f1; flex-direction: column;';
                 
                 let dayContent = day;
                 let tooltip = dateStr;
