@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Hasene Arapça Oyunu</title>
     
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="icon-192-v4-RED-MUSHAF.png">
+    
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
     
@@ -470,28 +473,35 @@
         /* ============ GERİ BUTONU ============ */
         .back-btn {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 249, 250, 0.9) 100%);
-            color: #2c3e50;
-            border: 2px solid rgba(0, 0, 0, 0.1);
-            padding: 6px 12px;
+            color: #6200EA;
+            border: 2px solid rgba(98, 0, 234, 0.2);
+            padding: 8px 12px;
             border-radius: 8px;
             cursor: pointer;
             margin-bottom: 10px;
-            font-size: 0.85em;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: all 0.2s ease;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .back-btn .material-icons {
+            font-size: 18px;
         }
 
         .back-btn:hover {
-            background: white;
-            transform: translateX(-3px);
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
-            border-color: #8B4513;
-            color: #8B4513;
+            background: rgba(98, 0, 234, 0.1);
+            transform: translateX(-2px);
+            box-shadow: 0 3px 10px rgba(98, 0, 234, 0.2);
+            border-color: #6200EA;
+            color: #6200EA;
         }
 
         .back-btn:active {
-            transform: translateX(-2px);
+            transform: translateX(-1px) scale(0.95);
         }
 
         /* ============ MOD SEÇİCİ ============ */
@@ -1468,59 +1478,69 @@
     </div>
 
     <div class="container" id="mainContainer" style="display: none;">
-        <!-- Oyun İstatistikleri Barı -->
-        <div class="header" style="background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 8px; padding: 4px 4px; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 2px; margin-bottom: 8px; box-shadow: none; opacity: 0.85; font-size: 0.93em;">
-            <!-- Puan -->
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 1px;">
-                <div style="background: #FF9800; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 9px;" id="gamePoints">0</div>
-            </div>
-            
-            <!-- Yıldız -->
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 1px;">
-                <div style="display: flex; align-items: center; gap: 3px;">
-                    <span style="font-size: 16px; color: #FFD700;">⭐</span>
-                    <span style="font-weight: bold; font-size: 14px; color: #333;" id="starPoints">0</span>
-                </div>
-            </div>
 
-            <!-- Rozet -->
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 1px;">
-                <div style="display: flex; align-items: center; gap: 3px;">
-                    <span style="font-size: 16px;" id="topBadgeIcon">🥉</span>
-                    <span style="font-weight: bold; font-size: 14px; color: #333;" id="topBadgeCount">0</span>
-                </div>
-            </div>
-            
-            <!-- Seviye -->
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 1px;">
-                <div style="display: flex; align-items: center; gap: 3px;">
-                    <span style="font-size: 11px; color: #666;">Lv</span>
-                    <span style="background: #9C27B0; color: white; padding: 2px 6px; border-radius: 8px; font-weight: bold; font-size: 11px;" id="playerLevel">1</span>
-                </div>
-                <!-- Seviye İlerleme Çubuğu -->
-                <div style="width: 60px; height: 3px; background: #e0e0e0; border-radius: 2px; overflow: hidden;">
-                    <div style="height: 100%; background: #9C27B0; transition: width 0.3s;" id="levelProgress"></div>
-                </div>
-            </div>
-        </div>
 
 
 
         <!-- Ana Menü -->
         <div class="main-menu" id="mainMenu">
-            <!-- Flutter App Bar -->
-            <div class="flutter-app-bar">
-                <h1>🌙 Hasene Arapça Oyunu</h1>
-                <button class="flutter-fab" style="width: 48px; height: 48px;" onclick="showStatsModal()">
-                    <i class="material-icons">analytics</i>
-                </button>
-            </div>
+
 
             <!-- Günlük Hedef Progress Bar -->
             <div class="daily-goal-section">
+                <!-- Üst Stats Cards -->
+                <div style="display: flex; justify-content: space-between; gap: 8px; margin-bottom: 16px;">
+                    <div style="flex: 1; background: linear-gradient(135deg, #FFA726, #FF8F00); border-radius: 12px; padding: 12px; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 8px rgba(255,167,38,0.3);">
+                        <div style="background: rgba(255,255,255,0.2); border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;">
+                            <i class="material-icons" style="color: white; font-size: 20px;">monetization_on</i>
+                        </div>
+                        <div>
+                            <div style="color: white; font-weight: 700; font-size: 16px;" id="gamePoints">0</div>
+                            <div style="color: rgba(255,255,255,0.8); font-size: 11px; font-weight: 500;">Puan</div>
+                        </div>
+                    </div>
+                    
+                    <div style="flex: 1; background: linear-gradient(135deg, #FFD54F, #FFC107); border-radius: 12px; padding: 12px; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 8px rgba(255,213,79,0.3);">
+                        <div style="background: rgba(255,255,255,0.2); border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;">
+                            <i class="material-icons" style="color: white; font-size: 20px;">star</i>
+                        </div>
+                        <div>
+                            <div style="color: white; font-weight: 700; font-size: 16px;" id="starPoints">0</div>
+                            <div style="color: rgba(255,255,255,0.8); font-size: 11px; font-weight: 500;">Yıldız</div>
+                        </div>
+                    </div>
+                    
+                    <div style="flex: 1; background: linear-gradient(135deg, #9C27B0, #7B1FA2); border-radius: 12px; padding: 12px; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 8px rgba(156,39,176,0.3);">
+                        <div style="background: rgba(255,255,255,0.2); border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;">
+                            <i class="material-icons" style="color: white; font-size: 20px;">trending_up</i>
+                        </div>
+                        <div>
+                            <div style="color: white; font-weight: 700; font-size: 16px;" id="playerLevel">Lv 1</div>
+                            <div style="color: rgba(255,255,255,0.8); font-size: 11px; font-weight: 500;">Level</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Top Badge Display -->
+                <div style="display: flex; justify-content: center; margin-top: 12px;">
+                    <div style="background: linear-gradient(135deg, #FFD700, #FFA500); border-radius: 16px; padding: 8px 16px; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 8px rgba(255,215,0,0.3);">
+                        <span id="topBadgeIcon" style="font-size: 20px;">🥉</span>
+                        <div>
+                            <div style="color: white; font-weight: 700; font-size: 14px;" id="topBadgeCount">0</div>
+                            <div style="color: rgba(255,255,255,0.8); font-size: 10px; font-weight: 500;">Rozet</div>
+                        </div>
+                        <button id="badgesBtn" style="background: none; border: none; color: white; padding: 4px; cursor: pointer;">
+                            <i class="material-icons" style="font-size: 18px;">keyboard_arrow_right</i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Günlük Hedef -->
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                     <div style="display: flex; align-items: center; gap: 12px;">
-                        <span style="font-size: 28px;">🎯</span>
+                        <div style="background: linear-gradient(135deg, #4CAF50, #388E3C); border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(76,175,80,0.3);">
+                            <i class="material-icons" style="color: white; font-size: 24px;">target</i>
+                        </div>
                         <div>
                             <div style="color: var(--text-primary); font-weight: 600; font-size: 16px;">Günlük Hedef</div>
                             <div style="color: var(--text-secondary); font-size: 14px;" id="dailyGoalText">2700 XP hedefine ulaş!</div>
@@ -1541,7 +1561,7 @@
 
             
             <!-- XP Bilgi Butonu -->
-            <div style="margin-bottom: 3px;">
+            <div style="margin: 0 20px 3px 20px;">
                 <button id="xpInfoBtn" style="width: 100%; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: white; border: none; border-radius: 8px; padding: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; box-shadow: 0 2px 6px rgba(251,191,36,0.3); transition: all 0.3s; font-weight: 600; font-size: 0.8em;">
                     <span style="font-size: 1em;">�</span>
                     <div>XP Nasıl Kazanılır?</div>
@@ -1550,7 +1570,7 @@
             </div>
             
             <!-- Zorluk Butonları -->
-            <div style="display: flex; gap: 2px; margin-bottom: 3px; flex-wrap: nowrap; justify-content: center;">
+            <div style="display: flex; gap: 2px; margin: 0 20px 3px 20px; flex-wrap: nowrap; justify-content: center;">
                 <button class="diff-btn" id="mainDiffKolay" style="flex: 1; min-width: 60px; max-width: 85px; margin: 0; padding: 4px; font-size: 0.7em; background: white; color: #4CAF50; border: 1px solid #4CAF50; border-radius: 5px;">
                     <strong>🌱 Kolay</strong>
                 </button>
@@ -1604,7 +1624,10 @@
 
         <!-- Kelime Çevir Alt Mod Seçimi -->
         <div class="mode-selector" id="modeSelector" style="display: none;">
-            <button class="back-btn" id="backToMenuBtn">← Geri</button>
+            <button class="back-btn" id="backToMenuBtn">
+                <i class="material-icons">west</i>
+                Geri
+            </button>
             
             <div id="modeButtons"></div>
             
@@ -1613,7 +1636,10 @@
 
         <!-- Ayet Okuma Modu -->
         <div class="ayet-mode" id="ayetMode" style="display: none;">
-            <button class="back-btn" id="backFromAyetBtn">← Geri</button>
+            <button class="back-btn" id="backFromAyetBtn">
+                <i class="material-icons">west</i>
+                Geri
+            </button>
             <div class="ayet-card">
                 <div class="sure-info" id="ayetSureInfo">Yükleniyor...</div>
                 <div class="arabic" id="ayetArabic">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
@@ -1628,7 +1654,10 @@
 
         <!-- Dua Modu -->
         <div class="dua-mode" id="duaMode" style="display: none;">
-            <button class="back-btn" id="backFromDuaBtn">← Geri</button>
+            <button class="back-btn" id="backFromDuaBtn">
+                <i class="material-icons">west</i>
+                Geri
+            </button>
             <div class="dua-card">
                 <div class="sure-info" id="duaSureInfo">Yükleniyor...</div>
                 <div class="arabic" id="duaArabic">Arapça Metin</div>
@@ -1643,7 +1672,10 @@
 
         <!-- Hadis Oku Modu -->
         <div class="hadis-mode" id="hadisMode" style="display: none;">
-            <button class="back-btn" id="backFromHadisBtn">← Geri</button>
+            <button class="back-btn" id="backFromHadisBtn">
+                <i class="material-icons">west</i>
+                Geri
+            </button>
             <div class="hadis-card">
                 <div class="hadis-category" id="hadisCategory">Kategori</div>
                 <div class="hadis-title" id="hadisTitle">Başlık</div>
@@ -1659,7 +1691,10 @@
 
         <!-- Boşluk Doldur Modu -->
         <div class="bosluk-mode" id="boslukMode" style="display: none;">
-            <button class="back-btn" id="backFromBoslukBtn">← Geri</button>
+            <button class="back-btn" id="backFromBoslukBtn">
+                <i class="material-icons">west</i>
+                Geri
+            </button>
             
             <!-- İstatistikler -->
             <div class="stats">
@@ -1689,7 +1724,10 @@
 
         <!-- Dinle ve Bul Modu -->
         <div class="dinle-mode" id="dinleMode" style="display: none;">
-            <button class="back-btn" id="backFromDinleBtn">← Geri</button>
+            <button class="back-btn" id="backFromDinleBtn">
+                <i class="material-icons">west</i>
+                Geri
+            </button>
             
             <!-- İstatistikler -->
             <div class="stats">
@@ -1723,8 +1761,9 @@
         <div class="game-screen" id="gameScreen" style="display: none;">
         <!-- Flutter App Bar -->
         <div class="flutter-app-bar">
-            <button class="back-btn" id="backFromGameBtn" style="background: none; border: none; color: white; padding: 8px; font-size: 24px;">
-                <i class="material-icons">arrow_back</i>
+            <button class="back-btn" id="backFromGameBtn">
+                <i class="material-icons">west</i>
+                Geri
             </button>
             <h1>📚 Kelime Çevir</h1>
             <div></div>
@@ -3389,10 +3428,35 @@
 
         // ============ SES DURDURMA FONKSİYONU ============
         function stopCurrentAudio() {
-            if (currentAudio && !currentAudio.paused) {
-                currentAudio.pause();
+            if (currentAudio) {
+                console.log('⏹️ Mevcut ses durduruluyor:', {
+                    paused: currentAudio.paused,
+                    currentTime: currentAudio.currentTime,
+                    duration: currentAudio.duration,
+                    src: currentAudio.src
+                });
+                
+                if (!currentAudio.paused) {
+                    currentAudio.pause();
+                    console.log('⏸️ Ses durduruldu');
+                }
+                
+                // Event listener'ları temizle
+                currentAudio.onloadstart = null;
+                currentAudio.oncanplay = null;
+                currentAudio.onplay = null;
+                currentAudio.onpause = null;
+                currentAudio.ontimeupdate = null;
+                currentAudio.onended = null;
+                currentAudio.onerror = null;
+                console.log('🧹 Event listenerlar temizlendi');
+                
                 currentAudio.currentTime = 0;
+                console.log('🔄 Ses başa sarıldı');
                 currentAudio = null;
+                console.log('🗑️ Audio object temizlendi');
+            } else {
+                console.log('ℹ️ Durduracak ses yok');
             }
         }
 
@@ -3403,23 +3467,46 @@
             
             if (!audioUrl) {
                 log.error('Ses dosyası bulunamadı');
+                if (button) button.disabled = false;
                 return;
             }
             
             // Butonu devre dışı bırak
             if (button) button.disabled = true;
             
-            currentAudio = new Audio(audioUrl);
-            
-            currentAudio.play().catch(err => {
-                log.error('Ses hatası:', err);
+            try {
+                currentAudio = new Audio(audioUrl);
+                
+                // Ses yüklendiğinde çal
+                currentAudio.addEventListener('loadeddata', () => {
+                    currentAudio.play().catch(err => {
+                        log.error('Ses çalma hatası:', err);
+                        if (button) button.disabled = false;
+                        currentAudio = null;
+                    });
+                });
+                
+                // Ses bittiğinde butonu aktif et
+                currentAudio.onended = () => {
+                    if (button) button.disabled = false;
+                    currentAudio = null;
+                };
+                
+                // Hata durumunda
+                currentAudio.onerror = () => {
+                    log.error('Ses dosyası yüklenemedi:', audioUrl);
+                    if (button) button.disabled = false;
+                    currentAudio = null;
+                };
+                
+                // Ses dosyasını yükle
+                currentAudio.load();
+                
+            } catch (err) {
+                log.error('Audio oluşturma hatası:', err);
                 if (button) button.disabled = false;
-            });
-            
-            // Ses bittiğinde butonu aktif et
-            currentAudio.onended = () => {
-                if (button) button.disabled = false;
-            };
+                currentAudio = null;
+            }
         }
 
         // ============ VERİ YÜKLEME ============
@@ -4070,6 +4157,12 @@
         function updateTopBadgeDisplay() {
             const topBadgeIcon = document.getElementById('topBadgeIcon');
             const topBadgeCount = document.getElementById('topBadgeCount');
+            
+            // Null check - eğer elementler yoksa fonksiyonu sonlandır
+            if (!topBadgeIcon || !topBadgeCount) {
+                log.warn('⚠️ UYARI: Top badge elementleri bulunamadı, atlanıyor...');
+                return;
+            }
             
             if (badges.diamond > 0) {
                 topBadgeIcon.textContent = '💎';
@@ -5092,32 +5185,52 @@
             if (elements.settingsBtn) elements.settingsBtn.style.display = 'none';
         };
 
-        elements.backFromAyetBtn.onclick = () => {
-            elements.ayetMode.style.display = 'none';
-            elements.modeSelector.style.display = 'none';
-            elements.gameScreen.style.display = 'none';
-            elements.mainMenu.removeAttribute('style');
-            elements.mainMenu.style.display = 'block';
-            elements.settingsBtn.style.display = 'none';
-        };
+        if (elements.backFromAyetBtn) {
+            elements.backFromAyetBtn.onclick = () => {
+                stopCurrentAudio(); // Mevcut ses varsa durdur
+                if (elements.ayetMode) elements.ayetMode.style.display = 'none';
+                if (elements.modeSelector) elements.modeSelector.style.display = 'none';
+                if (elements.gameScreen) elements.gameScreen.style.display = 'none';
+                if (elements.mainMenu) {
+                    elements.mainMenu.removeAttribute('style');
+                    elements.mainMenu.style.display = 'block';
+                }
+                if (elements.settingsBtn) elements.settingsBtn.style.display = 'none';
+            };
+        }
 
-        elements.backFromDuaBtn.onclick = () => {
-            elements.duaMode.style.display = 'none';
-            elements.modeSelector.style.display = 'none';
-            elements.gameScreen.style.display = 'none';
-            elements.mainMenu.removeAttribute('style');
-            elements.mainMenu.style.display = 'block';
-            elements.settingsBtn.style.display = 'none';
-        };
+        if (elements.backFromDuaBtn) {
+            elements.backFromDuaBtn.onclick = () => {
+                console.log('⬅️ Dua geri butonuna tıklandı');
+                stopCurrentAudio(); // Mevcut ses varsa durdur
+                
+                // Null check'ler ekle
+                if (elements.duaMode) elements.duaMode.style.display = 'none';
+                if (elements.modeSelector) elements.modeSelector.style.display = 'none';
+                if (elements.gameScreen) elements.gameScreen.style.display = 'none';
+                if (elements.mainMenu) {
+                    elements.mainMenu.removeAttribute('style');
+                    elements.mainMenu.style.display = 'block';
+                }
+                if (elements.settingsBtn) elements.settingsBtn.style.display = 'none';
+                
+                console.log('✅ Ana menüye döndü');
+            };
+        }
 
-        elements.backFromHadisBtn.onclick = () => {
-            elements.hadisMode.style.display = 'none';
-            elements.modeSelector.style.display = 'none';
-            elements.gameScreen.style.display = 'none';
-            elements.mainMenu.removeAttribute('style');
-            elements.mainMenu.style.display = 'block';
-            elements.settingsBtn.style.display = 'none';
-        };
+        if (elements.backFromHadisBtn) {
+            elements.backFromHadisBtn.onclick = () => {
+                stopCurrentAudio(); // Mevcut ses varsa durdur
+                if (elements.hadisMode) elements.hadisMode.style.display = 'none';
+                if (elements.modeSelector) elements.modeSelector.style.display = 'none';
+                if (elements.gameScreen) elements.gameScreen.style.display = 'none';
+                if (elements.mainMenu) {
+                    elements.mainMenu.removeAttribute('style');
+                    elements.mainMenu.style.display = 'block';
+                }
+                if (elements.settingsBtn) elements.settingsBtn.style.display = 'none';
+            };
+        }
 
         elements.backFromBoslukBtn.onclick = async () => {
             // Ses durdur
@@ -5360,11 +5473,10 @@
 
             // Seçenekleri göster
             elements.options.innerHTML = '';
-            const labels = ['A', 'B', 'C', 'D'];
             allOptions.forEach((opt, i) => {
                 const btn = document.createElement('button');
-                btn.className = 'option';
-                btn.textContent = `${labels[i]}) ${opt.text}`;
+                btn.className = 'option flutter-option-btn';
+                btn.textContent = opt.text;
                 btn.onclick = () => checkAnswer(btn, opt.correct);
                 elements.options.appendChild(btn);
             });
@@ -5779,17 +5891,15 @@
 
             // Seçenekleri göster
             elements.dinleOptions.innerHTML = '';
-            const labels = ['A', 'B', 'C', 'D'];
             allOptions.forEach((opt, i) => {
                 const btn = document.createElement('button');
-                btn.className = 'option';
+                btn.className = 'option flutter-option-btn';
                 // Arapça ise özel sınıf ekle ve düzgün formatlama
                 if (isArabic(opt.text)) {
                     btn.classList.add('arabic-option');
-                    // Arapça için özel format: LTR yönde harf + Arapça metin
-                    btn.innerHTML = `<span style="direction: ltr; display: flex; align-items: center; justify-content: center; gap: 8px;"><span>${labels[i]})</span><span style="direction: rtl;">${opt.text}</span></span>`;
+                    btn.innerHTML = `<span style="direction: rtl;">${opt.text}</span>`;
                 } else {
-                    btn.textContent = `${labels[i]}) ${opt.text}`;
+                    btn.textContent = opt.text;
                 }
                 btn.onclick = () => checkDinleAnswer(btn, opt.correct);
                 elements.dinleOptions.appendChild(btn);
@@ -6020,18 +6130,17 @@
 
             // Seçenekleri göster
             elements.boslukOptions.innerHTML = '';
-            const labels = ['A', 'B', 'C', 'D'];
             allOptions.forEach((opt, i) => {
                 const btn = document.createElement('button');
-                btn.className = 'option';
+                btn.className = 'option flutter-option-btn';
                 // Boşluk Doldur'da her zaman Arapça format kullan (ayet parçaları)
                 if (opt.text === '...' || opt.text.trim() === '') {
                     // Boş seçenekler için normal format
-                    btn.textContent = `${labels[i]}) ${opt.text}`;
+                    btn.textContent = opt.text;
                 } else {
                     // Arapça kelimeler için özel format
                     btn.classList.add('arabic-option');
-                    btn.innerHTML = `<span style="direction: ltr; display: flex; align-items: center; justify-content: center; gap: 8px;"><span>${labels[i]})</span><span style="direction: rtl;">${opt.text}</span></span>`;
+                    btn.innerHTML = `<span style="direction: rtl;">${opt.text}</span>`;
                 }
                 btn.onclick = () => checkBoslukAnswer(btn, opt.correct);
                 elements.boslukOptions.appendChild(btn);
@@ -6165,47 +6274,124 @@
         }
 
         elements.prevDuaBtn.onclick = () => {
+            console.log('⬅️ Önceki dua butonuna tıklandı');
             if (currentDuaIndex > 0) {
+                console.log('📍 Önceki duaya geçiliyor:', currentDuaIndex, '->', currentDuaIndex - 1);
+                stopCurrentAudio(); // Mevcut ses varsa durdur
                 currentDuaIndex--;
                 showDua();
+                console.log('✅ Önceki dua gösterildi');
                 // Navigasyon - görev sayılmaz
             }
         };
 
         elements.nextDuaBtn.onclick = () => {
+            console.log('➡️ Sonraki dua butonuna tıklandı');
             if (currentDuaIndex < duaData.length - 1) {
+                console.log('📍 Sonraki duaya geçiliyor:', currentDuaIndex, '->', currentDuaIndex + 1);
+                stopCurrentAudio(); // Mevcut ses varsa durdur
                 currentDuaIndex++;
                 showDua();
+                console.log('✅ Sonraki dua gösterildi');
                 // Navigasyon - görev sayılmaz
             }
         };
 
         elements.duaAudioBtn.onclick = () => {
+            console.log('🔊 Dua audio butonuna tıklandı');
             const dua = duaData[currentDuaIndex];
+            console.log('📊 Mevcut dua bilgileri:', {
+                index: currentDuaIndex,
+                hasUrl: !!(dua && dua.ses_url),
+                url: dua?.ses_url,
+                start: dua?.start,
+                title: dua?.dua_adi
+            });
+            
             if (dua && dua.ses_url) {
-                // Ses başlangıç zamanı için özel işlem
-                if (currentAudio && !currentAudio.paused) {
-                    currentAudio.pause();
-                    currentAudio.currentTime = 0;
-                }
+                // Önceki sesi durdur
+                stopCurrentAudio();
                 
+                // Butonu devre dışı bırak
                 elements.duaAudioBtn.disabled = true;
-                currentAudio = new Audio(dua.ses_url);
+                console.log('🔒 Audio butonu devre dışı bırakıldı');
                 
-                if (dua.start) {
-                    currentAudio.currentTime = dua.start;
+                try {
+                    currentAudio = new Audio(dua.ses_url);
+                    
+                    // Başlangıç zamanı varsa ayarla (yüklenmeden önce)
+                    if (dua.start) {
+                        currentAudio.currentTime = dua.start;
+                    }
+                    
+                    // Direkt çalmayı dene
+                    currentAudio.play().then(() => {
+                        console.log('🎵 Dua sesi başlatıldı - URL:', dua.ses_url);
+                        console.log('🎵 Audio object durumu:', {
+                            currentTime: currentAudio.currentTime,
+                            duration: currentAudio.duration,
+                            paused: currentAudio.paused,
+                            readyState: currentAudio.readyState,
+                            volume: currentAudio.volume
+                        });
+                        elements.duaAudioBtn.disabled = false; // Butonu tekrar aktif et
+                    }).catch(err => {
+                        console.error('❌ Ses çalma hatası:', err);
+                        elements.duaAudioBtn.disabled = false;
+                        currentAudio = null;
+                    });
+                    
+                    // Ses yüklenme durumu
+                    currentAudio.onloadstart = () => {
+                        console.log('📥 Ses yüklenmeye başladı');
+                    };
+                    
+                    currentAudio.oncanplay = () => {
+                        console.log('✅ Ses çalmaya hazır');
+                    };
+                    
+                    currentAudio.onplay = () => {
+                        console.log('▶️ Ses çalmaya başladı');
+                    };
+                    
+                    currentAudio.onpause = () => {
+                        console.log('⏸️ Ses duraklatıldı');
+                    };
+                    
+                    currentAudio.ontimeupdate = () => {
+                        // Null check - eğer currentAudio silinmişse event'i durdur
+                        if (!currentAudio) return;
+                        
+                        // Her 5 saniyede bir log (çok fazla log'u önlemek için)
+                        if (currentAudio.currentTime > 0 && Math.floor(currentAudio.currentTime) % 5 === 0) {
+                            console.log('⏱️ Ses oynatma zamanı:', currentAudio.currentTime.toFixed(2) + 's / ' + (currentAudio.duration || 0).toFixed(2) + 's');
+                        }
+                    };
+                    
+                    // Ses bittiğinde
+                    currentAudio.onended = () => {
+                        console.log('🏁 Ses bitti');
+                        elements.duaAudioBtn.disabled = false;
+                        updateTaskProgress('duaOgre', 1);
+                        currentAudio = null;
+                    };
+                    
+                    // Hata durumunda
+                    currentAudio.onerror = (err) => {
+                        console.error('❌ Ses dosyası hatası:', err);
+                        console.error('❌ Hata detayları:', {
+                            code: currentAudio.error?.code,
+                            message: currentAudio.error?.message
+                        });
+                        elements.duaAudioBtn.disabled = false;
+                        currentAudio = null;
+                    };
+                    
+                } catch (err) {
+                    console.error('Audio oluşturma hatası:', err);
+                    elements.duaAudioBtn.disabled = false;
+                    currentAudio = null;
                 }
-                
-                currentAudio.play().catch(err => {
-                    console.error('Ses hatası:', err);
-                    elements.duaAudioBtn.disabled = false;
-                });
-                
-                currentAudio.onended = () => {
-                    elements.duaAudioBtn.disabled = false;
-                    // Daily task progress - SONUNA KADAR dinledi!
-                    updateTaskProgress('duaOgre', 1);
-                };
             }
         };
 
@@ -6222,38 +6408,111 @@
         }
 
         elements.prevAyetBtn.onclick = () => {
+            console.log('⬅️ Önceki ayet butonuna tıklandı');
+            stopCurrentAudio(); // Mevcut ses varsa durdur
             showAyet(); // Rastgele önceki ayet
+            console.log('✅ Önceki ayet gösterildi');
             // Navigasyon - görev sayılmaz
         };
 
         elements.nextAyetBtn.onclick = () => {
+            console.log('➡️ Sonraki ayet butonuna tıklandı');
+            stopCurrentAudio(); // Mevcut ses varsa durdur
             showAyet(); // Rastgele sonraki ayet
+            console.log('✅ Sonraki ayet gösterildi');
             // Navigasyon - görev sayılmaz
         };
 
         elements.ayetAudioBtn.onclick = () => {
+            console.log('🔊 Ayet audio butonuna tıklandı');
             const ayet = ayetOkuData[currentAyetIndex];
+            console.log('📊 Mevcut ayet bilgileri:', {
+                index: currentAyetIndex,
+                hasUrl: !!(ayet && ayet.ayet_ses_dosyasi),
+                url: ayet?.ayet_ses_dosyasi,
+                sure: ayet?.sure_adi,
+                ayetNo: ayet?.ayet_no
+            });
+            
             if (ayet && ayet.ayet_ses_dosyasi) {
-                // Eğer ses çalıyorsa durdur
-                if (currentAudio && !currentAudio.paused) {
-                    currentAudio.pause();
-                    currentAudio.currentTime = 0;
-                }
+                // Önceki sesi durdur
+                stopCurrentAudio();
                 
+                // Butonu devre dışı bırak
                 elements.ayetAudioBtn.disabled = true;
-                currentAudio = new Audio(ayet.ayet_ses_dosyasi);
+                console.log('🔒 Audio butonu devre dışı bırakıldı');
                 
-                currentAudio.play().catch(err => {
-                    console.error('Ses hatası:', err);
+                try {
+                    currentAudio = new Audio(ayet.ayet_ses_dosyasi);
+                    
+                    // Direkt çalmayı dene
+                    currentAudio.play().then(() => {
+                        console.log('🎵 Ayet sesi başlatıldı - URL:', ayet.ayet_ses_dosyasi);
+                        console.log('🎵 Audio object durumu:', {
+                            currentTime: currentAudio.currentTime,
+                            duration: currentAudio.duration,
+                            paused: currentAudio.paused,
+                            readyState: currentAudio.readyState,
+                            volume: currentAudio.volume
+                        });
+                        elements.ayetAudioBtn.disabled = false; // Butonu tekrar aktif et
+                    }).catch(err => {
+                        console.error('❌ Ses çalma hatası:', err);
+                        elements.ayetAudioBtn.disabled = false;
+                        currentAudio = null;
+                    });
+                    
+                    // Ses yüklenme durumu
+                    currentAudio.onloadstart = () => {
+                        console.log('📥 Ses yüklenmeye başladı');
+                    };
+                    
+                    currentAudio.oncanplay = () => {
+                        console.log('✅ Ses çalmaya hazır');
+                    };
+                    
+                    currentAudio.onplay = () => {
+                        console.log('▶️ Ses çalmaya başladı');
+                    };
+                    
+                    currentAudio.onpause = () => {
+                        console.log('⏸️ Ses duraklatıldı');
+                    };
+                    
+                    currentAudio.ontimeupdate = () => {
+                        // Null check - eğer currentAudio silinmişse event'i durdur
+                        if (!currentAudio) return;
+                        
+                        // Her 5 saniyede bir log (çok fazla log'u önlemek için)
+                        if (currentAudio.currentTime > 0 && Math.floor(currentAudio.currentTime) % 5 === 0) {
+                            console.log('⏱️ Ses oynatma zamanı:', currentAudio.currentTime.toFixed(2) + 's / ' + (currentAudio.duration || 0).toFixed(2) + 's');
+                        }
+                    };
+                    
+                    // Ses bittiğinde
+                    currentAudio.onended = () => {
+                        console.log('🏁 Ayet sesi bitti');
+                        elements.ayetAudioBtn.disabled = false;
+                        updateTaskProgress('ayetOku', 1); // Görev sayılsın
+                        currentAudio = null;
+                    };
+                    
+                    // Hata durumunda
+                    currentAudio.onerror = (err) => {
+                        console.error('❌ Ses dosyası hatası:', err);
+                        console.error('❌ Hata detayları:', {
+                            code: currentAudio.error?.code,
+                            message: currentAudio.error?.message
+                        });
+                        elements.ayetAudioBtn.disabled = false;
+                        currentAudio = null;
+                    };
+                    
+                } catch (err) {
+                    console.error('Audio oluşturma hatası:', err);
                     elements.ayetAudioBtn.disabled = false;
-                });
-                
-                // Ses sonuna kadar dinlendiğinde görev sayılsın
-                currentAudio.onended = () => {
-                    elements.ayetAudioBtn.disabled = false;
-                    // Daily task progress - SONUNA KADAR dinledi!
-                    updateTaskProgress('ayetOku', 1);
-                };
+                    currentAudio = null;
+                }
             }
         };
 
@@ -6272,20 +6531,30 @@
         }
 
         elements.prevHadisBtn.onclick = () => {
+            stopCurrentAudio(); // Mevcut ses varsa durdur
             showHadis(); // Rastgele önceki hadis
             // Daily task progress - hadis okuma
             updateTaskProgress('hadisOku', 1);
         };
 
         elements.nextHadisBtn.onclick = () => {
+            stopCurrentAudio(); // Mevcut ses varsa durdur
             showHadis(); // Rastgele sonraki hadis
             // Daily task progress - hadis okuma
             updateTaskProgress('hadisOku', 1);
         };
 
         // ============ OYUNU BAŞLAT ============
-        loadData();
-        updateStatsBar(); // İstatistik barını initialize et
+        // Performance: Async initialization
+        setTimeout(async () => {
+            try {
+                await loadData();
+                updateStatsBar(); // İstatistik barını initialize et
+                console.log('✅ Oyun veriler yüklendi ve hazır');
+            } catch (error) {
+                console.error('❌ Oyun yükleme hatası:', error);
+            }
+        }, 100); // DOM hazır olduktan sonra async başlat
             // Global debug fonksiyonu - console'dan çağırılabilir
             window.debugStats = function() {
                 console.log('🔧 DEBUG - Mevcut Oyun İstatistikleri:');
@@ -6421,9 +6690,12 @@
 
             // PWA Install Prompt fonksiyonu
             function showPWAInstallPrompt(deferredPrompt) {
-                // 3 saniye sonra install prompt göster
-                setTimeout(() => {
-                    if (confirm('📱 Bu oyunu telefonunuza yüklemek ister misiniz?\n\n✅ Offline oynayabilirsiniz\n🚀 Daha hızlı açılır\n📲 Masaüstü ikonu oluşur')) {
+                // PWA kurulum hatırlatıcısını konsolda göster, otomatik prompt yok
+                console.log('💾 PWA kurulumu hazır! Kullanıcı eylemiyle tetiklenebilir.');
+                
+                // Kullanıcı etkileşimi gerektiğinde çağrılacak fonksiyon
+                window.triggerPWAInstall = () => {
+                    if (deferredPrompt) {
                         deferredPrompt.prompt();
                         deferredPrompt.userChoice.then((choiceResult) => {
                             if (choiceResult.outcome === 'accepted') {
@@ -6434,7 +6706,7 @@
                             deferredPrompt = null;
                         });
                     }
-                }, 3000);
+                };
             }
         }
 
@@ -6443,16 +6715,21 @@
             const loadingScreen = document.getElementById('loadingScreen');
             const mainContainer = document.getElementById('mainContainer');
             
-            // 3 saniye sonra loading sayfasını kaldır
-            setTimeout(() => {
-                loadingScreen.classList.add('fade-out');
-                
-                // Fade-out animasyonu bittikten sonra
-                setTimeout(() => {
-                    loadingScreen.style.display = 'none';
-                    mainContainer.style.display = 'block';
-                }, 500); // fade-out süresi
-            }, 3000); // 3 saniye
+            // Performance optimization: RequestAnimationFrame kullan
+            const showMainApp = () => {
+                requestAnimationFrame(() => {
+                    loadingScreen.classList.add('fade-out');
+                    
+                    // Fade-out animasyonu bittikten sonra
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                        mainContainer.style.display = 'block';
+                    }, 500); // fade-out süresi
+                });
+            };
+            
+            // 2.5 saniye sonra loading sayfasını kaldır (biraz daha hızlı)
+            setTimeout(showMainApp, 2500);
         });
 
 
