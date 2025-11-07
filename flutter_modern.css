@@ -237,7 +237,7 @@ html, body {
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
-    color: #333333 !important;
+    color: #666666 !important;
     text-decoration: none;
     min-width: 60px;
 }
@@ -249,6 +249,60 @@ html, body {
 
 .flutter-nav-item:hover {
     background: rgba(0, 0, 0, 0.05);
+    transform: scale(1.1);
+}
+
+/* İstatistik butonu - Mavi */
+.flutter-nav-item:nth-child(1) {
+    color: #2196F3 !important;
+}
+
+.flutter-nav-item:nth-child(1):hover {
+    background: rgba(33, 150, 243, 0.1);
+}
+
+/* Görevler butonu - Yeşil */
+.flutter-nav-item:nth-child(2) {
+    color: #4CAF50 !important;
+}
+
+.flutter-nav-item:nth-child(2):hover {
+    background: rgba(76, 175, 80, 0.1);
+}
+
+/* Başarılar butonu - Sarı/Altın */
+.flutter-nav-item:nth-child(3) {
+    color: #FFC107 !important;
+}
+
+.flutter-nav-item:nth-child(3):hover {
+    background: rgba(255, 193, 7, 0.2);
+    transform: scale(1.05);
+}
+
+.flutter-nav-item:nth-child(3):hover i {
+    animation: glowPulse 0.8s ease-in-out infinite;
+    color: #FFD700;
+}
+
+@keyframes glowPulse {
+    0%, 100% {
+        transform: scale(1);
+        text-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
+    }
+    50% {
+        transform: scale(1.2);
+        text-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 30px rgba(255, 215, 0, 0.8);
+    }
+}
+
+/* Takvim butonu - Kırmızı */
+.flutter-nav-item:nth-child(4) {
+    color: #FF6B6B !important;
+}
+
+.flutter-nav-item:nth-child(4):hover {
+    background: rgba(255, 107, 107, 0.1);
 }
 
 .flutter-nav-item i {
