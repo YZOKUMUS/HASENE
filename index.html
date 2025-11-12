@@ -2439,7 +2439,7 @@
             scroll-behavior: auto !important; /* Smooth scroll'u devre dışı bırak */
         }
 
-        /* Swipe gestures removed per user request */
+    /* gestures removed per cleanup: swipe handlers intentionally disabled */
 
         body {
             overflow-anchor: auto; /* Chrome'da scroll anchor'ı optimize et */
@@ -6800,10 +6800,10 @@
             elements.modeSelector.style.display = 'none';
             elements.gameScreen.style.display = 'block';
             
-            // 🎮 Gesture sistemini başlat
-            // Swipes disabled per user request (button exists). Keep init call
-            // commented so gestures won't be active but code remains for future.
-            // initGameGestures();
+                // 🎮 Gesture sistemini başlat
+                /* gestures removed per cleanup: swipe gestures intentionally disabled
+                    Kept commented init call so code can be re-enabled in future if needed. */
+                // initGameGestures();
             
             // ⚡ Speed animation ile yeni soruyu yükle
             addSpeedAnimation(elements.gameScreen, 'slide-up');
