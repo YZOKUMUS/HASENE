@@ -2954,7 +2954,7 @@
             
             <!-- Aylık Takvim Bölümü -->
             <div style="margin: 20px 0; background: rgba(44, 62, 80, 0.3); border-radius: 12px; padding: 15px;">
-                <!-- Başlık kaldırıldı -->
+                <!-- (removed) header intentionally omitted -->
                 
                 <!-- Mini Takvim -->
                 <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 8px;">
@@ -5104,14 +5104,14 @@
                     // Oyun ayarları da localStorage'a kaydet - KRİTİK!
                     localStorage.setItem('hasene_currentMode', currentMode);
                     localStorage.setItem('hasene_currentDifficulty', currentDifficulty);
-                } catch(e) { console.log('localStorage failed:', e); }
+                } catch(e) { log.error('localStorage failed:', e); }
                 
                 // 3. URL sistemi (son çare - mobil için)
                 try {
                     saveToURL();
-                } catch(e) { console.log('URL save failed:', e); }
+                } catch(e) { log.error('URL save failed:', e); }
                 
-                console.log('💾 ÜÇLÜ KORUMA: IndexedDB + localStorage + URL ile kaydedildi!', totalPoints);
+                log.debug('💾 ÜÇLÜ KORUMA: IndexedDB + localStorage + URL ile kaydedildi!', totalPoints);
                 
             } catch (error) {
                 console.error('❌ Kaydetme hatası:', error);
@@ -5168,9 +5168,9 @@
                     const transaction = db.transaction(['gameData'], 'readwrite');
                     const store = transaction.objectStore('gameData');
                     store.clear(); // Tüm IndexedDB verilerini sil
-                    console.log('🗑️ IndexedDB temizlendi');
+                    log.debug('🗑️ IndexedDB temizlendi');
                 } catch(e) { 
-                    console.log('IndexedDB temizleme hatası:', e); 
+                    log.error('IndexedDB temizleme hatası:', e); 
                 }
             }
             
@@ -5185,16 +5185,16 @@
             localStorage.removeItem('dailyXP'); // GÜNLÜK XP'Yİ SIFIRLA!
             localStorage.removeItem('dailyGoalLevel'); // GÜNLÜK HEDEF SEVİYESİNİ SIFIRLA!
             localStorage.removeItem('lastDailyXPReset'); // GÜNLÜK XP RESET TARİHİNİ TEMİZLE!
-            console.log('🗑️ localStorage tamamen temizlendi (kelime paneli + günlük XP dahil)');
+            log.debug('🗑️ localStorage tamamen temizlendi (kelime paneli + günlük XP dahil)');
             
             // 3. URL geçmişini temizle (mümkünse)
-            try {
+                try {
                 if (window.history.replaceState) {
                     window.history.replaceState({}, '', window.location.pathname);
                 }
-                console.log('🗑️ URL geçmişi temizlendi');
+                log.debug('🗑️ URL geçmişi temizlendi');
             } catch(e) { 
-                console.log('URL temizleme hatası:', e); 
+                log.error('URL temizleme hatası:', e); 
             }
             
             // Yeni günlük görevler oluştur
@@ -5205,7 +5205,7 @@
             updateUI();
             updateDailyGoalDisplay(); // GÜNLÜK HEDEF UI'INI SIFIRLA!
             
-            console.log('✅ TÜM 3 SİSTEM TEMİZLENDİ! IndexedDB + localStorage + URL + Günlük XP');
+            log.game('✅ TÜM 3 SİSTEM TEMİZLENDİ! IndexedDB + localStorage + URL + Günlük XP');
             showCustomAlert('Tüm veriler TAMAMEN sıfırlandı! IndexedDB, localStorage, URL geçmişi ve Günlük XP temizlendi.', 'success', 'Veriler Sıfırlandı');
         }
 
@@ -5398,10 +5398,10 @@
                 hideCombo();
             }
             wrong = sessionWrong; // Geriye uyumluluk
-            console.log(`📊 Sonra: sessionWrong=${sessionWrong}, wrong=${wrong}`);
-            console.log(`🎨 updateUI() çağrılıyor...`);
+            log.debug(`📊 Sonra: sessionWrong=${sessionWrong}, wrong=${wrong}`);
+            log.debug(`🎨 updateUI() çağrılıyor...`);
             updateUI();
-            console.log(`✅ addSessionWrong tamamlandı!`);
+            log.debug(`✅ addSessionWrong tamamlandı!`);
         }
 
         // ============ ROZET SİSTEMİ ============
@@ -5558,7 +5558,7 @@
             // Varsayılan tab'ı göster (Genel)
             switchStatsTab('general');
             
-            console.log('📊 İstatistikler modalı açıldı');
+            log.debug('📊 İstatistikler modalı açıldı');
         }
 
         function getDaysFromFirstPlay() {
@@ -5600,12 +5600,12 @@
             
             // Eğer bugün ilk defa açılıyorsa
             if (streakData.todayDate !== today) {
-                console.log(`🕐 Gün değişikliği algılandı: ${streakData.todayDate} → ${today}`);
+                log.debug(`🕐 Gün değişikliği algılandı: ${streakData.todayDate} → ${today}`);
                 
                 // Gelişmiş streak kontrolü
                 const streakValidation = validateCurrentStreak(today);
                 if (!streakValidation.isValid) {
-                    console.log(`🔴 Streak tutarsızlığı: ${streakValidation.reason}`);
+                    log.debug(`🔴 Streak tutarsızlığı: ${streakValidation.reason}`);
                     streakData.currentStreak = streakValidation.correctStreak;
                 }
                 
@@ -5613,7 +5613,7 @@
                 streakData.todayDate = today;
                 streakData.todayProgress = 0;
                 
-                console.log(`📅 Yeni gün başladı: ${today}, mevcut streak: ${streakData.currentStreak}`);
+                log.debug(`📅 Yeni gün başladı: ${today}, mevcut streak: ${streakData.currentStreak}`);
             }
         }
 
@@ -5678,7 +5678,7 @@
                 }
             }
 
-            console.log(`🔥 Streak tarihleri hesaplandı: [${streakDates.join(', ')}]`);
+            log.debug(`🔥 Streak tarihleri hesaplandı: [${streakDates.join(', ')}]`);
             return streakDates;
         }
 
@@ -5712,13 +5712,13 @@
             
             // Günlük hedef tamamlandı mı?
             if (streakData.todayProgress >= streakData.dailyGoal && streakData.lastPlayDate !== today) {
-                console.log(`🎯 Günlük hedef tamamlandı! İlerleme: ${streakData.todayProgress}/${streakData.dailyGoal}`);
+                log.debug(`🎯 Günlük hedef tamamlandı! İlerleme: ${streakData.todayProgress}/${streakData.dailyGoal}`);
                 
                 // İlk defa bugün hedefi tamamladı
                 streakData.lastPlayDate = today;
                 streakData.totalPlayDays++;
                 
-                console.log(`📈 Toplam oyun günü: ${streakData.totalPlayDays}, önceki streak: ${streakData.currentStreak}`);
+                log.debug(`📈 Toplam oyun günü: ${streakData.totalPlayDays}, önceki streak: ${streakData.currentStreak}`);
                 
                 // Oyun tarihi listesine ekle
                 if (!streakData.playDates.includes(today)) {
@@ -5738,15 +5738,15 @@
                 // En iyi streak'i güncelle
                 if (streakData.currentStreak > streakData.bestStreak) {
                     streakData.bestStreak = streakData.currentStreak;
-                    console.log(`🏆 Yeni rekor streak: ${streakData.bestStreak} gün!`);
+                    log.debug(`🏆 Yeni rekor streak: ${streakData.bestStreak} gün!`);
                 }
                 
-                console.log(`🔥 Streak güncellendi: ${streakData.currentStreak} gün (en iyi: ${streakData.bestStreak})`);
+                log.debug(`🔥 Streak güncellendi: ${streakData.currentStreak} gün (en iyi: ${streakData.bestStreak})`);
                 
                 // Streak doğruluğunu kontrol et
                 const validation = validateCurrentStreak(today);
                 if (!validation.isValid) {
-                    console.log(`⚠️ Streak otomatik düzeltme: ${streakData.currentStreak} → ${validation.correctStreak}`);
+                    log.debug(`⚠️ Streak otomatik düzeltme: ${streakData.currentStreak} → ${validation.correctStreak}`);
                     streakData.currentStreak = validation.correctStreak;
                 }
 
@@ -6127,7 +6127,7 @@
             // Zorluk takibi
             if (currentDifficulty) {
                 dailyTasks.todayStats.farklıZorluk.add(currentDifficulty);
-                console.log(`🎯 Zorluk eklendi: ${currentDifficulty}, toplam: ${dailyTasks.todayStats.farklıZorluk.size}`);
+                log.debug(`🎯 Zorluk eklendi: ${currentDifficulty}, toplam: ${dailyTasks.todayStats.farklıZorluk.size}`);
             }
 
             // Görevleri kontrol et ve güncelle
@@ -6144,15 +6144,15 @@
                 // Görev tamamlandı mı?
                 if (task.current >= task.target && !dailyTasks.completedTasks.includes(task.id)) {
                     dailyTasks.completedTasks.push(task.id);
-                    console.log(`✅ Görev tamamlandı: ${task.id} (${task.name})`);
+                    log.debug(`✅ Görev tamamlandı: ${task.id} (${task.name})`);
                 }
                 
                 if (eskiCurrent !== task.current) {
-                    console.log(`🎯 Görev ilerleme: ${task.id} ${eskiCurrent}/${task.target} → ${task.current}/${task.target}`);
+                    log.debug(`🎯 Görev ilerleme: ${task.id} ${eskiCurrent}/${task.target} → ${task.current}/${task.target}`);
                 }
             });
 
-            console.log(`📋 Toplam tamamlanan görev: ${dailyTasks.completedTasks.length}`);
+            log.debug(`📋 Toplam tamamlanan görev: ${dailyTasks.completedTasks.length}`);
             saveStats();
         }
 
@@ -6161,7 +6161,7 @@
             checkDailyTasks();
             
             // Debug: Görev durumunu logla
-            console.log('📋 Daily Tasks Debug:', {
+            log.debug('📋 Daily Tasks Debug:', {
                 tasks: dailyTasks.tasks.length,
                 bonusTasks: dailyTasks.bonusTasks.length,
                 completed: dailyTasks.completedTasks.length,
@@ -6183,14 +6183,14 @@
         function updateTasksDisplay() {
             // Güvenlik kontrolü: Eğer görevler boşsa, yeniden oluştur
             if (!dailyTasks.tasks || dailyTasks.tasks.length === 0) {
-                console.log('⚠️ Tasks boş, yeniden oluşturuluyor...');
+                log.debug('⚠️ Tasks boş, yeniden oluşturuluyor...');
                 generateDailyTasks(new Date().toISOString().split('T')[0]);
             }
             
             const completedCount = dailyTasks.completedTasks.length;
             const totalCount = dailyTasks.tasks.length + dailyTasks.bonusTasks.length;
             
-            console.log('📊 updateTasksDisplay:', { completedCount, totalCount });
+            log.debug('📊 updateTasksDisplay:', { completedCount, totalCount });
             
             // Genel ilerleme
             document.getElementById('completedTasks').textContent = completedCount;
@@ -6346,7 +6346,7 @@
         // ============ ZORLUK UI GÜNCELLEYICI ============
         function updateDifficultyUI() {
             // Kaydedilen zorluk seviyesine göre UI'yı ayarla
-            console.log(`🎯 Zorluk UI güncelleniyor: ${currentDifficulty}`);
+            log.debug(`🎯 Zorluk UI güncelleniyor: ${currentDifficulty}`);
             
             // Tüm butonları başlangıç durumuna getir
             document.getElementById('mainDiffKolay').style.cssText = 'flex: 1; min-width: 90px; max-width: 120px; margin: 0; padding: 10px; font-size: 0.85em; background: white; color: #4CAF50; border: 2px solid #4CAF50;';
@@ -6377,11 +6377,11 @@
             updateDifficultyUI();
             
             document.getElementById('mainDiffKolay').onclick = () => {
-                console.log("===== ZORLUK DEĞİŞTİ =====");
-                console.log("YENİ ZORLUK: KOLAY");
-                console.log("Aralık: 5-9");
-                console.log("Çarpan: 2x");
-                console.log("=======================");
+                log.debug("===== ZORLUK DEĞİŞTİ =====");
+                log.debug("YENİ ZORLUK: KOLAY");
+                log.debug("Aralık: 5-9");
+                log.debug("Çarpan: 2x");
+                log.debug("=======================");
                 currentDifficulty = 'kolay';
                 saveStats(); // Zorluk değiştiğinde kaydet!
                 // Kolay yeşil seçili, diğerleri kendi border renkleri ile beyaz
@@ -6394,11 +6394,11 @@
             };
             
             document.getElementById('mainDiffOrta').onclick = () => {
-                console.log("===== ZORLUK DEĞİŞTİ =====");
-                console.log("YENİ ZORLUK: ORTA");
-                console.log("Aralık: 10-11");
-                console.log("Çarpan: 2x");
-                console.log("=======================");
+                log.debug("===== ZORLUK DEĞİŞTİ =====");
+                log.debug("YENİ ZORLUK: ORTA");
+                log.debug("Aralık: 10-11");
+                log.debug("Çarpan: 2x");
+                log.debug("=======================");
                 currentDifficulty = 'orta';
                 saveStats(); // Zorluk değiştiğinde kaydet!
                 // Orta turuncu seçili, diğerleri kendi border renkleri ile beyaz
@@ -6411,11 +6411,11 @@
             };
             
             document.getElementById('mainDiffZor').onclick = () => {
-                console.log("===== ZORLUK DEĞİŞTİ =====");
-                console.log("YENİ ZORLUK: ZOR");
-                console.log("Aralık: 12-21");
-                console.log("Çarpan: 2x");
-                console.log("=======================");
+                log.debug("===== ZORLUK DEĞİŞTİ =====");
+                log.debug("YENİ ZORLUK: ZOR");
+                log.debug("Aralık: 12-21");
+                log.debug("Çarpan: 2x");
+                log.debug("=======================");
                 currentDifficulty = 'zor';
                 saveStats(); // Zorluk değiştiğinde kaydet!
                 // Zor kırmızı seçili, diğerleri kendi border renkleri ile beyaz
@@ -6489,9 +6489,9 @@
             
             // Next butonu event handler'ını buraya taşıdık
             elements.dinleNextBtn.onclick = () => {
-                console.log(`🔄 === NEXT BUTONU TIKLANDI! ===`);
-                console.log(`📊 Mevcut durum: dinleQuestionCount=${dinleQuestionCount}/${DINLE_MAX_QUESTIONS}`);
-                console.log(`🎯 Bir sonraki soru yükleniyor...`);
+                log.debug(`🔄 === NEXT BUTONU TIKLANDI! ===`);
+                log.debug(`📊 Mevcut durum: dinleQuestionCount=${dinleQuestionCount}/${DINLE_MAX_QUESTIONS}`);
+                log.debug(`🎯 Bir sonraki soru yükleniyor...`);
                 elements.dinleNextBtn.style.display = 'none';
                 loadDinleQuestion();
             };
@@ -6502,30 +6502,30 @@
 
         // Boşluk Doldur modu
         elements.boslukDoldurBtn.onclick = () => {
-            console.log('📋 === BOŞLUK DOLDUR OYUNU BAŞLATILIYOR ===');
-            console.log('📋 1. Veri kontrol ediliyor...');
-            
+            log.debug('📋 === BOŞLUK DOLDUR OYUNU BAŞLATILIYOR ===');
+            log.debug('📋 1. Veri kontrol ediliyor...');
+
             if (ayetOkuData.length === 0) {
-                console.log('❌ Ayet verileri yüklenemedi!');
+                log.error('❌ Ayet verileri yüklenemedi!');
                 showCustomAlert('Ayet verileri yüklenemedi! Lütfen sayfayı yenileyin.', 'error');
                 return;
             }
-            console.log(`✅ Ayet verileri OK: ${ayetOkuData.length} ayet mevcut`);
-            console.log(`🎯 Mevcut zorluk: ${currentDifficulty}`);
-            
-            console.log('📋 2. UI değiştiriliyor...');
+            log.debug(`✅ Ayet verileri OK: ${ayetOkuData.length} ayet mevcut`);
+            log.debug(`🎯 Mevcut zorluk: ${currentDifficulty}`);
+
+            log.debug('📋 2. UI değiştiriliyor...');
             hideAllModes();
             if (elements.boslukMode) elements.boslukMode.style.display = 'block';
-            console.log('✅ UI değişikliği tamamlandı');
-            
-            console.log('📋 3. Oyun değişkenleri sıfırlanıyor...');
-            console.log(`🔄 Önceki değerler: score=${boslukScore}, correct=${boslukCorrect}, wrong=${boslukWrong}`);
+            log.debug('✅ UI değişikliği tamamlandı');
+
+            log.debug('📋 3. Oyun değişkenleri sıfırlanıyor...');
+            log.debug(`🔄 Önceki değerler: score=${boslukScore}, correct=${boslukCorrect}, wrong=${boslukWrong}`);
             // Boşluk modunu başlat
             boslukScore = 0;
             boslukCorrect = 0;
             boslukWrong = 0;
-            console.log(`✅ Yeni değerler: score=${boslukScore}, correct=${boslukCorrect}, wrong=${boslukWrong}`);
-            console.log(`📊 Session değerler: sessionScore=${sessionScore}, sessionCorrect=${sessionCorrect}, sessionWrong=${sessionWrong}`);
+            log.debug(`✅ Yeni değerler: score=${boslukScore}, correct=${boslukCorrect}, wrong=${boslukWrong}`);
+            log.debug(`📊 Session değerler: sessionScore=${sessionScore}, sessionCorrect=${sessionCorrect}, sessionWrong=${sessionWrong}`);
             
             updateBoslukUI();
             loadBoslukQuestion();
@@ -6602,7 +6602,7 @@
                 sessionWrong = 0;
                 comboCount = 0;
                 
-                console.log('🏁 Oyundan erken çıkıldı. Puanlar kaydedildi:', {
+                log.debug('🏁 Oyundan erken çıkıldı. Puanlar kaydedildi:', {
                     totalPoints,
                     kazanilanPuan: sessionScore
                 });
@@ -6631,8 +6631,8 @@
         }
 
         if (elements.backFromDuaBtn) {
-            elements.backFromDuaBtn.onclick = () => {
-                console.log('⬅️ Dua geri butonuna tıklandı');
+                elements.backFromDuaBtn.onclick = () => {
+                log.debug('⬅️ Dua geri butonuna tıklandı');
                 stopCurrentAudio(); // Mevcut ses varsa durdur
                 hideAllModes();
                 if (elements.mainMenu) {
@@ -6640,7 +6640,7 @@
                     elements.mainMenu.style.display = 'block';
                 }
                 if (elements.settingsBtn) elements.settingsBtn.style.display = 'none';
-                console.log('✅ Ana menüye döndü');
+                log.debug('✅ Ana menüye döndü');
             };
         }
 
@@ -6825,61 +6825,61 @@
             // Önceki ses varsa durdur
             stopCurrentAudio();
             
-            console.log('📚 === KELİME ÇEVİR SORU YÜKLENİYOR (AKILLI SEÇİM) ===');
-            console.log(`📊 Mevcut soru sayısı: ${questionCount}`);
-            console.log(`🎯 Mevcut mod: ${currentMode}`);
-            console.log(`🎯 Zorluk: ${currentDifficulty}`);
+            log.debug('📚 === KELİME ÇEVİR SORU YÜKLENİYOR (AKILLI SEÇİM) ===');
+            log.debug(`📊 Mevcut soru sayısı: ${questionCount}`);
+            log.debug(`🎯 Mevcut mod: ${currentMode}`);
+            log.debug(`🎯 Zorluk: ${currentDifficulty}`);
             
             const mode = CONFIG.gameModes[currentMode];
-            console.log(`📋 Mod detayları:`, mode);
+            log.debug(`📋 Mod detayları:`, mode);
             
             // Soru sayısı kontrolü - oyun bitirme
             if (questionCount >= mode.questionsPerLevel) {
-                console.log(`🏁 === KELİME ÇEVİR OYUNU BİTTİ ===`);
-                console.log(`✅ ${mode.questionsPerLevel} soru tamamlandı!`);
-                console.log(`📊 Final session score: ${sessionScore}`);
+                log.game(`🏁 === KELİME ÇEVİR OYUNU BİTTİ ===`);
+                log.game(`✅ ${mode.questionsPerLevel} soru tamamlandı!`);
+                log.game(`📊 Final session score: ${sessionScore}`);
                 
                 // Günlük görev ilerlemesini güncelle
                 updateTaskProgress('kelimeCevir', sessionCorrect);
                 
                 // Session puanlarını global'e aktar
-                console.log(`💰 Session puanları global'e aktarılıyor: ${sessionScore} puan`);
+                log.game(`💰 Session puanları global'e aktarılıyor: ${sessionScore} puan`);
                 addToGlobalPoints(sessionScore, sessionCorrect);
                 
                 // Direkt ana menüye dön (popup yok)
-                console.log(`🔄 Ana menüye dönülüyor...`);
+                log.debug(`🔄 Ana menüye dönülüyor...`);
                 elements.gameScreen.style.display = 'none';
                 elements.modeSelector.style.display = 'none';
                 elements.mainMenu.style.display = 'block';
-                console.log(`✅ Kelime Çevir oyunu bitti ve ana menüye dönüldü!`);
+                log.game(`✅ Kelime Çevir oyunu bitti ve ana menüye dönüldü!`);
                 return;
             }
 
             // Can kontrolü
             if (mode.lives > 0 && lives <= 0) {
-                console.log(`💀 Can bitti! Oyun sona eriyor...`);
+                log.game(`💀 Can bitti! Oyun sona eriyor...`);
                 gameOver('Can bitti!');
                 return;
             }
 
-            console.log(`🔍 Zorluk filtreleme başlıyor...`);
-            console.log(`🎯 Seçili zorluk: ${currentDifficulty}`);
-            
+            log.debug(`🔍 Zorluk filtreleme başlıyor...`);
+            log.debug(`🎯 Seçili zorluk: ${currentDifficulty}`);
+
             // Zorluk filtreleme
             const diffLevel = CONFIG.difficultyLevels[currentDifficulty];
-            console.log(`📋 Zorluk aralığı: ${diffLevel.minDiff}-${diffLevel.maxDiff}`);
-            console.log(`📦 Toplam kelime sayısı: ${kelimeBulData.length}`);
-            
+            log.debug(`📋 Zorluk aralığı: ${diffLevel.minDiff}-${diffLevel.maxDiff}`);
+            log.debug(`📦 Toplam kelime sayısı: ${kelimeBulData.length}`);
+
             let filteredData = kelimeBulData.filter(w => 
                 w.difficulty >= diffLevel.minDiff && w.difficulty <= diffLevel.maxDiff
             );
-            console.log(`✅ Zorluk filtresi sonrası: ${filteredData.length} kelime`);
+            log.debug(`✅ Zorluk filtresi sonrası: ${filteredData.length} kelime`);
 
             // Mod özel zorluk kontrolü
             if (mode.minDifficulty) {
-                console.log(`📋 Mod minimum zorluk kontrolü: >= ${mode.minDifficulty}`);
+                log.debug(`📋 Mod minimum zorluk kontrolü: >= ${mode.minDifficulty}`);
                 filteredData = filteredData.filter(w => w.difficulty >= mode.minDifficulty);
-                console.log(`✅ Mod filtresi sonrası: ${filteredData.length} kelime`);
+                log.debug(`✅ Mod filtresi sonrası: ${filteredData.length} kelime`);
             }
 
             if (filteredData.length === 0) {
@@ -6887,19 +6887,19 @@
             }
 
             // AKILLI KELİME SEÇİMİ - Zorlanılan kelimeleri daha sık göster
-            console.log('🧠 Akıllı kelime seçimi başlıyor...');
+            log.debug('🧠 Akıllı kelime seçimi başlıyor...');
             currentQuestion = selectIntelligentWord(filteredData);
-            
+
             // SEÇİLEN KELİME DETAYLARI
-            console.log("===== SEÇİLEN KELİME =====");
-            console.log("Kelime:", currentQuestion.kelime);
-            console.log("Anlam:", currentQuestion.anlam);
-            console.log("Zorluk:", currentQuestion.difficulty);
-            console.log("ID:", currentQuestion.id);
-            console.log("Zorluk aralığı:", diffLevel.minDiff + "-" + diffLevel.maxDiff);
+            log.debug("===== SEÇİLEN KELİME =====");
+            log.debug("Kelime:", currentQuestion.kelime);
+            log.debug("Anlam:", currentQuestion.anlam);
+            log.debug("Zorluk:", currentQuestion.difficulty);
+            log.debug("ID:", currentQuestion.id);
+            log.debug("Zorluk aralığı:", diffLevel.minDiff + "-" + diffLevel.maxDiff);
             const isInRange = currentQuestion.difficulty >= diffLevel.minDiff && currentQuestion.difficulty <= diffLevel.maxDiff;
-            console.log("Aralıkta mı:", isInRange ? "EVET" : "HAYIR");
-            console.log("========================");
+            log.debug("Aralıkta mı:", isInRange ? "EVET" : "HAYIR");
+            log.debug("========================");
 
             // UI güncelle
             elements.arabicWord.textContent = currentQuestion.kelime;
@@ -7283,78 +7283,78 @@
             // Önceki ses varsa durdur
             stopCurrentAudio();
             
-            console.log(`🎪 === SORU YÜKLENİYOR ===`);
-            console.log(`📊 Mevcut soru sayısı: ${dinleQuestionCount}/${DINLE_MAX_QUESTIONS}`);
-            console.log(`📊 Oyun durumu: score=${dinleScore}, correct=${dinleCorrect}, wrong=${dinleWrong}`);
+            log.debug(`🎪 === SORU YÜKLENİYOR ===`);
+            log.debug(`📊 Mevcut soru sayısı: ${dinleQuestionCount}/${DINLE_MAX_QUESTIONS}`);
+            log.debug(`📊 Oyun durumu: score=${dinleScore}, correct=${dinleCorrect}, wrong=${dinleWrong}`);
             
             // 10 soru kontrolü
             if (dinleQuestionCount >= DINLE_MAX_QUESTIONS) {
-                console.log(`🏁 === OYUN BİTİŞİ TETİKLENDİ ===`);
-                console.log(`✅ ${DINLE_MAX_QUESTIONS} soru tamamlandı!`);
-                console.log(`📊 Final oyun skorları: dinleScore=${dinleScore}, dinleCorrect=${dinleCorrect}, dinleWrong=${dinleWrong}`);
-                console.log(`📊 Final session skorları: sessionScore=${sessionScore}, sessionCorrect=${sessionCorrect}, sessionWrong=${sessionWrong}`);
+                log.game(`🏁 === OYUN BİTİŞİ TETİKLENDİ ===`);
+                log.game(`✅ ${DINLE_MAX_QUESTIONS} soru tamamlandı!`);
+                log.game(`📊 Final oyun skorları: dinleScore=${dinleScore}, dinleCorrect=${dinleCorrect}, dinleWrong=${dinleWrong}`);
+                log.game(`📊 Final session skorları: sessionScore=${sessionScore}, sessionCorrect=${sessionCorrect}, sessionWrong=${sessionWrong}`);
                 
                 // Günlük görev ilerlemesini güncelle
                 updateTaskProgress('dinleBul', sessionCorrect);
                 
-                console.log(`💰 Session puanları global'e aktarılıyor: ${sessionScore} puan`);
+                log.game(`💰 Session puanları global'e aktarılıyor: ${sessionScore} puan`);
                 // Session puanlarını global'e aktar
                 addToGlobalPoints(sessionScore, sessionCorrect);
                 
-                console.log(`🔄 Ana menüye dönülüyor...`);
+                log.debug(`🔄 Ana menüye dönülüyor...`);
                 // Direkt ana menüye dön
                 elements.dinleMode.style.display = 'none';
                 elements.mainMenu.style.display = 'block';
                 
-                console.log(`🧹 Oyun değişkenleri temizleniyor...`);
+                log.debug(`🧹 Oyun değişkenleri temizleniyor...`);
                 // Sıfırla
                 dinleScore = 0;
                 dinleCorrect = 0;
                 dinleWrong = 0;
                 dinleQuestionCount = 0;
                 updateDinleUI();
-                console.log(`✅ Oyun bitti ve ana menüye dönüldü!`);
+                log.game(`✅ Oyun bitti ve ana menüye dönüldü!`);
                 return;
             }
 
-            console.log(`🔍 Zorluk filtreleme başlıyor...`);
-            console.log(`🎯 Seçili zorluk: ${currentDifficulty}`);
+            log.debug(`🔍 Zorluk filtreleme başlıyor...`);
+            log.debug(`🎯 Seçili zorluk: ${currentDifficulty}`);
             // Zorluk filtreleme (Kelime Çevir ile aynı)
             const diffLevel = CONFIG.difficultyLevels[currentDifficulty];
-            console.log(`📋 Zorluk aralığı: ${diffLevel.minDiff}-${diffLevel.maxDiff}`);
-            console.log(`📦 Toplam kelime sayısı: ${kelimeBulData.length}`);
+            log.debug(`📋 Zorluk aralığı: ${diffLevel.minDiff}-${diffLevel.maxDiff}`);
+            log.debug(`📦 Toplam kelime sayısı: ${kelimeBulData.length}`);
             
             let filteredData = kelimeBulData.filter(w => 
                 w.difficulty >= diffLevel.minDiff && w.difficulty <= diffLevel.maxDiff
             );
-            console.log(`✅ Filtrelenmiş kelime sayısı: ${filteredData.length}`);
+            log.debug(`✅ Filtrelenmiş kelime sayısı: ${filteredData.length}`);
 
             if (filteredData.length === 0) {
-                console.log(`⚠️ Filtrelenmiş veri boş! Tüm kelimeler kullanılacak.`);
+                log.debug(`⚠️ Filtrelenmiş veri boş! Tüm kelimeler kullanılacak.`);
                 filteredData = kelimeBulData;
             }
 
-            console.log(`🧠 Akıllı kelime seçimi (Dinle Modu) başlıyor...`);
+            log.debug(`🧠 Akıllı kelime seçimi (Dinle Modu) başlıyor...`);
             currentDinleQuestion = selectIntelligentWord(filteredData);
             
             // 🔍 SEÇİLEN KELİME DETAYLARI (DİNLE MODU)
-            console.log("===== DINLE MODU KELİME =====");
-            console.log(`� Kelime: ${currentDinleQuestion.kelime}`);
-            console.log("Anlam:", currentDinleQuestion.anlam);
-            console.log("Zorluk:", currentDinleQuestion.difficulty);
-            console.log("ID:", currentDinleQuestion.id);
-            console.log("Zorluk aralığı:", diffLevel.minDiff + "-" + diffLevel.maxDiff);
+            log.debug("===== DINLE MODU KELİME =====");
+            log.debug(`� Kelime: ${currentDinleQuestion.kelime}`);
+            log.debug("Anlam:", currentDinleQuestion.anlam);
+            log.debug("Zorluk:", currentDinleQuestion.difficulty);
+            log.debug("ID:", currentDinleQuestion.id);
+            log.debug("Zorluk aralığı:", diffLevel.minDiff + "-" + diffLevel.maxDiff);
             const isInRange = currentDinleQuestion.difficulty >= diffLevel.minDiff && currentDinleQuestion.difficulty <= diffLevel.maxDiff;
-            console.log("Aralıkta mı:", isInRange ? "EVET" : "HAYIR");
-            console.log("Puan:", currentDinleQuestion.difficulty * 2);
-            console.log("==========================");
+            log.debug("Aralıkta mı:", isInRange ? "EVET" : "HAYIR");
+            log.debug("Puan:", currentDinleQuestion.difficulty * 2);
+            log.debug("==========================");
 
-            console.log(`🎨 UI güncelleniyor...`);
+            log.debug(`🎨 UI güncelleniyor...`);
             // UI güncelle
             elements.dinleSureInfo.textContent = `ID: ${currentDinleQuestion.id} | Zorluk: ${currentDinleQuestion.difficulty} | Aralık: ${diffLevel.minDiff}-${diffLevel.maxDiff}`;
-            console.log(`✅ Kelime ID: ${currentDinleQuestion.id}`);
+            log.debug(`✅ Kelime ID: ${currentDinleQuestion.id}`);
 
-            console.log(`🔀 Seçenekler oluşturuluyor... (4 Arapça kelime)`);
+            log.debug(`🔀 Seçenekler oluşturuluyor... (4 Arapça kelime)`);
             // Seçenekler oluştur (4 Arapça kelime) - aynı zorluktan
             const wrongAnswers = [];
             let attempts = 0;
@@ -7364,17 +7364,17 @@
                 if (random.kelime !== currentDinleQuestion.kelime && 
                     !wrongAnswers.find(w => w.kelime === random.kelime)) {
                     wrongAnswers.push(random);
-                    console.log(`✅ Yanlış cevap #${wrongAnswers.length}: "${random.kelime}" (zorluk: ${random.difficulty})`);
+                    log.debug(`✅ Yanlış cevap #${wrongAnswers.length}: "${random.kelime}" (zorluk: ${random.difficulty})`);
                 }
             }
-            console.log(`📊 Yanlış cevap oluşturma: ${attempts} deneme, ${wrongAnswers.length}/3 başarılı`);
+            log.debug(`📊 Yanlış cevap oluşturma: ${attempts} deneme, ${wrongAnswers.length}/3 başarılı`);
 
             const allOptions = [
                 { text: currentDinleQuestion.kelime, correct: true },
                 ...wrongAnswers.map(w => ({ text: w.kelime, correct: false }))
             ];
-            console.log(`🎯 Doğru cevap: "${currentDinleQuestion.kelime}" (index: 0)`);
-            console.log(`❌ Yanlış cevaplar: ${wrongAnswers.map(w => `"${w.kelime}"`).join(', ')}`);
+            log.debug(`🎯 Doğru cevap: "${currentDinleQuestion.kelime}" (index: 0)`);
+            log.debug(`❌ Yanlış cevaplar: ${wrongAnswers.map(w => `"${w.kelime}"`).join(', ')}`);
 
             shuffle(allOptions);
 
@@ -7410,37 +7410,37 @@
         }
 
         function checkDinleAnswer(button, isCorrect) {
-            console.log(`🚨 === CEVAP KONTROLÜ BAŞLIYOR ===`);
-            console.log(`👆 Tıklanan buton: "${button.textContent}"`);
-            console.log(`✅/❌ isCorrect parametresi: ${isCorrect}`);
-            console.log(`📊 Mevcut soru: #${dinleQuestionCount + 1}/${DINLE_MAX_QUESTIONS}`);
-            console.log(`� Önce - session score: ${sessionScore}, session correct: ${sessionCorrect}, session wrong: ${sessionWrong}`);
-            console.log(`📊 Önce - dinle score: ${dinleScore}, dinle correct: ${dinleCorrect}, dinle wrong: ${dinleWrong}`);
+            log.debug(`🚨 === CEVAP KONTROLÜ BAŞLIYOR ===`);
+            log.debug(`👆 Tıklanan buton: "${button.textContent}"`);
+            log.debug(`✅/❌ isCorrect parametresi: ${isCorrect}`);
+            log.debug(`📊 Mevcut soru: #${dinleQuestionCount + 1}/${DINLE_MAX_QUESTIONS}`);
+            log.debug(`� Önce - session score: ${sessionScore}, session correct: ${sessionCorrect}, session wrong: ${sessionWrong}`);
+            log.debug(`📊 Önce - dinle score: ${dinleScore}, dinle correct: ${dinleCorrect}, dinle wrong: ${dinleWrong}`);
             
             // KELİME İSTATİSTİKLERİNİ GÜNCELLE (Dinle Modu)
-            console.log(`📊 Kelime istatistiği güncelleniyor (Dinle): ${currentDinleQuestion.kelime} (ID: ${currentDinleQuestion.id})`);
+            log.debug(`📊 Kelime istatistiği güncelleniyor (Dinle): ${currentDinleQuestion.kelime} (ID: ${currentDinleQuestion.id})`);
             updateWordStats(currentDinleQuestion.id, isCorrect);
             
             const allBtns = elements.dinleOptions.querySelectorAll('.option');
-            console.log(`🔒 ${allBtns.length} buton devre dışı bırakılıyor...`);
+            log.debug(`🔒 ${allBtns.length} buton devre dışı bırakılıyor...`);
             allBtns.forEach(btn => btn.disabled = true);
 
             if (isCorrect) {
-                console.log(`✅ === SAHİH CEVAP İŞLEMİ ===`);
+                log.debug(`✅ === SAHİH CEVAP İŞLEMİ ===`);
                 button.classList.add('correct');
                 elements.dinleFeedback.textContent = '✅ Mâşâallah!';
                 elements.dinleFeedback.className = 'feedback correct';
                 
                 const points = currentDinleQuestion.difficulty * 2;
-                console.log(`💰 Puan hesaplama: ${currentDinleQuestion.difficulty} × 2 = ${points} puan`);
+                log.debug(`💰 Puan hesaplama: ${currentDinleQuestion.difficulty} × 2 = ${points} puan`);
                 
-                console.log(`📊 Dinle score güncelleniyor: ${dinleScore} + ${points} = ${dinleScore + points}`);
+                log.debug(`📊 Dinle score güncelleniyor: ${dinleScore} + ${points} = ${dinleScore + points}`);
                 dinleScore += points; // Local oyun puanı
                 
-                console.log(`📊 Dinle correct güncelleniyor: ${dinleCorrect} + 1 = ${dinleCorrect + 1}`);
+                log.debug(`📊 Dinle correct güncelleniyor: ${dinleCorrect} + 1 = ${dinleCorrect + 1}`);
                 dinleCorrect++;
                 
-                console.log(`📊 addSessionPoints(${points}) çağrılıyor...`);
+                log.debug(`📊 addSessionPoints(${points}) çağrılıyor...`);
                 addSessionPoints(points); // Session puanına ekle
                 
                 // Daily task progress - her doğru cevap için
@@ -7449,59 +7449,59 @@
                 // Perfect streak kontrolü - hiç yanlış yapmamışsak perfect streak artır
                 if (sessionWrong === 0) {
                     updateTaskProgress('perfectStreak', 1);
-                    console.log(`🔥 Perfect streak artırıldı! Mevcut: ${dailyTasks.todayStats.perfectStreak}`);
+                    log.debug(`🔥 Perfect streak artırıldı! Mevcut: ${dailyTasks.todayStats.perfectStreak}`);
                 }
                 
-                console.log(`✅ Doğru cevap işlemi tamamlandı!`);
-                console.log(`📊 Sonra - session score: ${sessionScore}, session correct: ${sessionCorrect}`);
+                log.debug(`✅ Doğru cevap işlemi tamamlandı!`);
+                log.debug(`📊 Sonra - session score: ${sessionScore}, session correct: ${sessionCorrect}`);
             } else {
-                console.log(`❌ === YANLIŞ CEVAP İŞLEMİ ===`);
+                log.debug(`❌ === YANLIŞ CEVAP İŞLEMİ ===`);
                 button.classList.add('wrong');
                 elements.dinleFeedback.textContent = `❌ Hatalı! Doğru: ${currentDinleQuestion.kelime} (${currentDinleQuestion.anlam})`;
                 elements.dinleFeedback.className = 'feedback wrong';
                 
-                console.log(`📊 Dinle wrong güncelleniyor: ${dinleWrong} + 1 = ${dinleWrong + 1}`);
+                log.debug(`📊 Dinle wrong güncelleniyor: ${dinleWrong} + 1 = ${dinleWrong + 1}`);
                 dinleWrong++;
                 
-                console.log(`📊 addSessionWrong() çağrılıyor...`);
+                log.debug(`📊 addSessionWrong() çağrılıyor...`);
                 addSessionWrong(); // Session yanlış sayısını artır
-                console.log(`❌ ÖNEMLI: Yanlış cevap için puan EKLENMEDİ!`);
-                console.log(`📊 Session score değişmedi: ${sessionScore}`);
+                log.debug(`❌ ÖNEMLI: Yanlış cevap için puan EKLENMEDİ!`);
+                log.debug(`📊 Session score değişmedi: ${sessionScore}`);
 
-                console.log(`🔍 Doğru cevabı gösteriliyor...`);
+                log.debug(`🔍 Doğru cevabı gösteriliyor...`);
                 // Doğru cevabı göster
                 let correctButtonFound = false;
                 allBtns.forEach(btn => {
                     if (btn.textContent.includes(currentDinleQuestion.kelime)) {
                         btn.classList.add('correct');
                         correctButtonFound = true;
-                        console.log(`✅ Doğru buton bulundu ve işaretlendi: "${btn.textContent}"`);
+                        log.debug(`✅ Doğru buton bulundu ve işaretlendi: "${btn.textContent}"`);
                     }
                 });
                 if (!correctButtonFound) {
-                    console.log(`⚠️ Doğru buton bulunamadı!`);
+                    log.warn(`⚠️ Doğru buton bulunamadı!`);
                 }
             }
 
-            console.log(`📊 Soru sayacı artırılıyor: ${dinleQuestionCount} + 1 = ${dinleQuestionCount + 1}`);
+            log.debug(`📊 Soru sayacı artırılıyor: ${dinleQuestionCount} + 1 = ${dinleQuestionCount + 1}`);
             dinleQuestionCount++; // Soru sayacını artır
-            console.log(`📊 FINAL - session: score=${sessionScore}, correct=${sessionCorrect}, wrong=${sessionWrong}`);
-            console.log(`📊 FINAL - dinle: score=${dinleScore}, correct=${dinleCorrect}, wrong=${dinleWrong}, questionCount=${dinleQuestionCount}`);
-            console.log(`🚨 === CEVAP KONTROLÜ BİTTİ ===`);
-            console.log(`🎨 UI güncelleniyor ve Next butonu gösteriliyor...`);
+            log.debug(`📊 FINAL - session: score=${sessionScore}, correct=${sessionCorrect}, wrong=${sessionWrong}`);
+            log.debug(`📊 FINAL - dinle: score=${dinleScore}, correct=${dinleCorrect}, wrong=${dinleWrong}, questionCount=${dinleQuestionCount}`);
+            log.debug(`🚨 === CEVAP KONTROLÜ BİTTİ ===`);
+            log.debug(`🎨 UI güncelleniyor ve Next butonu gösteriliyor...`);
             updateDinleUI();
             // Show the Dinle 'Next' button
             elements.dinleNextBtn.style.display = 'block';
-            console.log(`✅ Cevap işlemi tamamen tamamlandı!`);
+            log.debug(`✅ Cevap işlemi tamamen tamamlandı!`);
         }
 
         function updateDinleUI() {
-            console.log(`🎨 DinleUI güncelleniyor...`);
-            console.log(`📊 Gösterilecek değerler: score=${dinleScore}, correct=${dinleCorrect}, wrong=${dinleWrong}`);
+            log.debug(`🎨 DinleUI güncelleniyor...`);
+            log.debug(`📊 Gösterilecek değerler: score=${dinleScore}, correct=${dinleCorrect}, wrong=${dinleWrong}`);
             elements.dinleScore.textContent = dinleScore;
             elements.dinleCorrect.textContent = dinleCorrect;
             elements.dinleWrong.textContent = dinleWrong;
-            console.log(`✅ DinleUI güncellendi!`);
+            log.debug(`✅ DinleUI güncellendi!`);
         }
 
         // ============ BOŞLUK DOLDUR MODU ============
@@ -7515,65 +7515,60 @@
             // Önceki ses varsa durdur
             stopCurrentAudio();
             
-            console.log('📋 === BOŞLUK DOLDUR SORU YÜKLENİYOR ===');
-            console.log(`📊 Mevcut soru sayısı: ${boslukQuestionCount}/${BOSLUK_MAX_QUESTIONS}`);
-            console.log(`📊 Oyun durumu: score=${boslukScore}, correct=${boslukCorrect}, wrong=${boslukWrong}`);
-            
-            // 10 soru kontrolü
             if (boslukQuestionCount >= BOSLUK_MAX_QUESTIONS) {
-                console.log(`🏁 === BOŞLUK DOLDUR OYUNU BİTTİ ===`);
-                console.log(`✅ ${BOSLUK_MAX_QUESTIONS} soru tamamlandı!`);
-                console.log(`📊 Final oyun skorları: boslukScore=${boslukScore}, boslukCorrect=${boslukCorrect}, boslukWrong=${boslukWrong}`);
-                console.log(`📊 Final session skorları: sessionScore=${sessionScore}, sessionCorrect=${sessionCorrect}, sessionWrong=${sessionWrong}`);
+                log.game(`🏁 === BOŞLUK DOLDUR OYUNU BİTTİ ===`);
+                log.game(`✅ ${BOSLUK_MAX_QUESTIONS} soru tamamlandı!`);
+                log.game(`📊 Final oyun skorları: boslukScore=${boslukScore}, boslukCorrect=${boslukCorrect}, boslukWrong=${boslukWrong}`);
+                log.game(`📊 Final session skorları: sessionScore=${sessionScore}, sessionCorrect=${sessionCorrect}, sessionWrong=${sessionWrong}`);
                 
                 // Günlük görev ilerlemesini güncelle
                 updateTaskProgress('boslukDoldur', sessionCorrect);
                 
-                console.log(`💰 Session puanları global'e aktarılıyor: ${sessionScore} puan`);
+                log.game(`💰 Session puanları global'e aktarılıyor: ${sessionScore} puan`);
                 // Session puanlarını global'e aktar
                 addToGlobalPoints(sessionScore, sessionCorrect);
                 
-                console.log(`🔄 Ana menüye dönülüyor...`);
+                log.debug(`🔄 Ana menüye dönülüyor...`);
                 // Direkt ana menüye dön
                 elements.boslukMode.style.display = 'none';
                 elements.mainMenu.style.display = 'block';
                 
-                console.log(`🧹 Oyun değişkenleri temizleniyor...`);
+                log.debug(`🧹 Oyun değişkenleri temizleniyor...`);
                 // Sıfırla
                 boslukScore = 0;
                 boslukCorrect = 0;
                 boslukWrong = 0;
                 boslukQuestionCount = 0;
                 updateBoslukUI();
-                console.log(`✅ Boşluk Doldur oyunu bitti ve ana menüye dönüldü!`);
+                log.game(`✅ Boşluk Doldur oyunu bitti ve ana menüye dönüldü!`);
                 return;
             }
 
-            console.log(`🔍 Ayet filtreleme başlıyor...`);
+            log.debug(`🔍 Ayet filtreleme başlıyor...`);
             // Rastgele ayet seç (ayet_metni olan ayetleri filtrele)
             const validAyets = ayetOkuData.filter(a => a.ayet_metni && a.ayet_metni.trim());
-            console.log(`📦 Toplam ayet sayısı: ${ayetOkuData.length}`);
-            console.log(`✅ Geçerli ayet sayısı: ${validAyets.length}`);
+            log.debug(`📦 Toplam ayet sayısı: ${ayetOkuData.length}`);
+            log.debug(`✅ Geçerli ayet sayısı: ${validAyets.length}`);
             
             if (validAyets.length === 0) {
                 console.error('❌ Geçerli ayet bulunamadı!');
                 return;
             }
             
-            console.log(`🎲 Rastgele ayet seçiliyor...`);
+            log.debug(`🎲 Rastgele ayet seçiliyor...`);
             const randomIndex = Math.floor(Math.random() * validAyets.length);
             const ayet = validAyets[randomIndex];
-            console.log(`✅ Seçilen ayet index: ${randomIndex}/${validAyets.length}`);
+            log.debug(`✅ Seçilen ayet index: ${randomIndex}/${validAyets.length}`);
             
-            console.log(`📝 === SORU #${boslukQuestionCount + 1} ===`);
-            console.log(`📖 Sure: ${ayet.sure_adi || 'Bilinmiyor'}`);
-            console.log(`🔢 Ayet No: ${ayet.ayet_no || 'Bilinmiyor'}`);
-            console.log(`📝 Ayet Metni: "${ayet.ayet_metni}"`);
+            log.debug(`📝 === SORU #${boslukQuestionCount + 1} ===`);
+            log.debug(`📖 Sure: ${ayet.sure_adi || 'Bilinmiyor'}`);
+            log.debug(`🔢 Ayet No: ${ayet.ayet_no || 'Bilinmiyor'}`);
+            log.debug(`📝 Ayet Metni: "${ayet.ayet_metni}"`);
             
             // Ayet metnini kelimelere böl
             const words = ayet.ayet_metni.split(' ').filter(w => w && w.trim());
-            console.log(`🔤 Kelime sayısı: ${words.length}`);
-            console.log(`🔤 Kelimeler:`, words);
+            log.debug(`🔤 Kelime sayısı: ${words.length}`);
+            log.debug(`🔤 Kelimeler:`, words);
             
             if (words.length < 4) {
                 // Çok kısa ayetler için tekrar dene
@@ -7657,33 +7652,33 @@
         };
 
         function checkBoslukAnswer(button, isCorrect) {
-            console.log(`🚨 === BOŞLUK DOLDUR CEVAP KONTROLÜ ===`);
-            console.log(`👆 Tıklanan buton: "${button.textContent}"`);
-            console.log(`✅/❌ isCorrect parametresi: ${isCorrect}`);
-            console.log(`📊 Mevcut soru: #${boslukQuestionCount + 1}/${BOSLUK_MAX_QUESTIONS}`);
-            console.log(`📊 Eksik kelime: "${missingWord}"`);
-            console.log(`📊 Önce - session: score=${sessionScore}, correct=${sessionCorrect}, wrong=${sessionWrong}`);
-            console.log(`📊 Önce - boşluk: score=${boslukScore}, correct=${boslukCorrect}, wrong=${boslukWrong}`);
+            log.debug(`🚨 === BOŞLUK DOLDUR CEVAP KONTROLÜ ===`);
+            log.debug(`👆 Tıklanan buton: "${button.textContent}"`);
+            log.debug(`✅/❌ isCorrect parametresi: ${isCorrect}`);
+            log.debug(`📊 Mevcut soru: #${boslukQuestionCount + 1}/${BOSLUK_MAX_QUESTIONS}`);
+            log.debug(`📊 Eksik kelime: "${missingWord}"`);
+            log.debug(`📊 Önce - session: score=${sessionScore}, correct=${sessionCorrect}, wrong=${sessionWrong}`);
+            log.debug(`📊 Önce - boşluk: score=${boslukScore}, correct=${boslukCorrect}, wrong=${boslukWrong}`);
             
             // KELİME İSTATİSTİKLERİ SADECE KELİME ÇEVİR OYUNUNDA KAYIT EDİLİYOR
             // Boşluk Doldur oyunu için istatistik kaydedilmiyor
             
             const allBtns = elements.boslukOptions.querySelectorAll('.option');
-            console.log(`🔒 ${allBtns.length} buton devre dışı bırakılıyor...`);
+            log.debug(`🔒 ${allBtns.length} buton devre dışı bırakılıyor...`);
             allBtns.forEach(btn => btn.disabled = true);
 
             if (isCorrect) {
-                console.log(`✅ === DOĞRU CEVAP İŞLEMİ ===`);
+                log.debug(`✅ === DOĞRU CEVAP İŞLEMİ ===`);
                 button.classList.add('correct');
                 elements.boslukFeedback.textContent = '✅ Mâşâallah!';
                 elements.boslukFeedback.className = 'feedback correct';
                 
-                console.log(`💰 Boşluk Doldur sabit puan: 10 puan ekleniyor`);
-                console.log(`📊 Boşluk score güncelleniyor: ${boslukScore} + 10 = ${boslukScore + 10}`);
+                log.debug(`💰 Boşluk Doldur sabit puan: 10 puan ekleniyor`);
+                log.debug(`📊 Boşluk score güncelleniyor: ${boslukScore} + 10 = ${boslukScore + 10}`);
                 boslukScore += 10; // Local oyun puanı
                 boslukCorrect++;
                 
-                console.log(`📊 addSessionPoints(10) çağrılıyor...`);
+                log.debug(`📊 addSessionPoints(10) çağrılıyor...`);
                 addSessionPoints(10); // Session puanına ekle
                 
                 // Daily task progress - her doğru cevap için
@@ -7692,49 +7687,49 @@
                 // Perfect streak kontrolü - hiç yanlış yapmamışsak perfect streak artır
                 if (sessionWrong === 0) {
                     updateTaskProgress('perfectStreak', 1);
-                    console.log(`🔥 Perfect streak artırıldı! Mevcut: ${dailyTasks.todayStats.perfectStreak}`);
+                    log.debug(`🔥 Perfect streak artırıldı! Mevcut: ${dailyTasks.todayStats.perfectStreak}`);
                 }
                 
-                console.log(`✅ Doğru cevap işlemi tamamlandı!`);
+                log.debug(`✅ Doğru cevap işlemi tamamlandı!`);
 
                 // Tam ayeti doğru kelimeyi altın sarısı ile vurgulayarak göster
                 showAnswerWithGoldenHighlight();
             } else {
-                console.log(`❌ === YANLIŞ CEVAP İŞLEMİ ===`);
+                log.debug(`❌ === YANLIŞ CEVAP İŞLEMİ ===`);
                 button.classList.add('wrong');
                 elements.boslukFeedback.textContent = `❌ Hatalı! Doğru kelime: ${missingWord}`;
                 elements.boslukFeedback.className = 'feedback wrong';
                 
-                console.log(`📊 Boşluk wrong güncelleniyor: ${boslukWrong} + 1 = ${boslukWrong + 1}`);
+                log.debug(`📊 Boşluk wrong güncelleniyor: ${boslukWrong} + 1 = ${boslukWrong + 1}`);
                 boslukWrong++;
                 
-                console.log(`📊 addSessionWrong() çağrılıyor...`);
+                log.debug(`📊 addSessionWrong() çağrılıyor...`);
                 addSessionWrong(); // Session yanlış sayısını artır
-                console.log(`❌ ÖNEMLI: Yanlış cevap için puan EKLENMEDİ!`);
+                log.debug(`❌ ÖNEMLI: Yanlış cevap için puan EKLENMEDİ!`);
 
-                console.log(`🔍 Doğru cevabı gösteriliyor...`);
+                log.debug(`🔍 Doğru cevabı gösteriliyor...`);
                 // Doğru cevabı göster
                 let correctButtonFound = false;
                 allBtns.forEach(btn => {
                     if (btn.textContent.includes(missingWord)) {
                         btn.classList.add('correct');
                         correctButtonFound = true;
-                        console.log(`✅ Doğru buton bulundu: "${btn.textContent}"`);
+                        log.debug(`✅ Doğru buton bulundu: "${btn.textContent}"`);
                     }
                 });
                 if (!correctButtonFound) {
-                    console.log(`⚠️ Doğru buton bulunamadı! Aranan: "${missingWord}"`);
+                    log.debug(`⚠️ Doğru buton bulunamadı! Aranan: "${missingWord}"`);
                 }
 
                 // Tam ayeti doğru kelimeyi altın sarısı ile vurgulayarak göster
                 showAnswerWithGoldenHighlight();
             }
 
-            console.log(`📊 Soru sayacı artırılıyor: ${boslukQuestionCount} + 1 = ${boslukQuestionCount + 1}`);
+            log.debug(`📊 Soru sayacı artırılıyor: ${boslukQuestionCount} + 1 = ${boslukQuestionCount + 1}`);
             boslukQuestionCount++; // Soru sayacını artır
-            console.log(`📊 FINAL - session: score=${sessionScore}, correct=${sessionCorrect}, wrong=${sessionWrong}`);
-            console.log(`📊 FINAL - boşluk: score=${boslukScore}, correct=${boslukCorrect}, wrong=${boslukWrong}, questionCount=${boslukQuestionCount}`);
-            console.log(`🚨 === BOŞLUK DOLDUR CEVAP KONTROLÜ BİTTİ ===`);
+            log.debug(`📊 FINAL - session: score=${sessionScore}, correct=${sessionCorrect}, wrong=${sessionWrong}`);
+            log.debug(`📊 FINAL - boşluk: score=${boslukScore}, correct=${boslukCorrect}, wrong=${boslukWrong}, questionCount=${boslukQuestionCount}`);
+            log.debug(`🚨 === BOŞLUK DOLDUR CEVAP KONTROLÜ BİTTİ ===`);
             updateBoslukUI();
             // Show the Bosluk 'Next' button
             elements.boslukNextBtn.style.display = 'block';
@@ -7745,12 +7740,12 @@
         };
 
         function updateBoslukUI() {
-            console.log(`🎨 BoslukUI güncelleniyor...`);
-            console.log(`📊 Gösterilecek değerler: score=${boslukScore}, correct=${boslukCorrect}, wrong=${boslukWrong}`);
+            log.debug(`🎨 BoslukUI güncelleniyor...`);
+            log.debug(`📊 Gösterilecek değerler: score=${boslukScore}, correct=${boslukCorrect}, wrong=${boslukWrong}`);
             elements.boslukScore.textContent = boslukScore;
             elements.boslukCorrect.textContent = boslukCorrect;
             elements.boslukWrong.textContent = boslukWrong;
-            console.log(`✅ BoslukUI güncellendi!`);
+            log.debug(`✅ BoslukUI güncellendi!`);
         }
 
         function showAnswerWithGoldenHighlight() {
@@ -7762,8 +7757,8 @@
             );
             elements.boslukAyetText.innerHTML = highlightedText;
             
-            console.log(`🌟 Doğru kelime "${missingWord}" altın sarısı ile vurgulandı!`);
-            console.log(`📄 Tam metin: ${highlightedText}`);
+            log.debug(`🌟 Doğru kelime "${missingWord}" altın sarısı ile vurgulandı!`);
+            log.debug(`📄 Tam metin: ${highlightedText}`);
             
             // Ekstra güvenlik için direct style da uygula
             setTimeout(() => {
@@ -7774,7 +7769,7 @@
                     span.style.textShadow = '0 0 5px rgba(255, 215, 0, 0.8)';
                     span.style.backgroundColor = 'rgba(255, 215, 0, 0.1)';
                 });
-                console.log(`✨ ${goldenSpans.length} altın span bulundu ve stil uygulandı!`);
+                log.debug(`✨ ${goldenSpans.length} altın span bulundu ve stil uygulandı!`);
             }, 100);
         }
 
@@ -7792,33 +7787,33 @@
         }
 
         elements.prevDuaBtn.onclick = () => {
-            console.log('⬅️ Önceki dua butonuna tıklandı');
+            log.debug('⬅️ Önceki dua butonuna tıklandı');
             if (currentDuaIndex > 0) {
-                console.log('📍 Önceki duaya geçiliyor:', currentDuaIndex, '->', currentDuaIndex - 1);
+                log.debug('📍 Önceki duaya geçiliyor:', currentDuaIndex, '->', currentDuaIndex - 1);
                 stopCurrentAudio(); // Mevcut ses varsa durdur
                 currentDuaIndex--;
                 showDua();
-                console.log('✅ Önceki dua gösterildi');
+                log.debug('✅ Önceki dua gösterildi');
                 // Navigasyon - görev sayılmaz
             }
         };
 
         elements.nextDuaBtn.onclick = () => {
-            console.log('➡️ Sonraki dua butonuna tıklandı');
+            log.debug('➡️ Sonraki dua butonuna tıklandı');
             if (currentDuaIndex < duaData.length - 1) {
-                console.log('📍 Sonraki duaya geçiliyor:', currentDuaIndex, '->', currentDuaIndex + 1);
+                log.debug('📍 Sonraki duaya geçiliyor:', currentDuaIndex, '->', currentDuaIndex + 1);
                 stopCurrentAudio(); // Mevcut ses varsa durdur
                 currentDuaIndex++;
                 showDua();
-                console.log('✅ Sonraki dua gösterildi');
+                log.debug('✅ Sonraki dua gösterildi');
                 // Navigasyon - görev sayılmaz
             }
         };
 
         elements.duaAudioBtn.onclick = () => {
-            console.log('🔊 Dua audio butonuna tıklandı');
+            log.debug('🔊 Dua audio butonuna tıklandı');
             const dua = duaData[currentDuaIndex];
-            console.log('📊 Mevcut dua bilgileri:', {
+            log.debug('📊 Mevcut dua bilgileri:', {
                 index: currentDuaIndex,
                 hasUrl: !!(dua && dua.ses_url),
                 url: dua?.ses_url,
@@ -7832,7 +7827,7 @@
                 
                 // Butonu devre dışı bırak
                 elements.duaAudioBtn.disabled = true;
-                console.log('🔒 Audio butonu devre dışı bırakıldı');
+                log.debug('🔒 Audio butonu devre dışı bırakıldı');
                 
                 try {
                     currentAudio = new Audio(dua.ses_url);
@@ -7844,8 +7839,8 @@
                     
                     // Direkt çalmayı dene
                     currentAudio.play().then(() => {
-                        console.log('🎵 Dua sesi başlatıldı - URL:', dua.ses_url);
-                        console.log('🎵 Audio object durumu:', {
+                        log.debug('🎵 Dua sesi başlatıldı - URL:', dua.ses_url);
+                        log.debug('🎵 Audio object durumu:', {
                             currentTime: currentAudio.currentTime,
                             duration: currentAudio.duration,
                             paused: currentAudio.paused,
@@ -7854,41 +7849,41 @@
                         });
                         elements.duaAudioBtn.disabled = false; // Butonu tekrar aktif et
                     }).catch(err => {
-                        console.error('❌ Ses çalma hatası:', err);
+                        log.error('❌ Ses çalma hatası:', err);
                         elements.duaAudioBtn.disabled = false;
                         currentAudio = null;
                     });
                     
                     // Ses yüklenme durumu
                     currentAudio.onloadstart = () => {
-                        console.log('📥 Ses yüklenmeye başladı');
+                        log.debug('📥 Ses yüklenmeye başladı');
                     };
-                    
+
                     currentAudio.oncanplay = () => {
-                        console.log('✅ Ses çalmaya hazır');
+                        log.debug('✅ Ses çalmaya hazır');
                     };
-                    
+
                     currentAudio.onplay = () => {
-                        console.log('▶️ Ses çalmaya başladı');
+                        log.debug('▶️ Ses çalmaya başladı');
                     };
-                    
+
                     currentAudio.onpause = () => {
-                        console.log('⏸️ Ses duraklatıldı');
+                        log.debug('⏸️ Ses duraklatıldı');
                     };
-                    
+
                     currentAudio.ontimeupdate = () => {
                         // Null check - eğer currentAudio silinmişse event'i durdur
                         if (!currentAudio) return;
                         
                         // Her 5 saniyede bir log (çok fazla log'u önlemek için)
                         if (currentAudio.currentTime > 0 && Math.floor(currentAudio.currentTime) % 5 === 0) {
-                            console.log('⏱️ Ses oynatma zamanı:', currentAudio.currentTime.toFixed(2) + 's / ' + (currentAudio.duration || 0).toFixed(2) + 's');
+                            log.debug('⏱️ Ses oynatma zamanı:', currentAudio.currentTime.toFixed(2) + 's / ' + (currentAudio.duration || 0).toFixed(2) + 's');
                         }
                     };
                     
                     // Ses bittiğinde
                     currentAudio.onended = () => {
-                        console.log('🏁 Ses bitti');
+                        log.debug('🏁 Ses bitti');
                         elements.duaAudioBtn.disabled = false;
                         updateTaskProgress('duaOgre', 1);
                         currentAudio = null;
@@ -7896,8 +7891,8 @@
                     
                     // Hata durumunda
                     currentAudio.onerror = (err) => {
-                        console.error('❌ Ses dosyası hatası:', err);
-                        console.error('❌ Hata detayları:', {
+                        log.error('❌ Ses dosyası hatası:', err);
+                        log.error('❌ Hata detayları:', {
                             code: currentAudio.error?.code,
                             message: currentAudio.error?.message
                         });
@@ -7906,7 +7901,7 @@
                     };
                     
                 } catch (err) {
-                    console.error('Audio oluşturma hatası:', err);
+                    log.error('Audio oluşturma hatası:', err);
                     elements.duaAudioBtn.disabled = false;
                     currentAudio = null;
                 }
@@ -7926,25 +7921,25 @@
         }
 
         elements.prevAyetBtn.onclick = () => {
-            console.log('⬅️ Önceki ayet butonuna tıklandı');
+            log.debug('⬅️ Önceki ayet butonuna tıklandı');
             stopCurrentAudio(); // Mevcut ses varsa durdur
             showAyet(); // Rastgele önceki ayet
-            console.log('✅ Önceki ayet gösterildi');
+            log.debug('✅ Önceki ayet gösterildi');
             // Navigasyon - görev sayılmaz
         };
 
         elements.nextAyetBtn.onclick = () => {
-            console.log('➡️ Sonraki ayet butonuna tıklandı');
+            log.debug('➡️ Sonraki ayet butonuna tıklandı');
             stopCurrentAudio(); // Mevcut ses varsa durdur
             showAyet(); // Rastgele sonraki ayet
-            console.log('✅ Sonraki ayet gösterildi');
+            log.debug('✅ Sonraki ayet gösterildi');
             // Navigasyon - görev sayılmaz
         };
 
         elements.ayetAudioBtn.onclick = () => {
-            console.log('🔊 Ayet audio butonuna tıklandı');
+            log.debug('🔊 Ayet audio butonuna tıklandı');
             const ayet = ayetOkuData[currentAyetIndex];
-            console.log('📊 Mevcut ayet bilgileri:', {
+            log.debug('📊 Mevcut ayet bilgileri:', {
                 index: currentAyetIndex,
                 hasUrl: !!(ayet && ayet.ayet_ses_dosyasi),
                 url: ayet?.ayet_ses_dosyasi,
@@ -7958,15 +7953,15 @@
                 
                 // Butonu devre dışı bırak
                 elements.ayetAudioBtn.disabled = true;
-                console.log('🔒 Audio butonu devre dışı bırakıldı');
+                log.debug('🔒 Audio butonu devre dışı bırakıldı');
                 
                 try {
                     currentAudio = new Audio(ayet.ayet_ses_dosyasi);
                     
                     // Direkt çalmayı dene
                     currentAudio.play().then(() => {
-                        console.log('🎵 Ayet sesi başlatıldı - URL:', ayet.ayet_ses_dosyasi);
-                        console.log('🎵 Audio object durumu:', {
+                        log.debug('🎵 Ayet sesi başlatıldı - URL:', ayet.ayet_ses_dosyasi);
+                        log.debug('🎵 Audio object durumu:', {
                             currentTime: currentAudio.currentTime,
                             duration: currentAudio.duration,
                             paused: currentAudio.paused,
@@ -7975,41 +7970,41 @@
                         });
                         elements.ayetAudioBtn.disabled = false; // Butonu tekrar aktif et
                     }).catch(err => {
-                        console.error('❌ Ses çalma hatası:', err);
+                        log.error('❌ Ses çalma hatası:', err);
                         elements.ayetAudioBtn.disabled = false;
                         currentAudio = null;
                     });
                     
                     // Ses yüklenme durumu
                     currentAudio.onloadstart = () => {
-                        console.log('📥 Ses yüklenmeye başladı');
+                        log.debug('📥 Ses yüklenmeye başladı');
                     };
-                    
+
                     currentAudio.oncanplay = () => {
-                        console.log('✅ Ses çalmaya hazır');
+                        log.debug('✅ Ses çalmaya hazır');
                     };
-                    
+
                     currentAudio.onplay = () => {
-                        console.log('▶️ Ses çalmaya başladı');
+                        log.debug('▶️ Ses çalmaya başladı');
                     };
-                    
+
                     currentAudio.onpause = () => {
-                        console.log('⏸️ Ses duraklatıldı');
+                        log.debug('⏸️ Ses duraklatıldı');
                     };
-                    
+
                     currentAudio.ontimeupdate = () => {
                         // Null check - eğer currentAudio silinmişse event'i durdur
                         if (!currentAudio) return;
                         
                         // Her 5 saniyede bir log (çok fazla log'u önlemek için)
                         if (currentAudio.currentTime > 0 && Math.floor(currentAudio.currentTime) % 5 === 0) {
-                            console.log('⏱️ Ses oynatma zamanı:', currentAudio.currentTime.toFixed(2) + 's / ' + (currentAudio.duration || 0).toFixed(2) + 's');
+                            log.debug('⏱️ Ses oynatma zamanı:', currentAudio.currentTime.toFixed(2) + 's / ' + (currentAudio.duration || 0).toFixed(2) + 's');
                         }
                     };
                     
                     // Ses bittiğinde
                     currentAudio.onended = () => {
-                        console.log('🏁 Ayet sesi bitti');
+                        log.debug('🏁 Ayet sesi bitti');
                         elements.ayetAudioBtn.disabled = false;
                         updateTaskProgress('ayetOku', 1); // Görev sayılsın
                         currentAudio = null;
@@ -8017,8 +8012,8 @@
                     
                     // Hata durumunda
                     currentAudio.onerror = (err) => {
-                        console.error('❌ Ses dosyası hatası:', err);
-                        console.error('❌ Hata detayları:', {
+                        log.error('❌ Ses dosyası hatası:', err);
+                        log.error('❌ Hata detayları:', {
                             code: currentAudio.error?.code,
                             message: currentAudio.error?.message
                         });
@@ -8027,7 +8022,7 @@
                     };
                     
                 } catch (err) {
-                    console.error('Audio oluşturma hatası:', err);
+                    log.error('Audio oluşturma hatası:', err);
                     elements.ayetAudioBtn.disabled = false;
                     currentAudio = null;
                 }
@@ -8068,61 +8063,61 @@
             try {
                 await loadData();
                 updateStatsBar(); // İstatistik barını initialize et
-                console.log('✅ Oyun veriler yüklendi ve hazır');
+                log.debug('✅ Oyun veriler yüklendi ve hazır');
             } catch (error) {
-                console.error('❌ Oyun yükleme hatası:', error);
+                log.error('❌ Oyun yükleme hatası:', error);
             }
         }, 100); // DOM hazır olduktan sonra async başlat
             // Global debug fonksiyonu - console'dan çağırılabilir
             window.debugStats = function() {
-                console.log('🔧 DEBUG - Mevcut Oyun İstatistikleri:');
-                console.log('Total Points:', typeof totalPoints !== 'undefined' ? totalPoints : 'Henüz yüklenmedi');
-                console.log('Star Points:', typeof starPoints !== 'undefined' ? starPoints : 'Henüz yüklenmedi');
-                console.log('Level:', typeof level !== 'undefined' ? level : 'Henüz yüklenmedi');
-                console.log('Session Score:', typeof sessionScore !== 'undefined' ? sessionScore : 'Henüz yüklenmedi');
+                log.debug('🔧 DEBUG - Mevcut Oyun İstatistikleri:');
+                log.debug('Total Points:', typeof totalPoints !== 'undefined' ? totalPoints : 'Henüz yüklenmedi');
+                log.debug('Star Points:', typeof starPoints !== 'undefined' ? starPoints : 'Henüz yüklenmedi');
+                log.debug('Level:', typeof level !== 'undefined' ? level : 'Henüz yüklenmedi');
+                log.debug('Session Score:', typeof sessionScore !== 'undefined' ? sessionScore : 'Henüz yüklenmedi');
             };
 
             // 🔍 SENKRONİZASYON TESTİ - Kapsamlı kontrol
             window.testSenkronizasyon = function() {
-                console.log('\n═══════════════════════════════════════');
-                console.log('🔍 BAŞARI & PUAN SİSTEMİ SENKRONİZASYON TESTİ');
-                console.log('═══════════════════════════════════════\n');
-                
+                log.debug('\n═══════════════════════════════════════');
+                log.debug('🔍 BAŞARI & PUAN SİSTEMİ SENKRONİZASYON TESTİ');
+                log.debug('═══════════════════════════════════════\n');
+
                 // 1. MEVCUT DURUM
-                console.log('📊 1. MEVCUT DURUM:');
-                console.log('   totalPoints:', totalPoints);
-                console.log('   sessionScore:', sessionScore);
-                console.log('   level:', level);
-                console.log('   starPoints:', starPoints);
-                console.log('   badges:', JSON.stringify(badges));
-                console.log('   comboCount:', comboCount);
-                
+                log.debug('📊 1. MEVCUT DURUM:');
+                log.debug('   totalPoints:', totalPoints);
+                log.debug('   sessionScore:', sessionScore);
+                log.debug('   level:', level);
+                log.debug('   starPoints:', starPoints);
+                log.debug('   badges:', JSON.stringify(badges));
+                log.debug('   comboCount:', comboCount);
+
                 // 2. ROZET HESAPLAMA KONTROLÜ
-                console.log('\n🏅 2. ROZET SİSTEMİ KONTROLÜ:');
+                log.debug('\n🏅 2. ROZET SİSTEMİ KONTROLÜ:');
                 const expectedBadges = {
                     bronze: Math.floor(totalPoints / 2000),
                     silver: Math.floor(totalPoints / 8500),
                     gold: Math.floor(totalPoints / 25500),
                     diamond: Math.floor(totalPoints / 85000)
                 };
-                console.log('   Beklenen:', JSON.stringify(expectedBadges));
-                console.log('   Mevcut:', JSON.stringify(badges));
-                
+                log.debug('   Beklenen:', JSON.stringify(expectedBadges));
+                log.debug('   Mevcut:', JSON.stringify(badges));
+
                 const badgeMatch = JSON.stringify(expectedBadges) === JSON.stringify(badges);
-                console.log('   Senkronizasyon:', badgeMatch ? '✅ UYUMLU' : '❌ UYUMSUZ');
-                
+                log.debug('   Senkronizasyon:', badgeMatch ? '✅ UYUMLU' : '❌ UYUMSUZ');
+
                 if (!badgeMatch) {
-                    console.log('   ⚠️ Rozet sayıları tutarsız! updateBadgeSystem() çağrılıyor...');
+                    log.debug('   ⚠️ Rozet sayıları tutarsız! updateBadgeSystem() çağrılıyor...');
                     updateBadgeSystem();
-                    console.log('   Düzeltilmiş:', JSON.stringify(badges));
+                    log.debug('   Düzeltilmiş:', JSON.stringify(badges));
                 }
-                
+
                 // 3. BAŞARIM KONTROLÜ
-                console.log('\n🏆 3. BAŞARIM SİSTEMİ KONTROLÜ:');
+                log.debug('\n🏆 3. BAŞARIM SİSTEMİ KONTROLÜ:');
                 const unlockedAch = JSON.parse(localStorage.getItem('unlockedAchievements')) || [];
-                console.log('   Açılan başarımlar:', unlockedAch.length, 'adet');
-                console.log('   Liste:', unlockedAch.join(', '));
-                
+                log.debug('   Açılan başarımlar:', unlockedAch.length, 'adet');
+                log.debug('   Liste:', unlockedAch.join(', '));
+
                 // XP tabanlı başarımları kontrol et
                 const xpAchievements = [
                     { id: 'xp_500', threshold: 500, name: 'İlk Adım' },
@@ -8135,95 +8130,95 @@
                     { id: 'xp_85000', threshold: 85000, name: 'Elmas Master' },
                     { id: 'xp_170000', threshold: 170000, name: 'Efsane' }
                 ];
-                
+
                 let expectedAchievements = [];
                 xpAchievements.forEach(ach => {
                     if (totalPoints >= ach.threshold) {
                         expectedAchievements.push(ach.id);
                         const hasAch = unlockedAch.includes(ach.id);
-                        console.log(`   ${hasAch ? '✅' : '❌'} ${ach.name} (${ach.threshold} XP): ${hasAch ? 'Açık' : 'KAPALI!'}`);
+                        log.debug(`   ${hasAch ? '✅' : '❌'} ${ach.name} (${ach.threshold} XP): ${hasAch ? 'Açık' : 'KAPALI!'}`);
                     }
                 });
-                
+
                 const missingAchievements = expectedAchievements.filter(id => !unlockedAch.includes(id));
                 if (missingAchievements.length > 0) {
-                    console.log('   ⚠️ Eksik başarımlar:', missingAchievements.join(', '));
-                    console.log('   💡 checkAchievements() çağrılıyor...');
+                    log.debug('   ⚠️ Eksik başarımlar:', missingAchievements.join(', '));
+                    log.debug('   💡 checkAchievements() çağrılıyor...');
                     checkAchievements();
                 }
-                
+
                 // 4. VERİ KALICILIĞI KONTROLÜ
-                console.log('\n💾 4. VERİ KALICILIĞI KONTROLÜ:');
+                log.debug('\n💾 4. VERİ KALICILIĞI KONTROLÜ:');
                 const lsPoints = localStorage.getItem('hasene_totalPoints');
                 const lsBadges = localStorage.getItem('hasene_badges');
-                console.log('   localStorage totalPoints:', lsPoints);
-                console.log('   localStorage badges:', lsBadges);
-                console.log('   Memory totalPoints:', totalPoints);
-                console.log('   Memory badges:', JSON.stringify(badges));
-                
+                log.debug('   localStorage totalPoints:', lsPoints);
+                log.debug('   localStorage badges:', lsBadges);
+                log.debug('   Memory totalPoints:', totalPoints);
+                log.debug('   Memory badges:', JSON.stringify(badges));
+
                 const lsMatch = parseInt(lsPoints) === totalPoints;
-                console.log('   Points senkronizasyon:', lsMatch ? '✅ UYUMLU' : '❌ UYUMSUZ');
-                
+                log.debug('   Points senkronizasyon:', lsMatch ? '✅ UYUMLU' : '❌ UYUMSUZ');
+
                 if (!lsMatch) {
-                    console.log('   ⚠️ localStorage güncel değil! saveStats() çağrılıyor...');
+                    log.debug('   ⚠️ localStorage güncel değil! saveStats() çağrılıyor...');
                     saveStats();
                 }
-                
+
                 // 5. GÜNLÜK GÖREV KONTROLÜ
-                console.log('\n📅 5. GÜNLÜK GÖREV KONTROLÜ:');
-                console.log('   Bugünkü toplam puan:', dailyTasks.todayStats.toplamPuan);
-                console.log('   Günlük hedef:', dailyTasks.hedefler.toplamPuan);
+                log.debug('\n📅 5. GÜNLÜK GÖREV KONTROLÜ:');
+                log.debug('   Bugünkü toplam puan:', dailyTasks.todayStats.toplamPuan);
+                log.debug('   Günlük hedef:', dailyTasks.hedefler.toplamPuan);
                 const dailyHasene = parseInt(localStorage.getItem('dailyHasene')) || 0;
                 const goalHasene = parseInt(localStorage.getItem('dailyGoalHasene')) || 2700;
-                console.log('   Daily Hasene:', dailyHasene, '/', goalHasene);
-                console.log('   Günlük hedef tamamlandı mı?', dailyHasene >= goalHasene ? '✅ EVET' : '❌ HAYIR');
-                
+                log.debug('   Daily Hasene:', dailyHasene, '/', goalHasene);
+                log.debug('   Günlük hedef tamamlandı mı?', dailyHasene >= goalHasene ? '✅ EVET' : '❌ HAYIR');
+
                 // 6. SEVIYE HESAPLAMA KONTROLÜ
-                console.log('\n⬆️ 6. SEVİYE SİSTEMİ KONTROLÜ:');
+                log.debug('\n⬆️ 6. SEVİYE SİSTEMİ KONTROLÜ:');
                 const calculatedLevel = calculateLevel(totalPoints);
-                console.log('   Hesaplanan seviye:', calculatedLevel);
-                console.log('   Mevcut seviye:', level);
-                console.log('   Seviye senkronizasyon:', calculatedLevel === level ? '✅ UYUMLU' : '❌ UYUMSUZ');
-                
+                log.debug('   Hesaplanan seviye:', calculatedLevel);
+                log.debug('   Mevcut seviye:', level);
+                log.debug('   Seviye senkronizasyon:', calculatedLevel === level ? '✅ UYUMLU' : '❌ UYUMSUZ');
+
                 if (calculatedLevel !== level) {
-                    console.log('   ⚠️ Seviye tutarsız! Düzeltiliyor...');
+                    log.debug('   ⚠️ Seviye tutarsız! Düzeltiliyor...');
                     level = calculatedLevel;
                     updateStatsBar();
                 }
-                
+
                 // 7. ÖZET RAPOR
-                console.log('\n═══════════════════════════════════════');
-                console.log('📊 ÖZET RAPOR:');
-                console.log('═══════════════════════════════════════');
+                log.debug('\n═══════════════════════════════════════');
+                log.debug('📊 ÖZET RAPOR:');
+                log.debug('═══════════════════════════════════════');
                 const allOK = badgeMatch && lsMatch && (calculatedLevel === level);
-                console.log('Genel Durum:', allOK ? '✅ TÜM SİSTEMLER SENKRONİZE' : '⚠️ BAZI SORUNLAR VAR');
-                console.log('Rozet Sistemi:', badgeMatch ? '✅' : '❌');
-                console.log('Veri Kalıcılığı:', lsMatch ? '✅' : '❌');
-                console.log('Seviye Sistemi:', (calculatedLevel === level) ? '✅' : '❌');
-                console.log('═══════════════════════════════════════\n');
-                
+                log.debug('Genel Durum:', allOK ? '✅ TÜM SİSTEMLER SENKRONİZE' : '⚠️ BAZI SORUNLAR VAR');
+                log.debug('Rozet Sistemi:', badgeMatch ? '✅' : '❌');
+                log.debug('Veri Kalıcılığı:', lsMatch ? '✅' : '❌');
+                log.debug('Seviye Sistemi:', (calculatedLevel === level) ? '✅' : '❌');
+                log.debug('═══════════════════════════════════════\n');
+
                 return allOK;
             };
             
             // Test puan ekleme fonksiyonu
             window.testAddPoints = function(points) {
-                console.log(`\n🎯 TEST: ${points} puan ekleniyor...`);
-                console.log('Önceki totalPoints:', totalPoints);
+                log.stats(`\n🎯 TEST: ${points} puan ekleniyor...`);
+                log.stats('Önceki totalPoints:', totalPoints);
                 addSessionPoints(points);
-                console.log('Sonraki totalPoints:', totalPoints);
-                console.log('✅ Puan eklendi. testSenkronizasyon() çalıştırılıyor...\n');
+                log.stats('Sonraki totalPoints:', totalPoints);
+                log.stats('✅ Puan eklendi. testSenkronizasyon() çalıştırılıyor...\n');
                 setTimeout(() => testSenkronizasyon(), 500);
             };
             
             // Hızlı test senaryoları
             window.testSenaryo1 = function() {
-                console.log('\n🧪 SENARYO 1: Yeni kullanıcı (0 → 2500 XP)');
+                log.stats('\n🧪 SENARYO 1: Yeni kullanıcı (0 → 2500 XP)');
                 resetPoints();
                 testAddPoints(2500);
             };
             
             window.testSenaryo2 = function() {
-                console.log('\n🧪 SENARYO 2: Combo bonusu (3x doğru cevap)');
+                log.stats('\n🧪 SENARYO 2: Combo bonusu (3x doğru cevap)');
                 resetPoints();
                 addSessionPoints(10);
                 addSessionPoints(10);
@@ -8232,7 +8227,7 @@
             };
             
             window.testSenaryo3 = function() {
-                console.log('\n🧪 SENARYO 3: Rozet seviye atlama (25000 → 26000 XP)');
+                log.stats('\n🧪 SENARYO 3: Rozet seviye atlama (25000 → 26000 XP)');
                 totalPoints = 25000;
                 updateBadgeSystem();
                 saveStats();
@@ -8240,20 +8235,20 @@
             };
             
             window.testSenaryo4 = function() {
-                console.log('\n🧪 SENARYO 4: Sayfa yenileme simülasyonu');
-                console.log('1. Mevcut durum kaydediliyor...');
+                log.stats('\n🧪 SENARYO 4: Sayfa yenileme simülasyonu');
+                log.stats('1. Mevcut durum kaydediliyor...');
                 saveStats();
-                console.log('2. Veri değişkenleri sıfırlanıyor (sayfa yenileme sim.)...');
+                log.stats('2. Veri değişkenleri sıfırlanıyor (sayfa yenileme sim.)...');
                 const savedPoints = totalPoints;
                 totalPoints = 0;
                 level = 1;
                 badges = { bronze: 0, silver: 0, gold: 0, diamond: 0 };
-                console.log('3. Veriler yeniden yükleniyor...');
+                log.stats('3. Veriler yeniden yükleniyor...');
                 loadStats().then(() => {
-                    console.log('4. Senkronizasyon kontrol ediliyor...');
+                    log.stats('4. Senkronizasyon kontrol ediliyor...');
                     setTimeout(() => {
-                        console.log('Kaydedilen XP:', savedPoints);
-                        console.log('Yüklenen XP:', totalPoints);
+                        log.stats('Kaydedilen XP:', savedPoints);
+                        log.stats('Yüklenen XP:', totalPoints);
                         testSenkronizasyon();
                     }, 500);
                 });
@@ -8261,9 +8256,9 @@
 
             // Seviye geçiş test fonksiyonu - console'dan çağırılabilir
             window.testLevelUp = function(targetPoints) {
-                console.log('🎯 Seviye geçiş testi başlatılıyor...');
-                console.log('Mevcut puan:', totalPoints);
-                console.log('Hedef puan:', targetPoints);
+                log.stats('🎯 Seviye geçiş testi başlatılıyor...');
+                log.stats('Mevcut puan:', totalPoints);
+                log.stats('Hedef puan:', targetPoints);
                 
                 // Hedef puana sıçrama
                 const oldLevel = calculateLevel(totalPoints);
@@ -8275,16 +8270,16 @@
                 
                 const newLevel = calculateLevel(totalPoints);
                 
-                console.log('Eski seviye:', oldLevel);
-                console.log('Yeni seviye:', newLevel);
+                log.debug('Eski seviye:', oldLevel);
+                log.debug('Yeni seviye:', newLevel);
                 
                 // Seviye atlama kontrolü
                 if (newLevel > oldLevel) {
                     level = newLevel;
-                    console.log('✅ Seviye atlandı! Modal gösteriliyor...');
+                    log.game('✅ Seviye atlandı! Modal gösteriliyor...');
                     showLevelUpModal(newLevel);
                 } else {
-                    console.log('❌ Seviye atlanmadı.');
+                    log.stats('❌ Seviye atlanmadı.');
                 }
                 
                 updateStatsBar();
@@ -8301,7 +8296,7 @@
                 level = 1; 
                 updateStatsBar(); 
                 saveStats(); 
-                console.log('🔄 Puanlar sıfırlandı'); 
+                log.stats('🔄 Puanlar sıfırlandı'); 
             };
             window.resetAllStats = resetAllStats;
 
@@ -8312,14 +8307,14 @@
             // SON ADIM: Kaydedilmiş verileri yükle
             try {
                 // VERI SİSTEMİ BAŞLATMA (üçüncü taraf çerez sorunu için)
-                console.log('🚀 Veri sistemi başlatılıyor...');
+                log.debug('🚀 Veri sistemi başlatılıyor...');
                 
                 // IndexedDB başlat (çerez engellemelerinden etkilenmez)
                 initIndexedDB().then(async () => {
-                    console.log('✅ IndexedDB hazır!');
+                    log.debug('✅ IndexedDB hazır!');
                     await loadStats(); // Verileri yükle (IndexedDB öncelikli) - AWAIT EKLENDİ!
                     updateStatsBar();
-                    console.log('💾 Veriler yüklendi:', totalPoints, 'puan');
+                    log.debug('💾 Veriler yüklendi:', totalPoints, 'puan');
                 }).catch(async (error) => {
                     console.error('❌ IndexedDB hatası, localStorage kullanılıyor:', error);
                     await loadStats(); // Fallback olarak localStorage - AWAIT EKLENDİ!
@@ -8358,12 +8353,12 @@
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
                     .then(registration => {
-                        console.log('🎮 SW registered: ', registration);
+                    log.debug('🎮 SW registered: ', registration);
                         
                         // PWA yükleme prompt'u
                         let deferredPrompt;
                         window.addEventListener('beforeinstallprompt', (e) => {
-                            console.log('💾 PWA install prompt available');
+                            log.debug('💾 PWA install prompt available');
                             e.preventDefault();
                             deferredPrompt = e;
                             
@@ -8373,19 +8368,19 @@
 
                         // PWA yüklendiğinde
                         window.addEventListener('appinstalled', (evt) => {
-                            console.log('📱 PWA was installed');
+                            log.game('📱 PWA was installed');
                             alert('🎉 Hasene Arapça Oyunu başarıyla yüklendi!\n\nArtık telefon masaüstünden açabilirsiniz! 🚀');
                         });
                     })
                     .catch(registrationError => {
-                        console.log('❌ SW registration failed: ', registrationError);
+                        log.error('❌ SW registration failed: ', registrationError);
                     });
             });
 
             // PWA Install Prompt fonksiyonu
             function showPWAInstallPrompt(deferredPrompt) {
                 // PWA kurulum hatırlatıcısını konsolda göster, otomatik prompt yok
-                console.log('💾 PWA kurulumu hazır! Kullanıcı eylemiyle tetiklenebilir.');
+                log.debug('💾 PWA kurulumu hazır! Kullanıcı eylemiyle tetiklenebilir.');
                 
                 // Kullanıcı etkileşimi gerektiğinde çağrılacak fonksiyon
                 window.triggerPWAInstall = () => {
@@ -8393,9 +8388,9 @@
                         deferredPrompt.prompt();
                         deferredPrompt.userChoice.then((choiceResult) => {
                             if (choiceResult.outcome === 'accepted') {
-                                console.log('✅ User accepted the install prompt');
+                                log.debug('✅ User accepted the install prompt');
                             } else {
-                                console.log('❌ User dismissed the install prompt');
+                                log.debug('❌ User dismissed the install prompt');
                             }
                             deferredPrompt = null;
                         });
@@ -8557,7 +8552,7 @@
                     navigator.vibrate(patterns[type] || patterns.medium);
                 }
             } catch (error) {
-                console.log('Haptic feedback not supported');
+                log.debug('Haptic feedback not supported');
             }
         }
 
@@ -8566,10 +8561,10 @@
         // click the first option and confirm the Next button becomes visible.
         // Call from console with: __testKelimeFlow()
         window.__testKelimeFlow = async function() {
-            try {
-                console.log('🧪 Running quick Kelime smoke test...');
+                try {
+                    log.stats('🧪 Running quick Kelime smoke test...');
                 if (!elements || !elements.kelimeCevirBtn) {
-                    console.warn('⚠️ kelimeCevirBtn or elements not found');
+                    log.debug('⚠️ kelimeCevirBtn or elements not found');
                     return false;
                 }
                 // Ensure mode selector shown and start the game
@@ -8587,10 +8582,10 @@
                 opts[0].click();
                 await new Promise(r => setTimeout(r, 200));
                 const visible = elements.nextBtn && window.getComputedStyle(elements.nextBtn).display !== 'none';
-                console.log('🧪 Next button visible after answer?', visible);
+                log.stats('🧪 Next button visible after answer?', visible);
                 return visible;
             } catch (err) {
-                console.error('🧪 Smoke test failed:', err);
+                log.error('🧪 Smoke test failed:', err);
                 return false;
             }
         };
