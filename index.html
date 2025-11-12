@@ -357,6 +357,34 @@
             }
         }
 
+        /* Root variables for option sizing (canonical Kelime sizes; Dinle/Bosluk will inherit) */
+        :root {
+            --option-min-height: 56px;
+            --option-padding-vertical: 12px;
+            --option-padding-horizontal: 16px;
+            --option-font-size: 1rem;
+            --option-gap: 12px;
+        }
+
+        /* Normalize option/button sizing across game modes */
+        .game-box .options .option,
+        .game-box .options .flutter-option-btn,
+        .option {
+            min-height: var(--option-min-height);
+            padding: var(--option-padding-vertical) var(--option-padding-horizontal);
+            font-size: var(--option-font-size);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Slightly smaller font for Arabic options to avoid wrapping on narrow screens */
+        .option.arabic-option {
+            font-size: calc(var(--option-font-size) * 0.95);
+        }
+
         /* ============ KONTEYNER ============ */
         .container {
             max-width: 600px;
@@ -8526,6 +8554,40 @@
                 console.log('Haptic feedback not supported');
             }
         }
+
+        // ============ SMOKE TESTS / QUICK CHECKS ============
+        // Non-destructive helper to validate Kelime flow: load a question,
+        // click the first option and confirm the Next button becomes visible.
+        // Call from console with: __testKelimeFlow()
+        window.__testKelimeFlow = async function() {
+            try {
+                console.log('🧪 Running quick Kelime smoke test...');
+                if (!elements || !elements.kelimeCevirBtn) {
+                    console.warn('⚠️ kelimeCevirBtn or elements not found');
+                    return false;
+                }
+                // Ensure mode selector shown and start the game
+                elements.kelimeCevirBtn.click();
+                await new Promise(r => setTimeout(r, 150));
+                if (elements.startBtn) elements.startBtn.click();
+                await new Promise(r => setTimeout(r, 300));
+
+                const opts = document.querySelectorAll('#options .option');
+                if (!opts || opts.length === 0) {
+                    console.warn('⚠️ No options rendered yet; ensure kelime data is loaded');
+                    return false;
+                }
+                // Click first option
+                opts[0].click();
+                await new Promise(r => setTimeout(r, 200));
+                const visible = elements.nextBtn && window.getComputedStyle(elements.nextBtn).display !== 'none';
+                console.log('🧪 Next button visible after answer?', visible);
+                return visible;
+            } catch (err) {
+                console.error('🧪 Smoke test failed:', err);
+                return false;
+            }
+        };
 
         // Swipe gestures removed per user request. All swipe-related JS deleted.
 
