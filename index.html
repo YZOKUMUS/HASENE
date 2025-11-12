@@ -3491,8 +3491,8 @@
             try {
                 const jsonStr = JSON.stringify(data);
                 return btoa(unescape(encodeURIComponent(jsonStr)));
-            } catch(e) {
-                console.error('Encryption error:', e);
+                } catch(e) {
+                log.error('Encryption error:', e);
                 return data;
             }
         }
@@ -3503,7 +3503,7 @@
                 const jsonStr = decodeURIComponent(escape(atob(encrypted)));
                 return JSON.parse(jsonStr);
             } catch(e) {
-                console.error('Decryption error:', e);
+                log.error('Decryption error:', e);
                 // Eğer decrypt edilemezse, belki encrypt edilmemiş eski veri
                 try {
                     return JSON.parse(encrypted);
@@ -4058,7 +4058,7 @@
                 const saved = localStorage.getItem('hasene_wordStats');
                 return saved ? JSON.parse(saved) : {};
             } catch (error) {
-                console.error('📊 Kelime istatistikleri yüklenirken hata:', error);
+                log.error('📊 Kelime istatistikleri yüklenirken hata:', error);
                 return {};
             }
         }
@@ -4068,7 +4068,7 @@
                 localStorage.setItem('hasene_wordStats', JSON.stringify(wordStats));
                 // (commented) Kelime istatistikleri kaydedildi
             } catch (error) {
-                console.error('📊 Kelime istatistikleri kaydedilirken hata:', error);
+                log.error('📊 Kelime istatistikleri kaydedilirken hata:', error);
             }
         }
 
@@ -5114,7 +5114,7 @@
                 log.debug('💾 ÜÇLÜ KORUMA: IndexedDB + localStorage + URL ile kaydedildi!', totalPoints);
                 
             } catch (error) {
-                console.error('❌ Kaydetme hatası:', error);
+                log.error('❌ Kaydetme hatası:', error);
             }
         }
 
@@ -7551,7 +7551,7 @@
             log.debug(`✅ Geçerli ayet sayısı: ${validAyets.length}`);
             
             if (validAyets.length === 0) {
-                console.error('❌ Geçerli ayet bulunamadı!');
+                log.error('❌ Geçerli ayet bulunamadı!');
                 return;
             }
             
@@ -8316,13 +8316,13 @@
                     updateStatsBar();
                     log.debug('💾 Veriler yüklendi:', totalPoints, 'puan');
                 }).catch(async (error) => {
-                    console.error('❌ IndexedDB hatası, localStorage kullanılıyor:', error);
+                    log.error('❌ IndexedDB hatası, localStorage kullanılıyor:', error);
                     await loadStats(); // Fallback olarak localStorage - AWAIT EKLENDİ!
                     updateStatsBar();
                 });
             } catch (error) {
                 showCustomAlert(`Veri yükleme hatası: ${error.message}`, 'error');
-                console.error('❌ Veri yükleme hatası:', error);
+                log.error('❌ Veri yükleme hatası:', error);
             }
             
             // ============ MODAL BUTONLARINA EVENT LISTENER EKLE ============
