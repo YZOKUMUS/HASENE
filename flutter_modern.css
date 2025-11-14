@@ -456,6 +456,7 @@ html, body {
     }
 
     /* Main menu mobilde daha kompakt */
+    .main-menu {
         min-height: auto !important;
         height: 100vh !important;
         padding-bottom: 20px !important;
