@@ -1,3 +1,34 @@
+body, #mainContainer {
+    padding-top: 60px;
+}
+/* Üst navigasyon bar için stil */
+.flutter-top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    z-index: 1000;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 60px;
+}
+
+.flutter-top-nav .flutter-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #444;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 0 10px;
+}
+
+.flutter-top-nav .flutter-nav-item.active {
+    color: #1976d2;
+}
 /* 🎨 FLUTTER MATERIAL DESIGN - MODERN DUOLINGO STİLİ */
 
 /* ============ THEME ============ */
@@ -53,7 +84,7 @@ html, body {
 }
 
 /* ============ BOTTOM NAV (SABİT) ============ */
-.flutter-bottom-nav {
+.flutter-top-nav {
     position: fixed;
     bottom: 0;
     left: 0;
