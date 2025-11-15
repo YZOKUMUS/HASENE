@@ -1,3 +1,116 @@
+.arabic-text, .arabic-large {
+    font-family: 'KFGQPC Uthmanic Script HAFS Regular', 'Uthmani', 'Amiri', 'Scheherazade', 'Noto Naskh Arabic', serif;
+    font-size: 2.2rem;
+    line-height: 2.0;
+    direction: rtl;
+    text-align: center;
+    letter-spacing: 0;
+    word-break: keep-all;
+}
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.option,
+.flutter-option-btn {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10pt;
+    padding: 0 8px;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+.flutter-app, .game-box, .options {
+    scroll-behavior: auto !important;
+    overscroll-behavior: contain !important;
+}
+.game-box .sure-info {
+    font-size: 8pt !important;
+.game-box .options {
+    min-height: 0;
+    margin-bottom: 8px;
+    padding: 0;
+    gap: 8px;
+}
+.game-box .arabic-text.arabic-large {
+    min-height: 0;
+    line-height: 2.0;
+    margin-bottom: 6px;
+    padding: 0;
+}
+.game-box .game-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 8px 0 !important;
+    min-height: 0;
+    height: auto;
+    padding: 0;
+}
+
+.game-box .game-actions .flutter-fab img {
+    width: 28px;
+    height: 28px;
+}
+.game-box .sure-info {
+    margin-bottom: 8px;
+    font-size: 15px;
+    min-height: 0;
+    line-height: 1.2;
+    padding: 0;
+}
+/* Oyun kutusu alanını daraltmak ve iç boşlukları azaltmak için */
+.game-box {
+    max-width: 350px;
+    margin: 32px auto 0 auto;
+    padding: 16px 12px;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    min-height: 340px;
+}
+
+.game-box .arabic-text {
+    margin-bottom: 10px;
+}
+
+.game-box .sure-info {
+    margin-bottom: 12px;
+    font-size: 15px;
+}
+
+.game-box > div[style*="display: flex"] {
+    gap: 10px !important;
+    margin: 12px 0 !important;
+}
+
+.game-box .options {
+    margin-bottom: 10px;
+    gap: 8px;
+}
+
+.game-box .option {
+    min-width: 90px;
+    padding: 8px 10px;
+    font-size: 15px;
+}
+
+.game-box .feedback {
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+.game-box #nextBtn {
+    margin-top: 10px !important;
+    height: 38px;
+    font-size: 15px;
+}
 body, #mainContainer {
     padding-top: 60px;
 }
@@ -184,16 +297,16 @@ html, body {
 }
 
 /* ============ OPTIONS ============ */
-.option,
-.flutter-option-btn {
     width: 100%;
-    padding: 16px;
-    margin: 6px 0;
+    padding: 12px 0;
+    margin: 0;
     border-radius: 14px;
     border: 2px solid #e0e0e0;
     background: #fff;
     cursor: pointer;
     transition: 0.25s;
+    box-sizing: border-box;
+    font-size: 10pt !important;
 }
 
 .option:hover,

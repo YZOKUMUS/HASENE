@@ -359,11 +359,11 @@
 
         /* Root variables for option sizing (canonical Kelime sizes; Dinle/Bosluk will inherit) */
         :root {
-            --option-min-height: 56px;
-            --option-padding-vertical: 12px;
-            --option-padding-horizontal: 16px;
-            --option-font-size: 1rem;
-            --option-gap: 12px;
+            --option-min-height: 16px;
+            --option-padding-vertical: 2px;
+            --option-padding-horizontal: 6px;
+            --option-font-size: 0px;
+            --option-gap: 0px;
         }
 
         /* Normalize option/button sizing across game modes */
@@ -1588,32 +1588,9 @@
             opacity: 0.7;
         }
 
-        /* ============ ARAPÇA HAREKE RENKLERİ ============ */
-        /* Arapça hareke karakterleri için kırmızı renk */
-        .arabic-text,
-        .option.arabic-option,
-        .arabic-text span,
-        [style*="direction: rtl"] {
-            background: linear-gradient(
-                to right,
-                transparent 0%,
-                transparent 100%
-            );
-            background-size: 100% 100%;
-        }
+        
 
-        /* Unicode hareke karakterleri için kırmızı renk */
-        .arabic-text::after,
-        .option.arabic-option::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
+       
         /* Arapça metinlerdeki hareke karakterleri */
         .arabic-text,
         .option.arabic-option,
@@ -1641,16 +1618,7 @@
         }
 
         /* Hareke karakterleri için özel stil - Unicode aralığı */
-        .arabic-text:has-text([\u064B-\u065F]),
-        .option.arabic-option:has-text([\u064B-\u065F]) {
-            background-image: linear-gradient(
-                to right,
-                #2c3e50 0%,
-                #e74c3c 0%
-            );
-            -webkit-background-clip: text;
-            background-clip: text;
-        }
+
 
         /* Boşluk doldur oyununda doğru kelimenin altın sarısı vurgusu - Çok yüksek öncelik */
         .golden-highlight,
@@ -1667,10 +1635,7 @@
             font-family: 'KFGQPC Uthmanic Script HAFS Regular', 'Amiri', 'Scheherazade New', 'Traditional Arabic', serif !important;
         }
 
-        /* JavaScript ile hareke renklerini işleyeceğiz */
-        .hareke-red {
-            color: #e74c3c !important;
-        }
+        
 
         /* ============ GERİ BİLDİRİM ============ */
         /* FEEDBACK - MODERN GLASS MORPHISM */
@@ -2857,23 +2822,28 @@
         </div>
 
         <!-- Oyun Alanı -->
-        <div class="game-box">
-            <div class="arabic-text arabic-large" id="arabicWord">رَكَّبَكَ</div>
-            <div class="sure-info" id="sureInfo">ID: 0</div>
-            
-            <div style="display: flex; justify-content: center; gap: 16px; margin: 20px 0;">
-                <button class="flutter-fab" id="audioBtn" style="background: transparent; box-shadow: none; border: none;">
-                    <img src="hoparlor.png" alt="Ses" style="width: 50px; height: 50px;">
-                </button>
-                <button class="flutter-fab" id="hintBtn" style="display: none; background: transparent; box-shadow: none; border: none;">
-                    <img src="clue.png" alt="İpucu" style="width: 50px; height: 50px;">
-                </button>
-            </div>
-            
-            <div class="options" id="options"></div>
-            <div class="feedback" id="feedback"></div>
-            <button class="flutter-btn flutter-btn-primary" id="nextBtn" style="width: 100%; margin-top: 16px;">Sonraki Soru →</button>
-        </div>
+        <div class="game-box" style="max-width: 350px; margin: 32px auto; padding: 16px 12px; border-radius: 18px; background: #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.07);">
+    <div class="arabic-text arabic-large" id="arabicWord" style="color: #2c2c2c; margin-bottom: 8px; font-size: 2rem; text-align: center;">
+        فَكُبْكِبُوا۟
+    </div>
+    <div class="sure-info" id="sureInfo" style="font-size: 8pt; margin-bottom: 6px; text-align: center;">ID: 26:94:1 | Zorluk: 13 | Aralık: 12-21</div>
+    <div class="game-actions" style="display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 8px; margin-bottom: 8px;">
+        <button class="flutter-fab" id="audioBtn" style="background: transparent; box-shadow: none; border: none;">
+            <img src="hoparlor.png" alt="Ses" style="width: 24px; height: 24px;">
+        </button>
+        <button class="flutter-fab" id="hintBtn" style="background: transparent; box-shadow: none; border: none;">
+            <img src="clue.png" alt="İpucu" style="width: 24px; height: 24px;">
+        </button>
+    </div>
+    <div class="options" id="options" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 8px;">
+        <button class="option flutter-option-btn" style="font-size: 10pt; padding: 10px 0;">tepe taklak atılırlar</button>
+        <button class="option flutter-option-btn" style="font-size: 10pt; padding: 10px 0;">öğüdüm</button>
+        <button class="option flutter-option-btn" style="font-size: 10pt; padding: 10px 0;">onların çevresinden</button>
+        <button class="option flutter-option-btn" style="font-size: 10pt; padding: 10px 0;">açığa vurduğumuz</button>
+    </div>
+    <div class="feedback" id="feedback" style="font-size: 10pt; margin-bottom: 8px; text-align: center;"></div>
+    <button class="flutter-btn flutter-btn-primary" id="nextBtn" style="width: 100%; margin-top: 10px; display: none; height: 36px; font-size: 10pt;">Sonraki Soru →</button>
+</div>
         </div>  <!-- gameScreen sonu -->
     </div>
 
@@ -4354,17 +4324,7 @@
             }
         }
 
-        // ============ ARAPÇA HAREKE RENKLENDİRME ============
-        function colorizeArabicDiacritics(text) {
-            if (!text) return text;
-            
-            // Arapça hareke karakterleri (Unicode: U+064B - U+065F)
-            const diacritics = /[\u064B-\u065F]/g;
-            
-            return text.replace(diacritics, function(match) {
-                return `<span style="color: #e74c3c; font-weight: 600;">${match}</span>`;
-            });
-        }
+        
 
         function applyDiacriticColoring(element) {
             if (!element) return;
