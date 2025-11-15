@@ -1,127 +1,154 @@
-const CACHE_NAME = 'hasene-arabic-v1.0';
-const urlsToCache = [
-  '/HASENE/',
-  '/HASENE/index.html',
-  '/HASENE/manifest.json',
-  '/HASENE/icon-192-v4-RED-MUSHAF.png',
-  '/HASENE/icon-512-v4-RED-MUSHAF.png',
-  '/HASENE/KFGQPC Uthmanic Script HAFS Regular.otf',
-  '/HASENE/kelimebul.json',
-  '/HASENE/ayetoku_formatted.json',
-  '/HASENE/duaet.json',
-  '/HASENE/hadisoku.json'
+// ===============================
+// 🚀 HASENE ARABIC GAME – PRO SW
+// ===============================
+
+const CACHE_VERSION = "v3.0";
+const CACHE_NAME = `hasene-cache-${CACHE_VERSION}`;
+
+// Uygulama kabuğu (shell)
+const APP_SHELL = [
+  "/HASENE/",
+  "/HASENE/index.html",
+  "/HASENE/manifest.json",
+
+  // İkonlar
+  "/HASENE/icon-192-v4-RED-MUSHAF.png",
+  "/HASENE/icon-512-v4-RED-MUSHAF.png",
+
+  // Font (dosya adı BOŞLUKSUZ olacak!)
+  "/HASENE/KFGQPC-Uthmanic-HAFS-Regular.otf",
+
+  // Temel JS/CSS → varsa ekle
+  "/HASENE/style.css",
+  "/HASENE/app.js"
 ];
 
-// Install event - cache files
-// Toggle this to true if you need SW logs during debugging
+// JSON dosyaların otomatik güncellenebilir olması için
+const JSON_FILES = [
+  "/HASENE/kelimebul.json",
+  "/HASENE/ayetoku_formatted.json",
+  "/HASENE/duaet.json",
+  "/HASENE/hadisoku.json"
+];
+
+// Log aç/kapa
 const SW_DEBUG = false;
 
-self.addEventListener('install', event => {
-  if (SW_DEBUG) console.debug('🔧 Service Worker installing...');
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        if (SW_DEBUG) console.debug('📦 Caching app shell');
-        return cache.addAll(urlsToCache);
-      })
-      .then(() => {
-        if (SW_DEBUG) console.debug('✅ Service Worker installed successfully');
-        return self.skipWaiting();
-      })
-      .catch(error => {
-        console.error('❌ Cache failed:', error);
-      })
-  );
-});
+// ===============================
+// 📦 INSTALL – Shell cache
+// ===============================
+self.addEventListener("install", (event) => {
+  if (SW_DEBUG) console.log("📥 SW Install");
 
-// Activate event - clean up old caches
-self.addEventListener('activate', event => {
-  if (SW_DEBUG) console.debug('🚀 Service Worker activating...');
   event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
-            if (SW_DEBUG) console.debug('🗑️ Deleting old cache:', cacheName);
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    }).then(() => {
-      if (SW_DEBUG) console.debug('✅ Service Worker activated');
-      return self.clients.claim();
+    caches.open(CACHE_NAME).then((cache) => {
+      if (SW_DEBUG) console.log("📦 Caching app shell...");
+      return cache.addAll([...APP_SHELL, ...JSON_FILES]);
     })
   );
+
+  self.skipWaiting();
 });
 
-// Fetch event - serve from cache, fallback to network
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Return cached version or fetch from network
-        if (response) {
-          if (SW_DEBUG) console.debug('📱 Serving from cache:', event.request.url);
-          return response;
-        }
-        
-        if (SW_DEBUG) console.debug('🌐 Fetching from network:', event.request.url);
-        return fetch(event.request).then(response => {
-          // Don't cache non-successful responses
-          if (!response || response.status !== 200 || response.type !== 'basic') {
-            return response;
+// ===============================
+// 🧹 ACTIVATE – Eski cache'leri sil
+// ===============================
+self.addEventListener("activate", (event) => {
+  if (SW_DEBUG) console.log("🚀 SW Activate");
+
+  event.waitUntil(
+    caches.keys().then((keys) =>
+      Promise.all(
+        keys.map((key) => {
+          if (key !== CACHE_NAME) {
+            if (SW_DEBUG) console.log("🗑️ Silindi:", key);
+            return caches.delete(key);
           }
-
-          // Clone the response for caching
-          const responseToCache = response.clone();
-          caches.open(CACHE_NAME)
-            .then(cache => {
-              cache.put(event.request, responseToCache);
-            });
-
-          return response;
-        });
-      })
-      .catch(() => {
-        // Offline fallback
-        if (event.request.destination === 'document') {
-          return caches.match('/HASENE/index.html');
-        }
-      })
+        })
+      )
+    ).then(() => self.clients.claim())
   );
 });
 
-// Background sync for offline actions
-self.addEventListener('sync', event => {
-  if (event.tag === 'background-sync') {
-    if (SW_DEBUG) console.debug('🔄 Background sync triggered');
-    event.waitUntil(doBackgroundSync());
+// ===============================
+// 🌐 FETCH – Pro level cache
+// ===============================
+self.addEventListener("fetch", (event) => {
+  const req = event.request;
+  const url = new URL(req.url);
+
+  // --- JSON dosyaları: stale-while-revalidate ---
+  if (JSON_FILES.includes(url.pathname)) {
+    event.respondWith(jsonStrategy(req));
+    return;
   }
+
+  // --- HTML dosyaları: network-first (offline fallback) ---
+  if (req.destination === "document") {
+    event.respondWith(htmlStrategy(req));
+    return;
+  }
+
+  // --- Diğer dosyalar: cache-first ---
+  event.respondWith(cacheFirst(req));
 });
 
-async function doBackgroundSync() {
-  // Handle offline actions when back online
-  if (SW_DEBUG) console.debug('📡 Performing background sync...');
+// ===============================
+// 📌 STRATEGY 1 — JSON: Stale-While-Revalidate
+// ===============================
+async function jsonStrategy(req) {
+  const cache = await caches.open(CACHE_NAME);
+  const cached = await cache.match(req);
+
+  // Arka planda yenisi çekilir
+  fetch(req).then((fresh) => {
+    if (fresh.ok) cache.put(req, fresh.clone());
+  });
+
+  return cached || fetch(req);
 }
 
-// Push notifications (future feature)
-self.addEventListener('push', event => {
-  if (event.data) {
-    const options = {
-      body: event.data.text(),
-      icon: '/HASENE/icon-192-v4-RED-MUSHAF.png',
-      badge: '/HASENE/icon-192-v4-RED-MUSHAF.png',
-      vibrate: [100, 50, 100],
-      data: {
-        dateOfArrival: Date.now(),
-        primaryKey: 1
-      }
-    };
-    
-    event.waitUntil(
-      self.registration.showNotification('Hasene Arapça Oyunu', options)
-    );
+// ===============================
+// 📌 STRATEGY 2 — HTML: Network-first
+// ===============================
+async function htmlStrategy(req) {
+  try {
+    const fresh = await fetch(req);
+    return fresh;
+  } catch (err) {
+    return caches.match("/HASENE/index.html");
   }
+}
+
+// ===============================
+// 📌 STRATEGY 3 — Cache-first
+// ===============================
+async function cacheFirst(req) {
+  const cached = await caches.match(req);
+  return cached || fetch(req);
+}
+
+// ===============================
+// 🔄 BACKGROUND SYNC (Hazır)
+// ===============================
+self.addEventListener("sync", (event) => {
+  if (SW_DEBUG) console.log("🔄 Background Sync:", event.tag);
 });
 
-if (SW_DEBUG) console.debug('🎮 Hasene Arabic Game Service Worker loaded!');
+// ===============================
+// 🔔 PUSH Notifications (Hazır)
+// ===============================
+self.addEventListener("push", (event) => {
+  if (!event.data) return;
+
+  const options = {
+    body: event.data.text(),
+    icon: "/HASENE/icon-192-v4-RED-MUSHAF.png",
+    badge: "/HASENE/icon-192-v4-RED-MUSHAF.png",
+    vibrate: [100, 40, 100]
+  };
+
+  event.waitUntil(
+    self.registration.showNotification("Hasene Arapça Oyunu", options)
+  );
+});

@@ -2442,8 +2442,10 @@
     /* gestures removed per cleanup: swipe handlers intentionally disabled */
 
         body {
-            overflow-anchor: auto; /* Chrome'da scroll anchor'ı optimize et */
-        }
+    height: auto !important;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
         
         @keyframes slideDown {
             from {

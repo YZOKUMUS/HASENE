@@ -5,58 +5,80 @@ const path = require('path');
 // Port ayarı
 const PORT = 3000;
 
+// Doğru ve güncel MIME tipleri
 const mimeTypes = {
-    '.html': 'text/html',
-    '.js': 'text/javascript',
-    '.css': 'text/css',
-    '.json': 'application/json',
+    '.html': 'text/html; charset=utf-8',
+    '.js': 'application/javascript; charset=utf-8',
+    '.css': 'text/css; charset=utf-8',
+    '.json': 'application/json; charset=utf-8',
     '.png': 'image/png',
-    '.jpg': 'image/jpg',
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg',
     '.gif': 'image/gif',
     '.svg': 'image/svg+xml',
+    '.webp': 'image/webp',
+    '.mp3': 'audio/mpeg',
     '.wav': 'audio/wav',
     '.mp4': 'video/mp4',
-    '.woff': 'application/font-woff',
-    '.woff2': 'application/font-woff2',
-    '.ttf': 'application/font-ttf',
-    '.otf': 'application/font-otf',
-    '.webp': 'image/webp'
+
+    // ✔ Doğru font MIME tipleri
+    '.woff': 'font/woff',
+    '.woff2': 'font/woff2',
+    '.ttf': 'font/ttf',
+    '.otf': 'font/otf'
 };
 
-// HTTP Server
+// SERVER
 const server = http.createServer((req, res) => {
 
-    // Güvenli path ve root ayarı
-    let safePath = req.url === '/' ? '/index.html' : req.url;
-    let filePath = path.join(__dirname, safePath);
+    // URL normalize: saldırı engelle (../ gibi)
+    let safeUrl = req.url === '/' ? '/index.html' : path.normalize(req.url);
 
-    const extname = String(path.extname(filePath)).toLowerCase();
+    // Eğer path `..` içerirse hack denemesidir → index.html göster
+    if (safeUrl.includes('..')) {
+        safeUrl = '/index.html';
+    }
+
+    // Dosya tam yolu
+    const filePath = path.join(__dirname, safeUrl);
+    const extname = path.extname(filePath).toLowerCase();
+
+    // İçerik tipi
     const contentType = mimeTypes[extname] || 'application/octet-stream';
 
+    // JSON istekleri için CORS aç
+    if (extname === '.json') {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+    }
+
+    // Dosyayı oku
     fs.readFile(filePath, (error, content) => {
         if (error) {
+            // 404
             if (error.code === 'ENOENT') {
                 res.writeHead(404, { 'Content-Type': 'text/html' });
-                res.end('<h1>404 - File Not Found</h1>');
-            } else {
+                res.end('<h1>404 - Bulunamadı</h1>', 'utf-8');
+            } 
+            // 500
+            else {
                 res.writeHead(500, { 'Content-Type': 'text/html' });
-                res.end(`<h1>500 - Internal Server Error</h1><p>${error.code}</p>`);
+                res.end(`<h1>500 - Sunucu Hatası</h1><p>${error.code}</p>`, 'utf-8');
             }
-        } else {
-            // Binary dosyalar için UTF-8 kullanma
-            if (['.html', '.js', '.css', '.json', '.txt'].includes(extname)) {
-                res.writeHead(200, { 'Content-Type': contentType });
-                res.end(content, 'utf-8');
-            } else {
-                res.writeHead(200, { 'Content-Type': contentType });
-                res.end(content);
-            }
+        } 
+        else {
+            // TEXT dosyalar UTF-8 ile gönderilir
+            const isText = ['.html', '.css', '.js', '.json', '.txt'].includes(extname);
+
+            res.writeHead(200, { 'Content-Type': contentType });
+            res.end(content, isText ? 'utf-8' : undefined);
         }
     });
 });
 
+// Sunucuyu başlat
 server.listen(PORT, () => {
-    console.info(`🚀 Server running at http://localhost:${PORT}/`);
-    console.info(`🎮 Main Game: http://localhost:${PORT}/index.html`);
-    console.info('🔧 Ctrl+C ile durdurabilirsiniz');
+    console.log(`🚀 Server çalışıyor: http://localhost:${PORT}/`);
+    console.log(`📌 Ana Sayfa:      http://localhost:${PORT}/index.html`);
+    console.log(`🔧 Ctrl + C ile durdurabilirsiniz.`);
 });
+
